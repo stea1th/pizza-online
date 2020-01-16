@@ -28,6 +28,8 @@ CREATE TABLE PRODUCT
     picture     VARCHAR(100)
 );
 
+CREATE UNIQUE INDEX product_unique_name_description_index ON PRODUCT(name, description);
+
 CREATE TABLE ORDERS
 (
     id        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
