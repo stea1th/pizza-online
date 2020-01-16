@@ -18,7 +18,7 @@ import java.util.Random;
 
 @Service
 @Slf4j
-//@EnableScheduling
+@EnableScheduling
 public class WebServiceImpl {
 
     private final KafkaTemplate<Long, PizzaDto> kafkaPizzaTemplate;
@@ -32,7 +32,7 @@ public class WebServiceImpl {
     }
 
 
-//    @Scheduled(initialDelay = 5000, fixedDelay = 5000)
+    @Scheduled(initialDelay = 5000, fixedDelay = 5000)
     public void produce() {
 
         var pizzaDto = createDto();

@@ -23,7 +23,7 @@ public class Order extends AbstractBaseEntity{
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> orders;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     private Person person;
 }
