@@ -7,6 +7,7 @@ import javax.persistence.*;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -21,8 +22,4 @@ public class AbstractBaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "global_seq")
     protected Integer id;
-
-    protected AbstractBaseEntity(Integer id){
-        this.id = id;
-    }
 }
