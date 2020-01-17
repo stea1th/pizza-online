@@ -1,5 +1,6 @@
 package de.stea1th.persist.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "person_unique_email_index")})
 public class Person extends AbstractBaseEntity {
 
@@ -27,6 +29,6 @@ public class Person extends AbstractBaseEntity {
     @NotBlank
     private String email;
 
-    @OneToMany(mappedBy = "person")
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "person")
+//    private List<Order> orders;
 }

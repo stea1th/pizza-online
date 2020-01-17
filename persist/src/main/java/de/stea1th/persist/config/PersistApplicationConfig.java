@@ -1,4 +1,5 @@
-package de.stea1th.web.config;
+package de.stea1th.persist.config;
+
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -6,6 +7,5 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:app-common.properties")
-public class WebApplicationConfig {
-
+public class PersistApplicationConfig {
 }

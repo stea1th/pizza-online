@@ -18,7 +18,7 @@ import java.util.Random;
 
 @Service
 @Slf4j
-@EnableScheduling
+//@EnableScheduling
 public class WebServiceImpl {
 
     private final KafkaTemplate<Long, PizzaDto> kafkaPizzaTemplate;

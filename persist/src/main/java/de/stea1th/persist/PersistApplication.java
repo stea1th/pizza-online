@@ -9,9 +9,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PersistApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(PersistApplication.class, args);
-        PersonService personService = context.getBean(PersonService.class);
-        personService.get(1000);
+        SpringApplication.run(PersistApplication.class, args);
+//        ConfigurableApplicationContext context = SpringApplication.run(PersistApplication.class, args);
+//        PersonService personService = context.getBean(PersonService.class);
+//        personService.get(1000);
     }
 
 }

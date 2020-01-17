@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 @Data
@@ -20,7 +17,7 @@ import java.util.Objects;
 public class OrderProductPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @NotNull
     @Column(name = "order_id")
     private Integer orderId;
