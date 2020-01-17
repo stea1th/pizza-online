@@ -1,5 +1,6 @@
 package de.stea1th.persist.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class AbstractBaseEntity {
 
     public static final int START_SEQ = 1000;

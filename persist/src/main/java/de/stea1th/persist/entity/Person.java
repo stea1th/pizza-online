@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "person_unique_email_index")})
 public class Person extends AbstractBaseEntity {
 

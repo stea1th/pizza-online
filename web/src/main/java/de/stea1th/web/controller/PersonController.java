@@ -1,6 +1,7 @@
 package de.stea1th.web.controller;
 
-import de.stea1th.web.service.KafkaProducer;
+import de.stea1th.kafkalibrary.dto.PersonDto;
+import de.stea1th.web.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/person")
 public class PersonController {
 
+    private PersonService personService;
 
-    private final KafkaProducer kafkaProducer;
-
-    public PersonController(KafkaProducer kafkaProducer) {
-        this.kafkaProducer = kafkaProducer;
+    @Autowired
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity get(@PathVariable("id") int id) {
+    public ResponseEntity<PersonDto> get(@PathVariable("id") int id) {
         log.info("Get person with id: {}", id);
-        kafkaProducer.getById("pizza-online.kafka.get.person","pizza-online", id);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        PersonDto personDto = personService.get(id);
+        return new ResponseEntity<>(personDto, HttpStatus.ACCEPTED);
     }
 
 }
