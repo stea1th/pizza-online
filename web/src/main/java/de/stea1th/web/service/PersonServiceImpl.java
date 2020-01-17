@@ -27,6 +27,7 @@ public class PersonServiceImpl implements PersonService {
         PersonDto personDto = null;
         while (personDto == null) {
             personDto = personKafkaConsumer.getPersonDto();
+            log.info("{}", personDto == null);
         }
         return personDto;
     }
