@@ -6,6 +6,4 @@ public interface PersonService {
 
     PersonDto get(int id);
 
-
-
 }

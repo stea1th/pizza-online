@@ -19,7 +19,6 @@ public class PersonKafkaConsumerImpl implements PersonKafkaConsumer {
     public void processGetPerson(String person) {
         log.info("received person = {}", person);
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
             personDto = objectMapper.readValue(person, PersonDto.class);
         } catch (JsonProcessingException e) {
