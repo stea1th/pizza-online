@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     default Person get(int id) throws ClassNotFoundException {
-        return this.findById(id).orElseThrow(() -> new ClassNotFoundException("No such person with id:" + id));
+        return this.findById(id).orElseThrow(() -> new ClassNotFoundException("no such person exists with id:" + id));
     }
 
 }

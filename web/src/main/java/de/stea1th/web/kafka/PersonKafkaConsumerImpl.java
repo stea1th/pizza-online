@@ -15,7 +15,7 @@ public class PersonKafkaConsumerImpl implements PersonKafkaConsumer {
     private PersonDto personDto;
 
     @SneakyThrows
-    @KafkaListener(topics = "pizza-online.kafka.get.person", groupId = "pizza-online")
+    @KafkaListener(topics = "${person.receive.person}", groupId = "pizza-online")
     public void processGetPerson(String person) {
         log.info("received person = {}", person);
         ObjectMapper objectMapper = new ObjectMapper();
