@@ -25,9 +25,10 @@ public class PersonController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<PersonDto> get(@PathVariable("id") int id) {
-        log.info("Get person with id: {}", id);
+        log.info("get person with id: {}", id);
         PersonDto personDto = personService.get(id);
-        return new ResponseEntity<>(personDto, HttpStatus.ACCEPTED);
+        log.info("received person with id: {} {}", id, personDto == null ? "not exists" : personDto);
+        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.ACCEPTED);
     }
 
 }

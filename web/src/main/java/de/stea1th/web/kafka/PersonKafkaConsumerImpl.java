@@ -3,6 +3,7 @@ package de.stea1th.web.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.kafkalibrary.dto.PersonDto;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -13,14 +14,16 @@ public class PersonKafkaConsumerImpl implements PersonKafkaConsumer {
 
     private PersonDto personDto;
 
+    @SneakyThrows
     @KafkaListener(topics = "pizza-online.kafka.get.person", groupId = "pizza-online")
     public void processGetPerson(String person) {
         log.info("received person = {}", person);
         ObjectMapper objectMapper = new ObjectMapper();
+
         try {
             personDto = objectMapper.readValue(person, PersonDto.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 

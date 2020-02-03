@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PersonKafka {
+public class PersonKafkaConsumer {
 
     private KafkaProducer kafkaProducer;
 
@@ -21,7 +21,7 @@ public class PersonKafka {
     private Person person;
 
     @Autowired
-    public PersonKafka(KafkaProducer kafkaProducer, PersonService personService) {
+    public PersonKafkaConsumer(KafkaProducer kafkaProducer, PersonService personService) {
         this.kafkaProducer = kafkaProducer;
         this.personService = personService;
     }
@@ -33,8 +33,10 @@ public class PersonKafka {
         try {
             Integer personId = objectMapper.readValue(id, Integer.class);
             person = personService.get(personId);
-            kafkaProducer.produce("pizza-online.kafka.get.person", "pizza-online", person);
-            log.info("Person data: {} sent to topic {}", objectMapper.writeValueAsString(person), "pizza-online.kafka.get.person");
+            if(person != null) {
+                kafkaProducer.produce("pizza-online.kafka.get.person", "pizza-online", person);
+                log.info("person data: {} sent to topic {}", objectMapper.writeValueAsString(person), "pizza-online.kafka.get.person");
+            }
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
