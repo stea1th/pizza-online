@@ -20,7 +20,7 @@ public class KafkaProducerImpl implements KafkaProducer {
     }
 
     public void produce(String topic, String groupId, Object object) {
-        log.info("Sending id to kafka = '{} with topic '{}'", object, topic);
+        log.info("Sending object to kafka = '{} with topic '{}'", object, topic);
         kafkaTemplate.send(topic, groupId, object);
     }
 }
