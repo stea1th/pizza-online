@@ -3,6 +3,7 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper:latest
+    container_name: zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: 'yes'
     networks:
@@ -12,6 +13,7 @@ services:
 
   kafka:
     image: bitnami/kafka:latest
+    container_name: kafka
     hostname: localhost
     ports:
       - 9092:9092
@@ -40,6 +42,27 @@ services:
       - 5416:5432
     networks:
       - app-tier
+
+  authorization:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+#      DB_VENDOR: "POSTGRES"
+      DB_ADDR: postgres
+      DB_DATABASE: pizza_online
+      DB_PORT: 5432
+      DB_USER: user
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+    restart: always
+    networks:
+      - app-tier
+
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
