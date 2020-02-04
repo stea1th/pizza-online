@@ -18,24 +18,26 @@ export class MenuTableComponent implements OnInit {
 
   myDataArray: ProductElement[];
 
-  columnsToDisplay = ['id', 'name', 'price', 'discount'];
+  columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
   constructor(private menuService: MenuService) { }
 
   ngOnInit() {
     this.menuService.getAllProducts().subscribe(data => {
-      console.log(data);
       this.myDataArray = data;
     });
   }
 
+  test(num: number) {
+    console.log(num);
+  }
 }
 
 export interface ProductElement {
   id: number;
   name: string;
-  price: number;
+  price: string;
   discount: number;
   description: string;
   picture: string;

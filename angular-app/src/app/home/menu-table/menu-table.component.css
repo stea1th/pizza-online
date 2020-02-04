@@ -25,6 +25,7 @@ tr.element-row:not(.expanded-row):active {
 
 .element-diagram {
   min-width: 80px;
+  max-width: max-content;
   border: 2px solid black;
   padding: 8px;
   font-weight: lighter;
@@ -44,4 +45,12 @@ tr.element-row:not(.expanded-row):active {
 
 .element-description-attribution {
   opacity: 0.5;
+}
+
+.element-add-to-cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+
 }

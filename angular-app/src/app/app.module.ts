@@ -14,6 +14,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatTableModule} from "@angular/material/table";
 import { MenuTableComponent } from './home/menu-table/menu-table.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MenuTableComponent } from './home/menu-table/menu-table.component';
     MatCardModule,
     MatButtonModule,
     MatProgressBarModule,
-    MatTableModule
+    MatTableModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
