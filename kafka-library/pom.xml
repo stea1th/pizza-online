@@ -11,7 +11,7 @@
     <groupId>de.stea1th</groupId>
     <artifactId>kafka-library</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>kafka-library</name>
+    <name>Kafka-library</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

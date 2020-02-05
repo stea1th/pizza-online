@@ -11,7 +11,7 @@
     <groupId>de.stea1th</groupId>
     <artifactId>persist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>persist</name>
+    <name>Persist</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

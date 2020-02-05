@@ -51,7 +51,7 @@ services:
     depends_on:
       - database
     environment:
-#      DB_VENDOR: "POSTGRES"
+      DB_VENDOR: "POSTGRES"
       DB_ADDR: postgres
       DB_DATABASE: pizza_online
       DB_PORT: 5432

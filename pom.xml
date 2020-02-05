@@ -12,5 +12,6 @@
         <module>web</module>
         <module>persist</module>
         <module>kafka-library</module>
+        <module>angular</module>
     </modules>
 </project>
