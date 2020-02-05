@@ -19,8 +19,11 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonKafkaConsumer personKafkaConsumer;
 
-    private final static Integer ATTEMPT = 5;
-    private final static Integer SLEEP_DURATION = 100;
+    @Value("#{new Integer('${kafka.service.attempt}')}")
+    private Integer attempt;
+
+    @Value("#{new Integer('${kafka.service.delay}')}")
+    private Integer delay;
 
     @Value("${person.get.id}")
     private String personGetIdTopic;
@@ -36,8 +39,8 @@ public class PersonServiceImpl implements PersonService {
     public PersonDto get(int id) {
         kafkaProducer.produce(personGetIdTopic, "pizza-online", id);
         PersonDto personDto = null;
-        for (int i = 0; i < ATTEMPT; i++) {
-            TimeUnit.MILLISECONDS.sleep(SLEEP_DURATION);
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
             personDto = personKafkaConsumer.getPersonDto();
             if (personDto != null) break;
         }

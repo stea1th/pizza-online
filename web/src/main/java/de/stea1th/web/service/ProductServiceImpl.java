@@ -19,8 +19,11 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductKafkaConsumer productKafkaConsumer;
 
-    private final static Integer ATTEMPT = 5;
-    private final static Integer SLEEP_DURATION = 100;
+    @Value("#{new Integer('${kafka.service.attempt}')}")
+    private Integer attempt;
+
+    @Value("#{new Integer('${kafka.service.delay}')}")
+    private Integer delay;
 
     @Value("${product.get.all}")
     private String productsGetAllTopic;
@@ -35,10 +38,10 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getAll() {
         kafkaProducer.produce(productsGetAllTopic, "pizza-online", "");
         List<ProductDto> productDtoList = null;
-        for (int i = 0; i <ATTEMPT; i++) {
-            TimeUnit.MILLISECONDS.sleep(SLEEP_DURATION);
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
             productDtoList = productKafkaConsumer.getProductDtoList();
-            if(productDtoList != null) break;
+            if (productDtoList != null) break;
         }
         return productDtoList;
     }
