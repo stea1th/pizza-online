@@ -63,6 +63,14 @@ services:
     networks:
       - app-tier
 
+  frontend:
+    image: stea1th/pizza-ang:latest
+    container_name: angular
+    ports:
+      - 90:80
+    networks:
+      - app-tier
+
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:

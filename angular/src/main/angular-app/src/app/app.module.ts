@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -15,6 +15,12 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatTableModule} from "@angular/material/table";
 import { MenuTableComponent } from './home/menu-table/menu-table.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NgKeycloakModule} from "ng-keycloak";
+import {KeycloakService} from "./service/keycloak.service";
+
+export function kcFactory(keycloakService: KeycloakService) {
+  return () => keycloakService.init();
+}
 
 @NgModule({
   declarations: [
@@ -35,8 +41,17 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     MatProgressBarModule,
     MatTableModule,
     FontAwesomeModule,
+    NgKeycloakModule
   ],
-  providers: [],
+  providers: [
+    // KeycloakService,
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: kcFactory,
+    //   deps: [KeycloakService],
+    //   multi: true
+    // }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
