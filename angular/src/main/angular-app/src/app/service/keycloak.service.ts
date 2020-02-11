@@ -41,7 +41,7 @@ export class KeycloakService {
     return new Promise((resolve, reject) => {
       const keycloakAuth = Keycloak('assets/keycloak/keycloak.json');
       keycloakAuth.init({onLoad: 'login-required'})
-        .done(() => {
+        .success(() => {
           KeycloakService.auth.loggedIn = true;
           KeycloakService.auth.keycloak = keycloakAuth;
           KeycloakService.auth.logoutUrl = keycloakAuth.authServerUrl
@@ -61,7 +61,7 @@ export class KeycloakService {
       if (KeycloakService.auth.keycloak.token) {
         KeycloakService.auth.keycloak
           .updateToken(60)
-          .done((refreshed) => {
+          .success((refreshed) => {
             console.log('refreshed ' + refreshed);
             resolve(<string>KeycloakService.auth.keycloak.token);
           })

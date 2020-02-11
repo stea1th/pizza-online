@@ -3,7 +3,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +17,7 @@ import { MenuTableComponent } from './home/menu-table/menu-table.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NgKeycloakModule} from "ng-keycloak";
 import {KeycloakService} from "./service/keycloak.service";
+import {TokenInterceptor} from "./service/token-interceptor";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -44,15 +45,21 @@ export function kcFactory(keycloakService: KeycloakService) {
     NgKeycloakModule
   ],
   providers: [
-    // KeycloakService,
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: kcFactory,
-    //   deps: [KeycloakService],
-    //   multi: true
-    // }
+    KeycloakService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: kcFactory,
+      deps: [KeycloakService],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
+
