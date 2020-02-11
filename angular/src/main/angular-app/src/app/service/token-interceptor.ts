@@ -9,7 +9,6 @@ import {concatMap, map} from "rxjs/operators";
 export class TokenInterceptor implements HttpInterceptor{
 
   constructor(private auth: KeycloakService) {
-
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
