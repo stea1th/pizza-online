@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {KeycloakService} from "./service/keycloak.service";
 import {DataService} from "./service/data.service";
 
@@ -12,10 +12,15 @@ export class AppComponent {
 
 
   constructor(private auth: KeycloakService, private data: DataService) {
-
   }
 
   logout() {
     this.auth.logout();
+  }
+
+  getAdmin() {
+    this.data.getAuth('/admin').subscribe(d => {
+      return console.log("Admin: " + d);
+    })
   }
 }

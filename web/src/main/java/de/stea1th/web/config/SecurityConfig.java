@@ -1,8 +1,5 @@
 package de.stea1th.web.config;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.KeycloakDeployment;
-import org.keycloak.adapters.spi.HttpFacade;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
@@ -38,7 +35,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     /**
-     *  Define a Session Authentication Strategy
+     * Define a Session Authentication Strategy
      */
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
@@ -59,13 +56,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/*").hasAnyRole("ADMIN", "MANAGER")
+                .antMatchers("/api/**").hasAnyRole("admin", "manager")
                 .anyRequest().permitAll();
-    }
-
-    @Bean
-    public KeycloakConfigResolver keycloakConfigResolver() {
-       return new KeycloakSpringBootConfigResolver();
     }
 
     @Bean
