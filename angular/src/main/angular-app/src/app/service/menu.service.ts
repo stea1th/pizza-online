@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 })
 export class MenuService {
 
-  baseUrl = 'http://localhost:8081';
+  baseUrl = 'http://localhost:8081/api';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   public getAllProducts(): Observable<any> {
-    return this.http.get(this.baseUrl + '/api/product').pipe();
+    return this.http.get(this.baseUrl + '/product').pipe();
   }
 
 }

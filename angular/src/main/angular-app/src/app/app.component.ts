@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {KeycloakService} from "./service/keycloak.service";
+import {DataService} from "./service/data.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ export class AppComponent {
   title = 'angular-app';
 
 
-  constructor(private auth: KeycloakService) {
+  constructor(private auth: KeycloakService, private data: DataService) {
+
   }
 
   logout() {

@@ -19,7 +19,7 @@ export class KeycloakService {
           KeycloakService.auth.logoutUrl = keycloakAuth.authServerUrl
             + 'realms/Pizza-Online-Realm/protocol/openid-connect/logout?redirect_uri='
             + document.baseURI;
-          console.log(KeycloakService.auth);
+          // console.log(KeycloakService.auth);
           resolve();
         })
         .error(() => {
@@ -34,7 +34,7 @@ export class KeycloakService {
         KeycloakService.auth.keycloak
           .updateToken(60)
           .success((refreshed) => {
-            console.log('refreshed ' + refreshed);
+            // console.log('refreshed ' + refreshed);
             resolve(<string>KeycloakService.auth.keycloak.token);
           })
           .error(() => {
