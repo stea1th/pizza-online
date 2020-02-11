@@ -1,0 +1,8 @@
+{
+  "realm": "Pizza-Online-Realm",
+  "auth-server-url": "http://localhost:8080/auth/",
+  "ssl-required": "external",
+  "resource": "pizza-online-frontend",
+  "public-client": true,
+  "confidential-port": 0
+}
