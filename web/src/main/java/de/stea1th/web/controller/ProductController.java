@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RequestMapping("/api/product")
-@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class ProductController {
 
     private ProductService productService;
