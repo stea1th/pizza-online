@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 export class DataService {
 
   baseUrl = 'http://localhost:8081/api';
+  // orderProduct = new OrderProduct();
 
   constructor(private http: HttpClient) { }
 
@@ -25,4 +26,18 @@ export class DataService {
     return this.http.get(url + path);
   }
 
+  public postOrderProduct(productId: number) {
+    const url = this.baseUrl + "/order_product/save";
+    const body = {orderId: 1111, productId: productId, quantity: 2};
+    console.log(body);
+    return this.http.post(url, body).subscribe(d=> console.log(d));
+  }
 }
+
+// export class OrderProduct {
+//   orderId: number;
+//   productId: number;
+//   quantity: number;
+// }
+
+

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -25,12 +26,13 @@ public class ProductKafkaConsumerImpl implements ProductKafkaConsumer {
     }
 
     @KafkaListener(topics = "${product.receive.product.all}", groupId = "pizza-online")
+
     public void processGetAllProducts(String products) {
         log.info("received products = {}", products);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             productDtoList = objectMapper.readValue(products, new TypeReference<List<ProductDto>>(){});
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             log.error(e.getMessage());
         }
     }

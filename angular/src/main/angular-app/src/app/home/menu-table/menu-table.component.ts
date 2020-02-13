@@ -34,6 +34,7 @@ export class MenuTableComponent implements OnInit {
 
   test(num: number) {
     console.log(num);
+    this.dataService.postOrderProduct(num);
   }
 }
 
