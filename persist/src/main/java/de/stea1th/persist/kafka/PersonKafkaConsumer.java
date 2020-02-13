@@ -60,6 +60,4 @@ public class PersonKafkaConsumer {
             log.error(e.getMessage());
         }
     }
-
-
 }

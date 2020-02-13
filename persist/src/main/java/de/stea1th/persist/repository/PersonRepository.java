@@ -13,7 +13,4 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     }
 
     Person getByKeycloak(String keycloak);
-
-
-
 }

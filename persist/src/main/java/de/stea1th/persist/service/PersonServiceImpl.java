@@ -5,6 +5,7 @@ import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
 
+    @Autowired
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }

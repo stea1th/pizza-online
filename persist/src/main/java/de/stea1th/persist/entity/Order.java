@@ -21,7 +21,7 @@ public class Order extends AbstractBaseEntity{
     private Boolean completed;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderProduct> orders;
+    private List<OrderProduct> orderProducts;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
