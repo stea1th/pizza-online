@@ -56,7 +56,7 @@ public class PersonServiceImpl implements PersonService {
         String keycloak = keycloakAuthenticationToken.getName();
         kafkaProducer.produce(personGetKeycloakTopic, "pizza-online", keycloak);
         PersonDto personDto = getPersonDtoFromKafka();
-        if(personDto != null) {
+        if (personDto != null) {
             KeycloakSecurityContext securityContext = ((KeycloakPrincipal) keycloakAuthenticationToken.getPrincipal()).getKeycloakSecurityContext();
             AccessToken accessToken = securityContext.getToken();
             setPersonDetails(accessToken, personDto);
@@ -76,9 +76,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void setPersonDetails(AccessToken accessToken, PersonDto personDto) {
-        if(personDto.getFirstName() == null) personDto.setFirstName(accessToken.getName());
-        if(personDto.getLastName() == null) personDto.setLastName(accessToken.getFamilyName());
-        if(personDto.getEmail() == null) personDto.setEmail(accessToken.getEmail());
-//        return personDto;
+        if (personDto.getFirstName() == null) personDto.setFirstName(accessToken.getGivenName());
+        if (personDto.getLastName() == null) personDto.setLastName(accessToken.getFamilyName());
+        if (personDto.getEmail() == null) personDto.setEmail(accessToken.getEmail());
     }
 }

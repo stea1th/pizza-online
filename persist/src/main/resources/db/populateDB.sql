@@ -1,11 +1,11 @@
 
 INSERT INTO person(keycloak)
-VALUES ('8a1e689b-8b18-410a-8d38-11cc7942c230');
+VALUES ('"8a1e689b-8b18-410a-8d38-11cc7942c230"');
 
 INSERT INTO person (first_name, last_name, email, keycloak)
--- VALUES ('Vadim', 'Pechenkin', '1@1.de'),
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '3fbdd4e1-3494-4725-812f-a2bd8e91b51e'),
-       ('Ivan', 'Ogurcov', 'b@b.de', '4562d862-1ce1-474d-bbd1-eba52def4b2e');
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"3fbdd4e1-3494-4725-812f-a2bd8e91b51e"'),
+       ('Ivan', 'Ogurcov', 'b@b.de', '"4562d862-1ce1-474d-bbd1-eba52def4b2e"');
+
 
 INSERT INTO product(name, description, price, picture)
 VALUES ('Pizza Tonno', 'small size', 5.60, 'Tonno.jpg'),

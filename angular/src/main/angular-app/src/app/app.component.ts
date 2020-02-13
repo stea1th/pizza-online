@@ -21,7 +21,7 @@ export class AppComponent {
 
   getMe() {
     this.data.getAuth('/me').subscribe(d => {
-      return console.log("Admin: " + d);
+      return console.log("Admin: " + JSON.stringify(d));
     })
   }
 }
