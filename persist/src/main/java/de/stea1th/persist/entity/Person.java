@@ -16,18 +16,18 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "person_unique_email_index")})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"keycloak"}, name = "person_unique_keycloak_index")})
 public class Person extends AbstractBaseEntity {
 
-    @NotBlank
     private String firstName;
 
-    @NotBlank
     private String lastName;
 
     @Email
-    @NotBlank
     private String email;
+
+    @NotBlank
+    private String keycloak;
 
 //    @OneToMany(mappedBy = "person")
 //    private List<Order> orders;

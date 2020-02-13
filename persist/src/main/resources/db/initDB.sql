@@ -11,12 +11,13 @@ CREATE SEQUENCE global_seq START 1000;
 CREATE TABLE PERSON
 (
     id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    first_name VARCHAR(40) NOT NULL,
-    last_name  VARCHAR(40) NOT NULL,
-    email      VARCHAR(50) NOT NULL
+    first_name VARCHAR(40),
+    last_name  VARCHAR(40),
+    email      VARCHAR(50),
+    keycloak   VARCHAR(255) NOT NULL
 );
 
-CREATE UNIQUE INDEX person_unique_email_index ON PERSON (email);
+CREATE UNIQUE INDEX person_unique_keycloak_index ON PERSON (keycloak);
 
 CREATE TABLE PRODUCT
 (

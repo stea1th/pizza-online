@@ -9,6 +9,7 @@ import {DataService} from "./service/data.service";
 })
 export class AppComponent {
   title = 'angular-app';
+  email: string;
 
 
   constructor(private auth: KeycloakService, private data: DataService) {
@@ -18,8 +19,8 @@ export class AppComponent {
     this.auth.logout();
   }
 
-  getAdmin() {
-    this.data.getAuth('/admin').subscribe(d => {
+  getMe() {
+    this.data.getAuth('/me').subscribe(d => {
       return console.log("Admin: " + d);
     })
   }

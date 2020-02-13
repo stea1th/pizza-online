@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MenuService} from "../../service/menu.service";
+import {DataService} from "../../service/data.service";
 
 @Component({
   selector: 'app-menu-table',
@@ -21,11 +21,11 @@ export class MenuTableComponent implements OnInit {
   columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
-  constructor(private menuService: MenuService) {
+  constructor(private dataService : DataService) {
   }
 
   ngOnInit() {
-    this.menuService.getAllProducts().subscribe(data => {
+    this.dataService.getAllProducts().subscribe(data => {
       this.myDataArray = data;
       this.myDataArray.forEach(i => i.price = i.price.toFixed(2));
     });

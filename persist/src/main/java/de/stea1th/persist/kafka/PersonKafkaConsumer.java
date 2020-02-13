@@ -19,6 +19,8 @@ public class PersonKafkaConsumer {
 
     private PersonService personService;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     private Person person;
 
     @Value("${person.receive.person}")
@@ -33,7 +35,6 @@ public class PersonKafkaConsumer {
     @KafkaListener(topics = "${person.get.id}", groupId = "pizza-online")
     public void processGetPerson(String id) {
         log.info("received id = {}", id);
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             Integer personId = objectMapper.readValue(id, Integer.class);
             person = personService.get(personId);
@@ -45,4 +46,20 @@ public class PersonKafkaConsumer {
             log.error(e.getMessage());
         }
     }
+
+    @KafkaListener(topics = "${person.get.keycloak}", groupId = "pizza-online")
+    public void processGetPersonByKeycloak(String keycloak) {
+        log.info("received keycloak = {}", keycloak);
+        try {
+            person = personService.getByKeycloak(keycloak);
+            if (person != null) {
+                kafkaProducer.produce(receivePersonTopic, "pizza-online", person);
+                log.info("person data: {} sent to topic {}", objectMapper.writeValueAsString(person), receivePersonTopic);
+            }
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+
 }
