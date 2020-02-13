@@ -6,15 +6,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Embeddable
 public class OrderProductPK implements Serializable {
+
 
     private static final long serialVersionUID = 1L;
 
@@ -25,4 +28,5 @@ public class OrderProductPK implements Serializable {
     @NotNull
     @Column(name = "product_id")
     private Integer productId;
+
 }
