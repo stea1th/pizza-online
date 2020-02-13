@@ -1,4 +1,4 @@
-package de.stea1th.kafkalibrary.component;
+package de.stea1th.commonlibrary.component;
 
 public interface KafkaProducer {
 

@@ -1,13 +1,13 @@
-package de.stea1th.kafkalibrary;
+package de.stea1th.commonlibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KafkaLibraryApplication {
+public class CommonLibraryApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KafkaLibraryApplication.class, args);
+        SpringApplication.run(CommonLibraryApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package de.stea1th.kafkalibrary.exception;
+package de.stea1th.commonlibrary.exception;
 
 public class MyEntityNotFoundException extends Exception {
 

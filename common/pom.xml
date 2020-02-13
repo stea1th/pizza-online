@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.stea1th</groupId>
-    <artifactId>kafka-library</artifactId>
+    <artifactId>common-library</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Kafka-library</name>
+    <name>Common</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

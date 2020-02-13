@@ -61,7 +61,7 @@
         </dependency>
         <dependency>
             <groupId>de.stea1th</groupId>
-            <artifactId>kafka-library</artifactId>
+            <artifactId>common-library</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
 
-import de.stea1th.kafkalibrary.dto.ProductDto;
+import de.stea1th.commonlibrary.dto.ProductDto;
 
 import java.util.List;
 

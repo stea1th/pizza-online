@@ -1,14 +1,13 @@
 package de.stea1th.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.kafkalibrary.dto.PizzaDto;
+import de.stea1th.commonlibrary.dto.PizzaDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 

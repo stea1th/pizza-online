@@ -1,4 +1,4 @@
-package de.stea1th.kafkalibrary.dto;
+package de.stea1th.commonlibrary.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

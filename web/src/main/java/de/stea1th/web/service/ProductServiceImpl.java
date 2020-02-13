@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
-import de.stea1th.kafkalibrary.component.KafkaProducer;
-import de.stea1th.kafkalibrary.dto.ProductDto;
+import de.stea1th.commonlibrary.component.KafkaProducer;
+import de.stea1th.commonlibrary.dto.ProductDto;
 import de.stea1th.web.kafka.ProductKafkaConsumer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

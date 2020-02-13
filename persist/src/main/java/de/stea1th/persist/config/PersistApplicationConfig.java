@@ -8,6 +8,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:app-common.properties")
-@ComponentScan({"de.stea1th.kafkalibrary.component"})
+@ComponentScan({"de.stea1th.commonlibrary.component"})
 public class PersistApplicationConfig {
 }

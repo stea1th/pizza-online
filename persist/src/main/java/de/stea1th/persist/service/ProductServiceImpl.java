@@ -1,6 +1,6 @@
 package de.stea1th.persist.service;
 
-import de.stea1th.kafkalibrary.exception.MyEntityNotFoundException;
+import de.stea1th.commonlibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.entity.Product;
 import de.stea1th.persist.repository.ProductRepository;

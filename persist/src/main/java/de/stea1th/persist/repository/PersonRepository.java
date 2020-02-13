@@ -1,6 +1,6 @@
 package de.stea1th.persist.repository;
 
-import de.stea1th.kafkalibrary.exception.MyEntityNotFoundException;
+import de.stea1th.commonlibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
