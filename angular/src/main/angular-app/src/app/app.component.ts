@@ -19,9 +19,16 @@ export class AppComponent {
     this.auth.logout();
   }
 
-  getMe() {
-    this.data.getAuth('/me').subscribe(d => {
+  getDetails() {
+    this.data.getAuth('/details').subscribe(d => {
       return console.log("Admin: " + JSON.stringify(d));
     })
+  }
+
+  getProductsInCart() {
+    this.data.getProduct('/cart').subscribe(d=> {
+      return console.log("Cart: " + JSON.stringify(d));
+    });
+
   }
 }

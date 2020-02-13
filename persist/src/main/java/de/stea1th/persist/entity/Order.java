@@ -16,9 +16,9 @@ import java.util.List;
 @Table(name = "orders")
 public class Order extends AbstractBaseEntity{
 
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
-    private Boolean completed;
+    private Boolean completed = false;
 
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> orderProducts;

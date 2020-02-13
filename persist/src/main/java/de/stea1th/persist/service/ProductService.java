@@ -9,4 +9,6 @@ public interface ProductService {
     List<Product> getAll();
 
     Product get(int productId);
+
+    List<Product> getAllProductsByKeycloak(String keycloak);
 }

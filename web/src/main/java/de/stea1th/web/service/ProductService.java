@@ -11,4 +11,6 @@ public interface ProductService {
 
     ProductDto get(int productId);
 
+    List<ProductDto> getAllProductsForKeycloak(String keycloak);
+
 }

@@ -34,9 +34,9 @@ public class ProductKafkaConsumer {
     }
 
     @KafkaListener(topics = "${product.get.all}", groupId = "pizza-online")
-    public void processGetAllProducts() {
+    public void processGetAllProducts(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Product> products = productService.getAll();
+        List<Product> products = message.equals("\"\"") ? productService.getAll() : productService.getAllProductsByKeycloak(message);
         kafkaProducer.produce(receiveAllProductsTopic, "pizza-online", products);
         try {
             log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveAllProductsTopic);

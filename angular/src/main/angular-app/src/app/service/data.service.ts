@@ -20,4 +20,9 @@ export class DataService {
     return this.http.get(this.baseUrl + '/product').pipe();
   }
 
+  public getProduct(path) {
+    const url = this.baseUrl + "/product";
+    return this.http.get(url + path);
+  }
+
 }

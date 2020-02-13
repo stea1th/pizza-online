@@ -34,9 +34,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @SneakyThrows
     public List<ProductDto> getAll() {
-        kafkaProducer.produce(productsGetAllTopic, "pizza-online", "");
+        return getProductListWithKafka("");
+    }
+
+    @Override
+    public List<ProductDto> getAllProductsForKeycloak(String keycloak) {
+        return getProductListWithKafka(keycloak);
+    }
+
+    @SneakyThrows
+    private List<ProductDto> getProductListWithKafka(String message) {
+        kafkaProducer.produce(productsGetAllTopic, "pizza-online", message);
         List<ProductDto> productDtoList = null;
         for (int i = 0; i < attempt; i++) {
             TimeUnit.MILLISECONDS.sleep(delay);
