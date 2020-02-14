@@ -1,6 +1,6 @@
 package de.stea1th.web.controller;
 
-import de.stea1th.commonlibrary.dto.ProductDto;
+import de.stea1th.web.dto.ProductDto;
 import de.stea1th.web.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,8 +37,8 @@ public class ProductController {
     @GetMapping("/cart")
     public ResponseEntity<List<ProductDto>> getAllProductsInCart(Principal principal) {
         log.info("get all products in cart");
-        List<ProductDto> productDtoList = productService.getAllProductsForKeycloak(principal.getName());
-        log.info("received list of products: {}", productDtoList);
+        List<ProductDto> productDtoList = productService.getProductsInCart(principal.getName());
+        log.info("received list of products in cart: {}", productDtoList);
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
 }

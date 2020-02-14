@@ -26,6 +26,9 @@ public class ProductKafkaConsumer {
     @Value("${product.receive.product.all}")
     private String receiveAllProductsTopic;
 
+    @Value("${product.receive.product.cart}")
+    private String receiveCartProductsTopic;
+
 
     @Autowired
     public ProductKafkaConsumer(KafkaProducer kafkaProducer, ProductService productService) {
@@ -34,12 +37,24 @@ public class ProductKafkaConsumer {
     }
 
     @KafkaListener(topics = "${product.get.all}", groupId = "pizza-online")
-    public void processGetAllProducts(String message) {
+    public void processGetAllProducts() {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Product> products = message.equals("\"\"") ? productService.getAll() : productService.getAllProductsByKeycloak(message);
+        List<Product> products = productService.getAll();
         kafkaProducer.produce(receiveAllProductsTopic, "pizza-online", products);
         try {
             log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveAllProductsTopic);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    @KafkaListener(topics = "${product.get.cart}", groupId = "pizza-online")
+    public void processGetAllProducts(String message) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Product> products = productService.getAllProductsByKeycloak(message);
+        kafkaProducer.produce(receiveCartProductsTopic, "pizza-online", products);
+        try {
+            log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveCartProductsTopic);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }

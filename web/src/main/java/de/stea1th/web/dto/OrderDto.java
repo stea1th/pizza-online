@@ -1,4 +1,4 @@
-package de.stea1th.commonlibrary.dto;
+package de.stea1th.web.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

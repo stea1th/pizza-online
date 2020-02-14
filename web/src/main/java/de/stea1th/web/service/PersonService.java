@@ -1,6 +1,6 @@
 package de.stea1th.web.service;
 
-import de.stea1th.commonlibrary.dto.PersonDto;
+import de.stea1th.web.dto.PersonDto;
 
 import java.security.Principal;
 

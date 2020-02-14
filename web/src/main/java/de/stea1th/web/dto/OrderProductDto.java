@@ -1,7 +1,6 @@
-package de.stea1th.commonlibrary.dto;
+package de.stea1th.web.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class OrderProductDto implements Serializable {
 
-    private int orderId;
+    private String keycloak;
 
     private int productId;
 

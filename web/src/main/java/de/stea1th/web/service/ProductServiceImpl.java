@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
 import de.stea1th.commonlibrary.component.KafkaProducer;
-import de.stea1th.commonlibrary.dto.ProductDto;
+import de.stea1th.web.dto.ProductDto;
 import de.stea1th.web.kafka.ProductKafkaConsumer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -28,28 +28,37 @@ public class ProductServiceImpl implements ProductService {
     @Value("${product.get.all}")
     private String productsGetAllTopic;
 
+    @Value("${product.get.cart}")
+    private String productsGetCartTopic;
+
+
+
     public ProductServiceImpl(KafkaProducer kafkaProducer, ProductKafkaConsumer productKafkaConsumer) {
         this.kafkaProducer = kafkaProducer;
         this.productKafkaConsumer = productKafkaConsumer;
     }
 
+    @SneakyThrows
     @Override
     public List<ProductDto> getAll() {
-        return getProductListWithKafka("");
-    }
-
-    @Override
-    public List<ProductDto> getAllProductsForKeycloak(String keycloak) {
-        return getProductListWithKafka(keycloak);
-    }
-
-    @SneakyThrows
-    private List<ProductDto> getProductListWithKafka(String message) {
-        kafkaProducer.produce(productsGetAllTopic, "pizza-online", message);
+        kafkaProducer.produce(productsGetAllTopic, "pizza-online", "");
         List<ProductDto> productDtoList = null;
         for (int i = 0; i < attempt; i++) {
             TimeUnit.MILLISECONDS.sleep(delay);
-            productDtoList = productKafkaConsumer.getProductDtoList();
+            productDtoList = productKafkaConsumer.getAllProducts();
+            if (productDtoList != null) break;
+        }
+        return productDtoList;
+    }
+
+    @SneakyThrows
+    @Override
+    public List<ProductDto> getProductsInCart(String keycloak) {
+        kafkaProducer.produce(productsGetCartTopic, "pizza-online", keycloak);
+        List<ProductDto> productDtoList = null;
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
+            productDtoList = productKafkaConsumer.getProductsInCart();
             if (productDtoList != null) break;
         }
         return productDtoList;

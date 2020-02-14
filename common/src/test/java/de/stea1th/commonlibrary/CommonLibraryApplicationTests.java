@@ -1,7 +1,7 @@
 package de.stea1th.commonlibrary;
 
 //@SpringBootTest
-class KafkaLibraryApplicationTests {
+class CommonLibraryApplicationTests {
 
 //    @Test
 //    void contextLoads() {
