@@ -1,6 +1,6 @@
 package de.stea1th.web.kafka;
 
-import de.stea1th.web.dto.ProductDto;
+import de.stea1th.commonslibrary.dto.ProductDto;
 
 import java.util.List;
 

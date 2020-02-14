@@ -1,4 +1,4 @@
-package de.stea1th.web.dto;
+package de.stea1th.commonslibrary.dto;
 
 
 import lombok.AllArgsConstructor;

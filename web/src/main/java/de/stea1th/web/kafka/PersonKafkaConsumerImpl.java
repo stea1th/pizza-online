@@ -2,7 +2,7 @@ package de.stea1th.web.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.web.dto.PersonDto;
+import de.stea1th.commonslibrary.dto.PersonDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.web.dto.PizzaDto;
+import de.stea1th.commonslibrary.dto.PizzaDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;

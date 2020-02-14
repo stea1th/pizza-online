@@ -1,6 +1,6 @@
 package de.stea1th.web.controller;
 
-import de.stea1th.web.dto.OrderProductDto;
+import de.stea1th.commonslibrary.dto.OrderProductDto;
 import de.stea1th.web.service.OrderProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

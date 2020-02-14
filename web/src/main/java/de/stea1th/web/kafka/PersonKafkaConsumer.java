@@ -1,6 +1,6 @@
 package de.stea1th.web.kafka;
 
-import de.stea1th.web.dto.PersonDto;
+import de.stea1th.commonslibrary.dto.PersonDto;
 
 public interface PersonKafkaConsumer {
 
