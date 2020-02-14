@@ -25,13 +25,20 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public OrderProduct save(OrderProductDto orderProductDto) {
-        Order order = orderService.getUncompletedOrderByPersonKeycloak(orderProductDto.getKeycloak());
+        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductDto.getKeycloak() + "\"");
         OrderProductPK orderProductPK = new OrderProductPK();
         orderProductPK.setOrderId(order.getId());
         orderProductPK.setProductId(orderProductDto.getProductId());
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.setId(orderProductPK);
-        orderProduct.setQuantity(orderProductDto.getQuantity());
+        OrderProduct orderProduct = orderProductRepository.findById(orderProductPK).orElse(null);
+        if(orderProduct == null) {
+            log.info("new order-product created");
+            orderProduct = new OrderProduct();
+            orderProduct.setId(orderProductPK);
+            orderProduct.setQuantity(orderProductDto.getQuantity());
+        } else {
+            log.info("existing order-product updated");
+            orderProduct.setQuantity(orderProduct.getQuantity() + orderProductDto.getQuantity());
+        }
         log.info("order-product: {} saved", orderProduct);
         return orderProductRepository.save(orderProduct);
     }
