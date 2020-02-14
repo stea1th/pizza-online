@@ -1,19 +1,39 @@
 package de.stea1th.persist.service;
 
+import de.stea1th.commonslibrary.dto.OrderProductDto;
+import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.entity.OrderProduct;
 import de.stea1th.persist.entity.OrderProductPK;
+import de.stea1th.persist.repository.OrderProductRepository;
+import de.stea1th.persist.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class OrderProductServiceImpl implements OrderProductService {
 
+    private final OrderProductRepository orderProductRepository;
+
+    private final OrderService orderService;
+
+    public OrderProductServiceImpl(OrderProductRepository orderProductRepository, OrderService orderService) {
+        this.orderProductRepository = orderProductRepository;
+        this.orderService = orderService;
+    }
 
     @Override
-    public OrderProduct save(OrderProduct orderProduct) {
-        log.info("THIS IS MOQ: {}", orderProduct);
-        return null;
+    public OrderProduct save(OrderProductDto orderProductDto) {
+        Order order = orderService.getUncompletedOrderByPersonKeycloak(orderProductDto.getKeycloak());
+        OrderProductPK orderProductPK = new OrderProductPK();
+        orderProductPK.setOrderId(order.getId());
+        orderProductPK.setProductId(orderProductDto.getProductId());
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setId(orderProductPK);
+        orderProduct.setQuantity(orderProductDto.getQuantity());
+        log.info("order-product: {} saved", orderProduct);
+        return orderProductRepository.save(orderProduct);
     }
 
     @Override

@@ -23,10 +23,11 @@ public class OrderProductController {
         this.orderProductService = orderProductService;
     }
 
-    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity save(@RequestBody OrderProductDto orderProductDto, Principal principal) {
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addToCart(@RequestBody OrderProductDto orderProductDto, Principal principal) {
         orderProductDto.setKeycloak(principal.getName());
-        log.info("!!!!!! {}", orderProductDto);
+        log.info("added to cart: {}", orderProductDto);
+        orderProductService.addToCart(orderProductDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

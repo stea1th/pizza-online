@@ -1,7 +1,9 @@
 package de.stea1th.web.service;
 
+import de.stea1th.commonslibrary.dto.OrderProductDto;
+
 public interface OrderProductService {
 
-    void save(int productId, int quantity);
+    void addToCart(OrderProductDto orderProductDto);
 
 }

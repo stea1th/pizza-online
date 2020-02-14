@@ -27,10 +27,10 @@ export class DataService {
   }
 
   public postOrderProduct(productId: number) {
-    const url = this.baseUrl + "/order_product/save";
+    const url = this.baseUrl + "/order_product/add";
     const body = {productId: productId, quantity: 2};
     console.log(body);
-    return this.http.post(url, body).subscribe(d=> console.log(d));
+    return this.http.post(url, body).subscribe(d=> {console.log(d)});
   }
 }
 
