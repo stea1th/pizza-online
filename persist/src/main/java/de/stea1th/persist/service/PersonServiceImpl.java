@@ -1,6 +1,6 @@
 package de.stea1th.persist.service;
 
-import de.stea1th.commonlibrary.exception.MyEntityNotFoundException;
+import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;

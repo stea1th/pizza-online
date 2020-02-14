@@ -1,4 +1,4 @@
-package de.stea1th.commonlibrary.component;
+package de.stea1th.commonslibrary.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

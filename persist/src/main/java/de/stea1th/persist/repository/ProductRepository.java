@@ -1,6 +1,6 @@
 package de.stea1th.persist.repository;
 
-import de.stea1th.commonlibrary.exception.MyEntityNotFoundException;
+import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
