@@ -28,7 +28,7 @@ export class DataService {
 
   public postOrderProduct(productId: number) {
     const url = this.baseUrl + "/order_product/save";
-    const body = {orderId: 1111, productId: productId, quantity: 2};
+    const body = {productId: productId, quantity: 2};
     console.log(body);
     return this.http.post(url, body).subscribe(d=> console.log(d));
   }

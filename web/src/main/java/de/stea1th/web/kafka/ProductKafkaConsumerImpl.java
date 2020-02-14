@@ -1,10 +1,10 @@
 package de.stea1th.web.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.commonlibrary.dto.ProductDto;
+import de.stea1th.web.dto.ProductDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -15,23 +15,43 @@ import java.util.List;
 @Slf4j
 public class ProductKafkaConsumerImpl implements ProductKafkaConsumer {
 
-    private List<ProductDto> productDtoList;
+    private List<ProductDto> allProducts;
 
-    private ProductDto productDto;
+    private List<ProductDto> productsInCart;
 
-    public List<ProductDto> getProductDtoList() {
-        List<ProductDto> tempProducts = productDtoList;
-        productDtoList = null;
+//    private ProductDto productDto;
+
+    public List<ProductDto> getAllProducts() {
+        List<ProductDto> tempProducts = allProducts;
+        allProducts = null;
+        return tempProducts;
+    }
+
+    public List<ProductDto> getProductsInCart() {
+        List<ProductDto> tempProducts = productsInCart;
+        productsInCart = null;
         return tempProducts;
     }
 
     @KafkaListener(topics = "${product.receive.product.all}", groupId = "pizza-online")
-
     public void processGetAllProducts(String products) {
-        log.info("received products = {}", products);
+        log.info("received all products = {}", products);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            productDtoList = objectMapper.readValue(products, new TypeReference<List<ProductDto>>(){});
+            allProducts = objectMapper.readValue(products, new TypeReference<List<ProductDto>>() {
+            });
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    @KafkaListener(topics = "${product.receive.product.cart}", groupId = "pizza-online")
+    public void processGetCartProducts(String products) {
+        log.info("received products in cart = {}", products);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            productsInCart = objectMapper.readValue(products, new TypeReference<List<ProductDto>>() {
+            });
         } catch (IOException e) {
             log.error(e.getMessage());
         }

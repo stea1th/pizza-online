@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
 
-import de.stea1th.commonlibrary.dto.ProductDto;
+import de.stea1th.web.dto.ProductDto;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ public interface ProductService {
 
     ProductDto get(int productId);
 
-    List<ProductDto> getAllProductsForKeycloak(String keycloak);
+    List<ProductDto> getProductsInCart(String keycloak);
 
 }

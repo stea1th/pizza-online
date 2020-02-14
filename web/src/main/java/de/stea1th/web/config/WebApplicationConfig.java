@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:app-common.properties")
-@ComponentScan({"de.stea1th.commonlibrary.component"})
+@ComponentScan({"de.stea1th.commonslibrary.component"})
 public class WebApplicationConfig {
 
 }

@@ -1,4 +1,4 @@
-package de.stea1th.commonlibrary.exception;
+package de.stea1th.commonslibrary.exception;
 
 public class MyEntityNotFoundException extends Exception {
 

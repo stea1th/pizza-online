@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {KeycloakService} from "./service/keycloak.service";
 import {DataService} from "./service/data.service";
 
@@ -7,9 +7,10 @@ import {DataService} from "./service/data.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-app';
-  email: string;
+  cart: any;
+
 
 
   constructor(private auth: KeycloakService, private data: DataService) {
@@ -22,13 +23,19 @@ export class AppComponent {
   getDetails() {
     this.data.getAuth('/details').subscribe(d => {
       return console.log("Admin: " + JSON.stringify(d));
-    })
+    });
   }
 
   getProductsInCart() {
-    this.data.getProduct('/cart').subscribe(d=> {
-      return console.log("Cart: " + JSON.stringify(d));
+    this.data.getProduct('/cart').subscribe(d => {
+       // console.log("Cart: " + JSON.stringify(d));
+       console.log("Cart: " + d);
+      return this.cart = d;
     });
 
+  }
+
+  ngOnInit(): void {
+    this.getProductsInCart();
   }
 }

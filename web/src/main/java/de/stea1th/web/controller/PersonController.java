@@ -1,6 +1,6 @@
 package de.stea1th.web.controller;
 
-import de.stea1th.commonlibrary.dto.PersonDto;
+import de.stea1th.web.dto.PersonDto;
 import de.stea1th.web.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

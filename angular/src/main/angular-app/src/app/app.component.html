@@ -6,7 +6,7 @@
   <button mat-button routerLink="/">Home</button>
   <button mat-button routerLink="/about">About</button>
   <button mat-button (click)="getDetails()">User Details</button>
-  <button mat-button (click)="getProductsInCart()">Shopping Cart</button>
+  <button mat-button (click)="getProductsInCart()">Shopping Cart {{cart?.length}}</button>
   <button mat-raised-button (click)="logout()">Logout</button>
 </mat-toolbar>
 <router-outlet></router-outlet>
