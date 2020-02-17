@@ -23,6 +23,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatBadgeModule} from "@angular/material/badge";
+import {ReactiveFormsModule} from "@angular/forms";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -53,6 +54,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatListModule,
     FlexLayoutModule,
     MatBadgeModule,
+    ReactiveFormsModule,
   ],
   providers: [
     KeycloakService,
