@@ -16,9 +16,10 @@
             {{testData}}
           </div>
           <div fxFlex="25%">
-            <button mat-raised-button color="primary"  (click)="test(element.id)">
-              <i class="material-icons">add_shopping_cart</i>
-            </button>
+            <app-add-to-cart-form [product-id]="element.id"></app-add-to-cart-form>
+<!--            <button mat-raised-button color="primary"  (click)="test(element.id)">-->
+<!--              <i class="material-icons">add_shopping_cart</i>-->
+<!--            </button>-->
           </div>
         </div>
 

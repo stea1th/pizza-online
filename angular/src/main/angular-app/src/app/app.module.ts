@@ -24,6 +24,11 @@ import {MatListModule} from "@angular/material/list";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatBadgeModule} from "@angular/material/badge";
 import {ReactiveFormsModule} from "@angular/forms";
+import { AddToCartFormComponent } from './home/menu-table/add-to-cart-form/add-to-cart-form.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -35,7 +40,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     HomeComponent,
     AboutComponent,
     MenuTableComponent,
-    SidenavResponsiveComponent
+    SidenavResponsiveComponent,
+    AddToCartFormComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,10 @@ export function kcFactory(keycloakService: KeycloakService) {
     FlexLayoutModule,
     MatBadgeModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatInputModule,
   ],
   providers: [
     KeycloakService,

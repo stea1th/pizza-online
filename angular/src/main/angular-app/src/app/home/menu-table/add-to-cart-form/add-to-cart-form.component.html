@@ -1,0 +1,14 @@
+<div fxLayout="row" fxLayoutGap="0.5%">
+  <form [formGroup]="addToCartForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Quantity</mat-label>
+      <mat-select formControlName="quantity">
+        <mat-option *ngFor="let item of createRange(10); let i = index"
+                    [value]="i + 1">{{i + 1}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">
+      <i class="material-icons">add_shopping_cart</i>
+    </button>
+  </form>
+</div>
