@@ -1,10 +1,28 @@
-<div class="main-container" [class.is-mobile]="mobileQuery.matches">
+<div class="main-container" [class.is-mobile]="mobileQuery.matches" >
   <mat-toolbar color="primary" class="toolbar">
-    <div fxLayout="row" fxLayoutAlign="center end">
-      <button mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
+
+
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="app-name">Pizza-Online</h1>
+
+    <!--      <button mat-button (click)="getDetails()">User Details</button>-->
+    <!--      <button mat-button (click)="getProductsInCart()">Shopping Cart {{cart?.length}}</button>-->
+    <!--      <button mat-button (click)="deleteProductsFromCart()">Delete From Cart</button>-->
+    <!--        <button mat-button >Buy</button>-->
+
+    <div fxLayout="row" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="0.5%" fxLayout.lt-sm="column">
+      <button mat-button>
+        <i class="material-icons">search</i>
       </button>
-      <h1 class="app-name">Pizza-Online</h1>
+      <button mat-button>
+        <i class="material-icons">perm_identity</i>
+      </button>
+      <button mat-button matBadge="3" matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn">
+        <i class="material-icons">shopping_cart</i>
+      </button>
+      <button mat-raised-button>Logout</button>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container"
@@ -13,8 +31,8 @@
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
 
       <mat-nav-list>
-        <a mat-list-item routerLink="/" (click) = "snav.close()" >Home</a>
-        <a mat-list-item routerLink="/about" (click) = "snav.close()" >About</a>
+        <a mat-list-item routerLink="/" (click)="snav.close()">Home</a>
+        <a mat-list-item routerLink="/about" (click)="snav.close()">About</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

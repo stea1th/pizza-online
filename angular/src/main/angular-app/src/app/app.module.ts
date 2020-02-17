@@ -22,6 +22,7 @@ import { SidenavResponsiveComponent } from './sidenav-responsive/sidenav-respons
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatBadgeModule} from "@angular/material/badge";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -50,7 +51,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     NgKeycloakModule,
     MatSidenavModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatBadgeModule,
   ],
   providers: [
     KeycloakService,

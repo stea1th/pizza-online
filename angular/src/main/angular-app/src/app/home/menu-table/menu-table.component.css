@@ -30,7 +30,7 @@ tr.element-row:not(.expanded-row):active {
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
-  height: 104px;
+  height: 204px;
 }
 
 .element-picture {
@@ -47,10 +47,7 @@ tr.element-row:not(.expanded-row):active {
   opacity: 0.5;
 }
 
-.element-add-to-cart-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-
+.menu-layout-row {
+  width: 100%;
 }
+
