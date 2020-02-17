@@ -18,6 +18,9 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NgKeycloakModule} from "ng-keycloak";
 import {KeycloakService} from "./service/keycloak.service";
 import {TokenInterceptor} from "./service/token-interceptor";
+import { SidenavResponsiveComponent } from './sidenav-responsive/sidenav-responsive.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -28,7 +31,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     AppComponent,
     HomeComponent,
     AboutComponent,
-    MenuTableComponent
+    MenuTableComponent,
+    SidenavResponsiveComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatProgressBarModule,
     MatTableModule,
     FontAwesomeModule,
-    NgKeycloakModule
+    NgKeycloakModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     KeycloakService,
