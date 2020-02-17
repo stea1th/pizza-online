@@ -21,6 +21,7 @@ import {TokenInterceptor} from "./service/token-interceptor";
 import { SidenavResponsiveComponent } from './sidenav-responsive/sidenav-responsive.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -48,7 +49,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     FontAwesomeModule,
     NgKeycloakModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    FlexLayoutModule
   ],
   providers: [
     KeycloakService,
