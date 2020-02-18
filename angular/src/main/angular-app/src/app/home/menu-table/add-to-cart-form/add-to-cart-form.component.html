@@ -1,14 +1,45 @@
-<div fxLayout="row" fxLayoutGap="0.5%">
-  <form [formGroup]="addToCartForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <mat-label>Quantity</mat-label>
-      <mat-select formControlName="quantity">
-        <mat-option *ngFor="let item of createRange(10); let i = index"
-                    [value]="i + 1">{{i + 1}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">
-      <i class="material-icons">add_shopping_cart</i>
-    </button>
-  </form>
-</div>
+<form [formGroup]="addToCartForm" (ngSubmit)="onSubmit()">
+  <div fxLayout="row" fxLayoutGap="10%" class="add-to-cart-form-1" fxLayoutAlign="space-between center">
+    <div fxLayout="column">
+      <mat-form-field>
+        <mat-label>Size</mat-label>
+        <mat-select formControlName="productCost" (ngModelChange)="onChange($event)" required>
+          <mat-option *ngFor="let item of productCostList"
+                      [value]="item">{{item.property}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Quantity</mat-label>
+        <mat-select formControlName="quantity" required>
+          <mat-option *ngFor="let item of createRange(10); let i = index"
+                      [value]="i + 1">{{i + 1}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!--    </div>-->
+      <!--    <div fxLayout="column">-->
+      <button mat-raised-button color="primary" type="submit">
+        <i class="material-icons">add_shopping_cart</i>
+      </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <table class="price-tag">
+        <tbody>
+        <tr>
+          <td>Price:</td>
+          <td class="price-cell">{{formPrice}}</td>
+        </tr>
+        <tr>
+          <td>Old Price:</td>
+          <td class="price-cell"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="price-cell"><p><small>Kostenlose Lieferung</small></p></td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</form>
+

@@ -54,10 +54,10 @@ export class MenuTableComponent implements OnInit {
     return min.toFixed(2) + " - " + max.toFixed(2);
   }
 
-  test(num: number) {
-    console.log(num);
-    this.dataService.postOrderProduct(num);
-  }
+  // test(num: number) {
+  //   console.log(num);
+  //   this.dataService.postOrderProduct(num);
+  // }
 }
 
 export class ProductElement {

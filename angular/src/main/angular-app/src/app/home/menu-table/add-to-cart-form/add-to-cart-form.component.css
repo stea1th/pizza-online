@@ -1,0 +1,17 @@
+.add-to-cart-form-1 {
+  width: 100%;
+}
+
+th {
+  /*font-weight: bold;*/
+  /*font-size: 24px;*/
+  /*color: brown;*/
+
+}
+
+.price-cell {
+  width: 145px;
+  height: 45px;
+  text-align: right;
+}
+
