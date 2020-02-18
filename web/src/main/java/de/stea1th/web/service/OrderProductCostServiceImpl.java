@@ -1,7 +1,7 @@
 package de.stea1th.web.service;
 
 import de.stea1th.commonslibrary.component.KafkaProducer;
-import de.stea1th.commonslibrary.dto.OrderProductDto;
+import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     @Override
-    public void addToCart(OrderProductDto orderProductDto) {
-        log.info("sending with kafka: {}", orderProductDto);
-        kafkaProducer.produce(productOrderAddToCartTopic, "pizza-online", orderProductDto);
+    public void addToCart(OrderProductCostDto orderProductCostDto) {
+        log.info("sending with kafka: {}", orderProductCostDto);
+        kafkaProducer.produce(productOrderAddToCartTopic, "pizza-online", orderProductCostDto);
     }
 }

@@ -1,23 +1,20 @@
 package de.stea1th.commonslibrary.dto;
 
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
-
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class ProductDto extends AbstractBaseDto {
+public class ProductCostDto extends AbstractBaseDto {
 
-    private String name;
+    private String property;
 
-    private String description;
+    private BigDecimal price;
 
-    private String picture;
-
-    private List<ProductCostDto> productCostList;
+    private Integer discount;
 }

@@ -1,6 +1,6 @@
 package de.stea1th.persist.service;
 
-import de.stea1th.commonslibrary.dto.OrderProductDto;
+import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.persist.entity.OrderProductCost;
 import de.stea1th.persist.entity.OrderProductCostPK;
 import de.stea1th.persist.repository.OrderProductCostRepository;
@@ -21,7 +21,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     @Override
-    public OrderProductCost save(OrderProductDto orderProductDto) {
+    public OrderProductCost save(OrderProductCostDto orderProductCostDto) {
 //        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductDto.getKeycloak() + "\"");
 //        OrderProductPK orderProductPK = new OrderProductPK();
 //        orderProductPK.setOrderId(order.getId());

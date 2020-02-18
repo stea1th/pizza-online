@@ -3,7 +3,7 @@ package de.stea1th.persist.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.commonslibrary.dto.OrderProductDto;
+import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.persist.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,9 @@ public class OrderProductCostKafkaConsumer {
     public void processSaveOrderProductCost(String message) {
         log.info("received message = {}", message);
         try {
-            OrderProductDto orderProductDto = objectMapper.readValue(message, OrderProductDto.class);
-            log.info("order-product dto: {} prepared to save", objectMapper.writeValueAsString(orderProductDto));
-            orderProductCostService.save(orderProductDto);
+            OrderProductCostDto orderProductCostDto = objectMapper.readValue(message, OrderProductCostDto.class);
+            log.info("order-product dto: {} prepared to save", objectMapper.writeValueAsString(orderProductCostDto));
+            orderProductCostService.save(orderProductCostDto);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }

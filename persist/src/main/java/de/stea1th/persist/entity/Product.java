@@ -1,8 +1,10 @@
 package de.stea1th.persist.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = "productCostList")
 @Entity
 @Data
 @NoArgsConstructor
@@ -27,6 +30,7 @@ public class Product extends AbstractBaseEntity {
     @NotBlank
     private String picture;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductCost> productCostList;
 }
