@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-to-cart-form',
@@ -8,11 +8,16 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class AddToCartFormComponent implements OnInit {
 
-  @Input('product-id') productId: number;
+  // @Input('product-id') productId: number;
+
+  @Input('product-cost-list') productCostList: any[];
+
+  formPrice = 'Please choose product size';
 
 
   addToCartForm = new FormGroup({
-    quantity: new FormControl(''),
+    productCost: new FormControl('', Validators.required),
+    quantity: new FormControl('', Validators.required),
   });
 
   constructor() {
@@ -27,9 +32,15 @@ export class AddToCartFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const body = {productId: this.productId, quantity: this.addToCartForm.value.quantity};
+    const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
+    this.addToCartForm.reset();
+
     console.log(body);
   }
 
+  onChange(val: any) {
 
+    this.formPrice = val?.price.toFixed(2) + 'Euro';
+    console.log(val);
+  }
 }

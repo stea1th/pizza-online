@@ -8,21 +8,19 @@
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
       <div class="element-detail"
         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div fxLayout="row" fxLayoutAlign="space-around center" class="menu-layout-row" fxLayout.lt-md="column" fxLayoutGap="0.5%" >
-          <div class="element-diagram" fxFlex="25%">
+        <div fxLayout="row" fxLayoutAlign="space-around center" class="menu-layout-row" fxLayout.lt-md="column" fxLayoutGap="1%" >
+          <div class="element-diagram" fxFlex="20%">
             <div class="element-picture"> {{element.picture}}</div>
           </div>
-          <div class="element-description" fxFlex="50%">
+          <div class="element-description" fxFlex="40%" fxLayoutAlign="center center">
             {{testData}}
           </div>
-          <div fxFlex="25%">
-            <app-add-to-cart-form [product-id]="element.id"></app-add-to-cart-form>
-<!--            <button mat-raised-button color="primary"  (click)="test(element.id)">-->
-<!--              <i class="material-icons">add_shopping_cart</i>-->
-<!--            </button>-->
+          <div fxFlex="40%" fxLayoutAlign="space-around center">
+            <app-add-to-cart-form [product-cost-list]="element.productCostList"></app-add-to-cart-form>
           </div>
+<!--          <div fxFlex="15%" >-->
+<!--          </div>-->
         </div>
-
       </div>
     </td>
   </ng-container>

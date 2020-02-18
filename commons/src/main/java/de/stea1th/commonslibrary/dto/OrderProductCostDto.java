@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderProductDto implements Serializable {
+public class OrderProductCostDto implements Serializable {
 
     private String keycloak;
 

@@ -23,31 +23,48 @@ export class MenuTableComponent implements OnInit {
        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
 
-  columnsToDisplay = ['name', 'description', 'price', 'discount'];
+  columnsToDisplay = ['name', 'description', 'price'];
   expandedElement: ProductElement | null;
 
-  constructor(private dataService : DataService) {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
     this.dataService.getAllProducts().subscribe(data => {
-      this.myDataArray = data;
-      this.myDataArray.forEach(i => i.price = i.price.toFixed(2));
+      this.myDataArray = new Array<ProductElement>();
+      for (let i = 0; i < data.length; i++) {
+        let product = new ProductElement();
+        product.id = data[i].id;
+        product.name = data[i].name;
+        product.price = this.createPrice(data[i].productCostList);
+        product.productCostList = data[i].productCostList;
+        product.description=data[i].description;
+        product.picture = data[i].picture;
+        this.myDataArray.push(product);
+      }
     });
-
   }
 
-  test(num: number) {
-    console.log(num);
-    this.dataService.postOrderProduct(num);
+  createPrice(arr: any[]): string {
+    let resultArr = arr.map(function(x) {
+      return x.price;
+    });
+    let min = Math.min(...resultArr);
+    let max = Math.max(...resultArr);
+    return min.toFixed(2) + " - " + max.toFixed(2);
   }
+
+  // test(num: number) {
+  //   console.log(num);
+  //   this.dataService.postOrderProduct(num);
+  // }
 }
 
-export interface ProductElement {
+export class ProductElement {
   id: number;
   name: string;
+  productCostList: [];
   price: any;
-  discount: number;
   description: string;
   picture: string;
 }

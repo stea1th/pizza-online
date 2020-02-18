@@ -41,7 +41,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     AboutComponent,
     MenuTableComponent,
     SidenavResponsiveComponent,
-    AddToCartFormComponent
+    AddToCartFormComponent,
   ],
   imports: [
     BrowserModule,

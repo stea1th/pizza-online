@@ -5,16 +5,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "order_product", schema = "public", catalog = "pizza_online")
-public class OrderProduct {
+@Table(name = "order_product_cost", schema = "public", catalog = "pizza_online")
+public class OrderProductCost {
 
     @EmbeddedId
-    protected OrderProductPK id;
+    protected OrderProductCostPK id;
 
     @NotNull
     private Integer quantity;
@@ -24,6 +23,6 @@ public class OrderProduct {
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, updatable = false, insertable = false)
-    private Product product;
+    @JoinColumn(name = "product_cost_id", referencedColumnName = "id", nullable = false, updatable = false, insertable = false)
+    private ProductCost productCost;
 }

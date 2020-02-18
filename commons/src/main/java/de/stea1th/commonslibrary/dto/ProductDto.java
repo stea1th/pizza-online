@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -16,9 +17,9 @@ public class ProductDto extends AbstractBaseDto {
 
     private String description;
 
-    private BigDecimal price;
-
-    private Integer discount;
-
     private String picture;
+
+    private String price;
+
+    private List<ProductCostDto> productCostList;
 }
