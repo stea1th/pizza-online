@@ -17,7 +17,7 @@
       </mat-form-field>
       <!--    </div>-->
       <!--    <div fxLayout="column">-->
-      <button mat-raised-button color="primary" type="submit">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addToCartForm.valid">
         <i class="material-icons">add_shopping_cart</i>
       </button>
     </div>

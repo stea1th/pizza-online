@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-to-cart-form',
@@ -16,8 +16,8 @@ export class AddToCartFormComponent implements OnInit {
 
 
   addToCartForm = new FormGroup({
-    productCost: new FormControl(''),
-    quantity: new FormControl(''),
+    productCost: new FormControl('', Validators.required),
+    quantity: new FormControl('', Validators.required),
   });
 
   constructor() {
