@@ -12,7 +12,7 @@ export class AddToCartFormComponent implements OnInit {
 
   @Input('product-cost-list') productCostList: any[];
 
-  formPrice= 'Please choose product size';
+  formPrice = 'Please choose product size';
 
 
   addToCartForm = new FormGroup({
@@ -33,12 +33,14 @@ export class AddToCartFormComponent implements OnInit {
 
   onSubmit() {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
+    this.addToCartForm.reset();
+
     console.log(body);
   }
 
   onChange(val: any) {
 
-    this.formPrice = '' + val.price.toFixed(2) + 'Euro';
+    this.formPrice = val?.price.toFixed(2) + 'Euro';
     console.log(val);
   }
 }
