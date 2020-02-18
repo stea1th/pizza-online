@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
@@ -24,12 +25,8 @@ public class Product extends AbstractBaseEntity {
     private String description;
 
     @NotBlank
-    private BigDecimal price;
-
-    @NotNull
-    private Integer discount;
-
-    @NotBlank
     private String picture;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<ProductCost> productCostList;
 }

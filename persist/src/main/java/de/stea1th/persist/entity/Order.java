@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,7 +20,7 @@ public class Order extends AbstractBaseEntity{
     private Boolean completed = false;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderProduct> orderProducts;
+    private List<OrderProductCost> orderProductCosts;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)

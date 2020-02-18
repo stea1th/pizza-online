@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 //@AllArgsConstructor
 @Embeddable
-public class OrderProductPK implements Serializable {
+public class OrderProductCostPK implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class OrderProductPK implements Serializable {
     private Integer orderId;
 
     @NotNull
-    @Column(name = "product_id")
-    private Integer productId;
+    @Column(name = "product_cost_id")
+    private Integer productCostId;
 
 }

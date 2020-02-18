@@ -16,10 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         return this.findById(id).orElseThrow(() -> new MyEntityNotFoundException("no such product with id: + " + id + " exists"));
     }
 
-    @Query("SELECT p " +
-            "FROM Product p " +
-            "LEFT JOIN OrderProduct op ON p = op.product " +
-            "LEFT JOIN Order o ON o = op.order " +
-            "WHERE o.id = :orderId ")
+    @Query("SELECT p FROM Product p " +
+            "LEFT JOIN ProductCost pc ON p = pc.product " +
+            "LEFT JOIN OrderProductCost opc ON pc = opc.productCost " +
+            "LEFT JOIN Order o ON o = opc.order WHERE o.id = :orderId ")
     List<Product> getAllByOrderId(@Param("orderId") int orderId);
 }
