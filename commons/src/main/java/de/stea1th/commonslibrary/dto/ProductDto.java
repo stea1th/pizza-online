@@ -19,5 +19,7 @@ public class ProductDto extends AbstractBaseDto {
 
     private String picture;
 
+    private String price;
+
     private List<ProductCostDto> productCostList;
 }
