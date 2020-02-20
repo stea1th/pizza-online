@@ -6,23 +6,17 @@
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="app-name">Pizza-Online</h1>
-
-    <!--      <button mat-button (click)="getDetails()">User Details</button>-->
-    <!--      <button mat-button (click)="getProductsInCart()">Shopping Cart {{cart?.length}}</button>-->
-    <!--      <button mat-button (click)="deleteProductsFromCart()">Delete From Cart</button>-->
-    <!--        <button mat-button >Buy</button>-->
-
     <div fxLayout="row" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="3%" fxLayout.lt-sm="column">
       <button mat-button>
         <i class="material-icons">search</i>
       </button>
-      <button mat-button>
+      <button mat-button (click) = getDetails()>
         <i class="material-icons">perm_identity</i>
       </button>
-      <button mat-button matBadge="3" matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn">
+      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn" (click)="countProductsInCart()">
         <i class="material-icons">shopping_cart</i>
       </button>
-      <button mat-raised-button>Logout</button>
+      <button mat-raised-button (click)="logout()">Logout</button>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container"

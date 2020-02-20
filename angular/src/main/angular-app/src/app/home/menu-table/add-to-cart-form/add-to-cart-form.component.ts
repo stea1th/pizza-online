@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../../service/data.service";
+import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 
 @Component({
   selector: 'app-add-to-cart-form',
@@ -9,11 +10,9 @@ import {DataService} from "../../../service/data.service";
 })
 export class AddToCartFormComponent implements OnInit {
 
-  // @Input('product-id') productId: number;
-
   @Input('product-cost-list') productCostList: any[];
 
-  formPrice = 'Please choose product size';
+  formPrice: string;
 
 
   addToCartForm = new FormGroup({
@@ -21,7 +20,7 @@ export class AddToCartFormComponent implements OnInit {
     quantity: new FormControl('', Validators.required),
   });
 
-  constructor(private dataService: DataService ) {
+  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent) {
   }
 
 
@@ -34,15 +33,15 @@ export class AddToCartFormComponent implements OnInit {
 
   onSubmit() {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
-    this.addToCartForm.reset();
-    this.dataService.postOrderProduct(body);
-
-    // console.log(body);
+    this.data.addProductToCart(body).subscribe((d) => {
+      console.log(d);
+      this.addToCartForm.reset();
+      this.sideNav.countProductsInCart();
+    });
   }
 
   onChange(val: any) {
-
-    this.formPrice = val?.price.toFixed(2) + 'Euro';
+    this.formPrice = val?.price.toFixed(2);
     console.log(val);
   }
 }

@@ -11,12 +11,10 @@
       <mat-form-field>
         <mat-label>Quantity</mat-label>
         <mat-select formControlName="quantity" required>
-          <mat-option *ngFor="let item of createRange(10); let i = index"
+          <mat-option *ngFor="let item of createRange(4); let i = index"
                       [value]="i + 1">{{i + 1}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <!--    </div>-->
-      <!--    <div fxLayout="column">-->
       <button mat-raised-button color="primary" type="submit" [disabled]="!addToCartForm.valid">
         <i class="material-icons">add_shopping_cart</i>
       </button>
@@ -26,7 +24,7 @@
         <tbody>
         <tr>
           <td>Price:</td>
-          <td class="price-cell">{{formPrice}}</td>
+          <td class="price-cell">{{formPrice == undefined ? 'Please choose product size' : formPrice + ' Euro'}}</td>
         </tr>
         <tr>
           <td>Old Price:</td>
