@@ -23,7 +23,7 @@ export class MenuTableComponent implements OnInit {
        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
 
-  columnsToDisplay = ['name', 'description', 'price'];
+  columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
   constructor(private dataService: DataService) {
@@ -40,6 +40,7 @@ export class MenuTableComponent implements OnInit {
         product.productCostList = data[i].productCostList;
         product.description=data[i].description;
         product.picture = data[i].picture;
+        product.discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
         this.myDataArray.push(product);
       }
     });
@@ -66,4 +67,5 @@ export class ProductElement {
   price: any;
   description: string;
   picture: string;
+  discount: string;
 }

@@ -18,6 +18,10 @@ tr.element-row:not(.expanded-row):active {
   border-bottom-width: 0;
 }
 
+th, td {
+  cursor: context-menu;
+}
+
 .element-detail {
   overflow: hidden;
   display: flex;
@@ -49,5 +53,12 @@ tr.element-row:not(.expanded-row):active {
 
 .menu-layout-row {
   width: 100%;
+}
+
+.discount {
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: normal;
 }
 

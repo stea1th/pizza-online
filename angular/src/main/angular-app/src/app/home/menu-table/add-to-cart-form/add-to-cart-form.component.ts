@@ -15,9 +15,12 @@ export class AddToCartFormComponent implements OnInit {
 
   @Output() closeRow = new EventEmitter();
 
-  isHidden = true;
+  isSubmitButtonHidden = true;
+  isNormalPriceHidden = true;
 
-  formPrice: string;
+  formDiscountPrice: string;
+  formNormalPrice: string;
+  discount: number;
 
 
   addToCartForm = new FormGroup({
@@ -40,15 +43,30 @@ export class AddToCartFormComponent implements OnInit {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
     this.data.addProductToCart(body).subscribe((d) => {
       console.log(d);
-      this.closeRow.emit();
+      // this.closeRow.emit();
       this.resetForm();
       this.sideNav.countProductsInCart();
     });
   }
 
   onChange(val: any) {
-    this.formPrice = val?.price.toFixed(2);
-    this.isHidden = false;
+    this.discount = val?.discount;
+    console.log(this.discount);
+    if(this.discount != undefined) {
+      if(this.discount == 0) {
+        this.formDiscountPrice = val?.price.toFixed(2);
+        this.isNormalPriceHidden = true;
+      } else {
+        let price = val?.price;
+        this.formNormalPrice = price.toFixed(2);
+        this.formDiscountPrice = (price - price * this.discount / 100).toFixed(2);
+        this.isNormalPriceHidden = false;
+      }
+    } else {
+      this.formDiscountPrice = undefined;
+      this.isNormalPriceHidden = true;
+    }
+    this.isSubmitButtonHidden = false;
   }
 
   private resetForm() {
@@ -56,6 +74,6 @@ export class AddToCartFormComponent implements OnInit {
     Object.keys(this.addToCartForm.controls).forEach(key => {
       this.addToCartForm.get(key).setErrors(null);
     });
-    this.isHidden = true;
+    this.isSubmitButtonHidden = true;
   }
 }

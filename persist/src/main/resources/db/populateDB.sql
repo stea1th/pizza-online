@@ -38,4 +38,7 @@ VALUES (1016, 1006, 1),
        (1018, 1013, 2),
        (1015, 1006, 7);
 
+INSERT INTO product_cost(product_id, property, price, discount)
+VALUES (1005, 'family size', 20.59, 12);
+
 
