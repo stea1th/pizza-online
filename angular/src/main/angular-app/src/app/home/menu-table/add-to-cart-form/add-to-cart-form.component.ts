@@ -51,7 +51,6 @@ export class AddToCartFormComponent implements OnInit {
 
   onChange(val: any) {
     this.discount = val?.discount;
-    console.log(this.discount);
     if(this.discount != undefined) {
       if(this.discount == 0) {
         this.formDiscountPrice = val?.price.toFixed(2);

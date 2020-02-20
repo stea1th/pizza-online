@@ -26,7 +26,7 @@
           <td>Price:</td>
           <td
             class="price-cell"
-            [ngClass]="isNormalPriceHidden? 'null' : 'discount'">{{formDiscountPrice == undefined ? 'Please choose product size' : formDiscountPrice + ' Euro'}}</td>
+            [ngClass]="formDiscountPrice == undefined ? 'null' : 'discount'">{{formDiscountPrice == undefined ? 'Please choose product size' : formDiscountPrice + ' Euro'}}</td>
         </tr>
         <tr [hidden]="isNormalPriceHidden">
           <td></td>
