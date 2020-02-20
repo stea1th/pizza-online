@@ -16,7 +16,7 @@
             {{testData}}
           </div>
           <div fxFlex="40%" fxLayoutAlign="space-around center">
-            <app-add-to-cart-form [product-cost-list]="element.productCostList"></app-add-to-cart-form>
+            <app-add-to-cart-form [product-cost-list]="element.productCostList" (closeRow)="closeRow()" ></app-add-to-cart-form>
           </div>
         </div>
       </div>

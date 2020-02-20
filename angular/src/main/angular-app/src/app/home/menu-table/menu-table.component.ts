@@ -45,6 +45,10 @@ export class MenuTableComponent implements OnInit {
     });
   }
 
+  closeRow() {
+    this.expandedElement = null;
+  }
+
   createPrice(arr: any[]): string {
     let resultArr = arr.map(function(x) {
       return x.price;
@@ -53,11 +57,6 @@ export class MenuTableComponent implements OnInit {
     let max = Math.max(...resultArr);
     return min.toFixed(2) + " - " + max.toFixed(2);
   }
-
-  // test(num: number) {
-  //   console.log(num);
-  //   this.dataService.postOrderProduct(num);
-  // }
 }
 
 export class ProductElement {

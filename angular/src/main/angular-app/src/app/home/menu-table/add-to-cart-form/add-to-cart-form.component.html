@@ -15,7 +15,7 @@
                       [value]="i + 1">{{i + 1}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!addToCartForm.valid">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addToCartForm.valid || isHidden">
         <i class="material-icons">add_shopping_cart</i>
       </button>
     </div>

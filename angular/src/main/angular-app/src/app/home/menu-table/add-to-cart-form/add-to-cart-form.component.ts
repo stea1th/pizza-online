@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Host, Inject, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
+
 
 @Component({
   selector: 'app-add-to-cart-form',
@@ -11,6 +12,10 @@ import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-re
 export class AddToCartFormComponent implements OnInit {
 
   @Input('product-cost-list') productCostList: any[];
+
+  @Output() closeRow = new EventEmitter();
+
+  isHidden = true;
 
   formPrice: string;
 
@@ -35,13 +40,22 @@ export class AddToCartFormComponent implements OnInit {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
     this.data.addProductToCart(body).subscribe((d) => {
       console.log(d);
-      this.addToCartForm.reset();
+      this.closeRow.emit();
+      this.resetForm();
       this.sideNav.countProductsInCart();
     });
   }
 
   onChange(val: any) {
     this.formPrice = val?.price.toFixed(2);
-    console.log(val);
+    this.isHidden = false;
+  }
+
+  private resetForm() {
+    this.addToCartForm.reset();
+    Object.keys(this.addToCartForm.controls).forEach(key => {
+      this.addToCartForm.get(key).setErrors(null);
+    });
+    this.isHidden = true;
   }
 }
