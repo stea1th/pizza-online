@@ -14,7 +14,7 @@ public class OrderProductCostDto implements Serializable {
 
     private String keycloak;
 
-    private int productId;
+    private int productCostId;
 
     private int quantity;
 }

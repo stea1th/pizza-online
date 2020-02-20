@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {DataService} from "../../../service/data.service";
 
 @Component({
   selector: 'app-add-to-cart-form',
@@ -20,7 +21,7 @@ export class AddToCartFormComponent implements OnInit {
     quantity: new FormControl('', Validators.required),
   });
 
-  constructor() {
+  constructor(private dataService: DataService ) {
   }
 
 
@@ -34,8 +35,9 @@ export class AddToCartFormComponent implements OnInit {
   onSubmit() {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
     this.addToCartForm.reset();
+    this.dataService.postOrderProduct(body);
 
-    console.log(body);
+    // console.log(body);
   }
 
   onChange(val: any) {

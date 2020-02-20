@@ -13,7 +13,7 @@ import java.security.Principal;
 @CrossOrigin
 @RestController
 @Slf4j
-@RequestMapping("/api/order_product")
+@RequestMapping("/api/order_product_cost")
 public class OrderProductCostController {
 
     private final OrderProductCostService orderProductCostService;

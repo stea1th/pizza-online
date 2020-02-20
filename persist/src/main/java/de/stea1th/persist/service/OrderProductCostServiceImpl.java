@@ -1,6 +1,7 @@
 package de.stea1th.persist.service;
 
 import de.stea1th.commonslibrary.dto.OrderProductCostDto;
+import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.entity.OrderProductCost;
 import de.stea1th.persist.entity.OrderProductCostPK;
 import de.stea1th.persist.repository.OrderProductCostRepository;
@@ -22,23 +23,23 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     @Override
     public OrderProductCost save(OrderProductCostDto orderProductCostDto) {
-//        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductDto.getKeycloak() + "\"");
-//        OrderProductPK orderProductPK = new OrderProductPK();
-//        orderProductPK.setOrderId(order.getId());
-//        orderProductPK.setProductId(orderProductDto.getProductId());
-//        OrderProduct orderProduct = orderProductRepository.findById(orderProductPK).orElse(null);
-//        if(orderProduct == null) {
-//            log.info("new order-product created");
-//            orderProduct = new OrderProduct();
-//            orderProduct.setId(orderProductPK);
-//            orderProduct.setQuantity(orderProductDto.getQuantity());
-//        } else {
-//            log.info("existing order-product updated");
-//            orderProduct.setQuantity(orderProduct.getQuantity() + orderProductDto.getQuantity());
-//        }
-//        log.info("order-product: {} saved", orderProduct);
-//        return orderProductRepository.save(orderProduct);
-        return null;
+        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        OrderProductCostPK orderProductCostPK = new OrderProductCostPK();
+        orderProductCostPK.setOrderId(order.getId());
+        orderProductCostPK.setProductCostId(orderProductCostDto.getProductCostId());
+        OrderProductCost orderProductCost = orderProductCostRepository.findById(orderProductCostPK).orElse(null);
+        if(orderProductCost == null) {
+            log.info("new order-product-cost created");
+            orderProductCost = new OrderProductCost();
+            orderProductCost.setId(orderProductCostPK);
+            orderProductCost.setQuantity(orderProductCostDto.getQuantity());
+        } else {
+            log.info("existing order-product-cost updated");
+            orderProductCost.setQuantity(orderProductCost.getQuantity() + orderProductCostDto.getQuantity());
+        }
+        log.info("order-product-cost: {} saved", orderProductCost);
+        return orderProductCostRepository.save(orderProductCost);
+//        return null;
     }
 
     @Override
