@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
+import {ProductElement} from "../../dto/product-element";
 
 @Component({
   selector: 'app-menu-table',
@@ -58,14 +59,4 @@ export class MenuTableComponent implements OnInit {
     let max = Math.max(...resultArr);
     return min.toFixed(2) + " - " + max.toFixed(2);
   }
-}
-
-export class ProductElement {
-  id: number;
-  name: string;
-  productCostList: [];
-  price: any;
-  description: string;
-  picture: string;
-  discount: string;
 }

@@ -13,7 +13,7 @@
       <button mat-button (click) = getDetails()>
         <i class="material-icons">perm_identity</i>
       </button>
-      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn" (click)="countProductsInCart()">
+      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn" (click)="countProductsInCart()" routerLink="/shop-cart">
         <i class="material-icons">shopping_cart</i>
       </button>
       <button mat-raised-button (click)="logout()">Logout</button>

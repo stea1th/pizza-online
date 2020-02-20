@@ -29,6 +29,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import { ShopCartComponent } from './shop-cart/shop-cart.component';
+import { ProductCardComponent } from './shop-cart/product-card/product-card.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -42,6 +44,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     MenuTableComponent,
     SidenavResponsiveComponent,
     AddToCartFormComponent,
+    ShopCartComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +69,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatOptionModule,
     MatSelectModule,
     MatInputModule,
+    MatCardModule,
   ],
   providers: [
     KeycloakService,
