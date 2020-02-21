@@ -6,6 +6,7 @@ import de.stea1th.persist.entity.OrderProductCost;
 import de.stea1th.persist.entity.OrderProductCostPK;
 import de.stea1th.persist.repository.OrderProductCostRepository;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,7 +40,14 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         }
         log.info("order-product-cost: {} saved", orderProductCost);
         return orderProductCostRepository.save(orderProductCost);
-//        return null;
+    }
+
+    @Override
+    public int getQuantityByOrderProductCostId(int orderId, int productCostId) {
+        var orderProductCostId = new OrderProductCostPK();
+        orderProductCostId.setOrderId(orderId);
+        orderProductCostId.setProductCostId(productCostId);
+        return orderProductCostRepository.findQuantityById(orderProductCostId);
     }
 
     @Override

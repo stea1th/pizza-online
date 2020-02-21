@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../service/data.service";
-import {ProductElement} from "../dto/product-element";
 
 @Component({
   selector: 'app-shop-cart',
@@ -9,7 +8,7 @@ import {ProductElement} from "../dto/product-element";
 })
 export class ShopCartComponent implements OnInit {
 
-  productList: ProductElement[];
+  productCostList: ProductCostElement[];
 
   constructor(private data: DataService) { }
 
@@ -19,8 +18,20 @@ export class ShopCartComponent implements OnInit {
 
   getProductsInCart() {
     this.data.getCartProductCosts().subscribe(data => {
-      return this.productList = data;
+      console.log(data);
+      this.productCostList = data;
+      console.log(this.productCostList);
+      return this.productCostList;
     });
   }
 
+}
+
+export class ProductCostElement {
+  id: number;
+  property: string;
+  price: number;
+  discount: number;
+  quantity: number;
+  product: any;
 }

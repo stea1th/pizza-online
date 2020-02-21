@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
-import {ProductElement} from "../../dto/product-element";
 
 @Component({
   selector: 'app-menu-table',
@@ -32,18 +31,23 @@ export class MenuTableComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getAllProducts().subscribe(data => {
-      this.myDataArray = new Array<ProductElement>();
-      for (let i = 0; i < data.length; i++) {
-        let product = new ProductElement();
-        product.id = data[i].id;
-        product.name = data[i].name;
-        product.price = this.createPrice(data[i].productCostList);
-        product.productCostList = data[i].productCostList;
-        product.description=data[i].description;
-        product.picture = data[i].picture;
-        product.discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
-        this.myDataArray.push(product);
+      this.myDataArray = data;
+      for (let i = 0; i < this.myDataArray.length ; i++) {
+        this.myDataArray[i].price = this.createPrice(data[i].productCostList);
+        this.myDataArray[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
       }
+      // this.myDataArray = new Array<ProductElement>();
+      // for (let i = 0; i < data.length; i++) {
+      //   let product = new ProductElement();
+      //   product.id = data[i].id;
+      //   product.name = data[i].name;
+      //   product.price = this.createPrice(data[i].productCostList);
+      //   product.productCostList = data[i].productCostList;
+      //   product.description=data[i].description;
+      //   product.picture = data[i].picture;
+      //   product.discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
+      //   this.myDataArray.push(product);
+      // }
     });
   }
 
@@ -59,4 +63,14 @@ export class MenuTableComponent implements OnInit {
     let max = Math.max(...resultArr);
     return min.toFixed(2) + " - " + max.toFixed(2);
   }
+}
+
+export class ProductElement {
+  id: number;
+  name: string;
+  productCostList: [];
+  price: any;
+  description: string;
+  picture: string;
+  discount: string;
 }

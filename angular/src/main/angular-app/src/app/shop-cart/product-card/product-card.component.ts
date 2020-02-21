@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProductElement} from "../../dto/product-element";
+import {ProductCostElement} from "../shop-cart.component";
+
 
 @Component({
   selector: 'app-product-card',
@@ -8,11 +9,12 @@ import {ProductElement} from "../../dto/product-element";
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input("product-element") productElement: ProductElement;
+  @Input("product-element") productCostElement: ProductCostElement;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.productCostElement);
   }
 
 }

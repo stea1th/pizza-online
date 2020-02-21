@@ -3,11 +3,13 @@ package de.stea1th.web.service;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
 import de.stea1th.web.kafka.ProductCostKafkaConsumer;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -31,8 +33,16 @@ public class ProductCostServiceImpl implements ProductCostService {
         this.productCostKafkaConsumer = productCostKafkaConsumer;
     }
 
+    @SneakyThrows
+    @Override
     public List<ProductCostInCartDto> getProductCostsInCart(String keycloak) {
         kafkaProducer.produce(productCostGetCartTopic, "pizza-online", keycloak);
-        return null;
+        List<ProductCostInCartDto> productCostInCartDtoList = null;
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
+            productCostInCartDtoList = productCostKafkaConsumer.getProductCostInCartDtoList();
+            if (productCostInCartDtoList != null) break;
+        }
+        return productCostInCartDtoList;
     }
 }

@@ -10,4 +10,6 @@ public interface OrderProductCostService {
 
     OrderProductCost delete(OrderProductCostPK orderProductId);
 
+    int getQuantityByOrderProductCostId(int orderId, int productCostId);
+
 }

@@ -30,6 +30,7 @@ public class ProductCostController {
     public ResponseEntity<List<ProductCostInCartDto>> getAllProductCostsInCart(Principal principal) {
         log.info("get all products in cart");
         List<ProductCostInCartDto> productDtoList = productCostService.getProductCostsInCart(principal.getName());
-        return new ResponseEntity(HttpStatus.OK);
+        log.info("received list of product-costs in cart: {}", productDtoList);
+        return new ResponseEntity<>(productDtoList, HttpStatus.OK);
     }
 }

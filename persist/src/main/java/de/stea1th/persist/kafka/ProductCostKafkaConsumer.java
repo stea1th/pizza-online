@@ -3,6 +3,7 @@ package de.stea1th.persist.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
 import de.stea1th.persist.entity.ProductCost;
 import de.stea1th.persist.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +33,10 @@ public class ProductCostKafkaConsumer {
     @KafkaListener(topics="${product-cost.get.cart}", groupId = "pizza-online")
     public void processGetAllProductCosts(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<ProductCost> productCostList = productCostService.getAllProductCostsByKeycloak(message);
-        kafkaProducer.produce(receiveCartProductCostsTopic, "pizza-online", productCostList);
+        List<ProductCostInCartDto> allProductCostsByKeycloak = productCostService.getAllProductCostsByKeycloak(message);
+        kafkaProducer.produce(receiveCartProductCostsTopic, "pizza-online", allProductCostsByKeycloak);
         try {
-            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(productCostList), receiveCartProductCostsTopic);
+            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(allProductCostsByKeycloak), receiveCartProductCostsTopic);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
