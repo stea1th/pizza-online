@@ -17,6 +17,7 @@ export class AddToCartFormComponent implements OnInit {
 
   isSubmitButtonHidden = true;
   isNormalPriceHidden = true;
+  quantity = 1;
 
   formDiscountPrice: string;
   formNormalPrice: string;

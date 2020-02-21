@@ -36,18 +36,6 @@ export class MenuTableComponent implements OnInit {
         this.myDataArray[i].price = this.createPrice(data[i].productCostList);
         this.myDataArray[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
       }
-      // this.myDataArray = new Array<ProductElement>();
-      // for (let i = 0; i < data.length; i++) {
-      //   let product = new ProductElement();
-      //   product.id = data[i].id;
-      //   product.name = data[i].name;
-      //   product.price = this.createPrice(data[i].productCostList);
-      //   product.productCostList = data[i].productCostList;
-      //   product.description=data[i].description;
-      //   product.picture = data[i].picture;
-      //   product.discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
-      //   this.myDataArray.push(product);
-      // }
     });
   }
 

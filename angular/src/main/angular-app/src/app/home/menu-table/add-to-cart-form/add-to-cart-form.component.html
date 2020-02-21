@@ -10,7 +10,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Quantity</mat-label>
-        <mat-select formControlName="quantity" required>
+        <mat-select formControlName="quantity" required [(ngModel)]="quantity" [placeholder]="quantity">
           <mat-option *ngFor="let item of createRange(4); let i = index"
                       [value]="i + 1">{{i + 1}}</mat-option>
         </mat-select>

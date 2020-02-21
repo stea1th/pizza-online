@@ -7,8 +7,13 @@
       </div>
       <div class="element-description" fxFlex="40%"  fxLayout.lt-md="column">
         <div fxLayout="column" fxLayoutAlign="start start">
-          <mat-card-title>{{productCostElement.product.name}}</mat-card-title>
+          <mat-card-title>{{productCostElement.product.name}}, {{productCostElement.property}}</mat-card-title>
           <mat-card-subtitle>{{productCostElement.product.description}}</mat-card-subtitle>
+          <mat-label>Quantity</mat-label>
+          <mat-select formControlName="quantity" required >
+            <mat-option *ngFor="let item of createRange(4); let i = index"
+                        [value]="i + 1">{{i + 1}}</mat-option>
+          </mat-select>
         </div>
 
       </div>

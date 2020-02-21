@@ -17,4 +17,8 @@ export class ProductCardComponent implements OnInit {
     console.log(this.productCostElement);
   }
 
+  createRange(n: number) {
+    return Array(n);
+  }
+
 }
