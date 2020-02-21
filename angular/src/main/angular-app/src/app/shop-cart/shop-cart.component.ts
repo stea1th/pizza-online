@@ -18,7 +18,7 @@ export class ShopCartComponent implements OnInit {
   }
 
   getProductsInCart() {
-    this.data.getCartProducts().subscribe(data => {
+    this.data.getCartProductCosts().subscribe(data => {
       return this.productList = data;
     });
   }

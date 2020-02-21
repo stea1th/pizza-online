@@ -33,9 +33,9 @@ public class ProductCostKafkaConsumer {
     public void processGetAllProductCosts(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<ProductCost> productCostList = productCostService.getAllProductCostsByKeycloak(message);
-        kafkaProducer.produce("", "pizza-online", productCostList);
+        kafkaProducer.produce(receiveCartProductCostsTopic, "pizza-online", productCostList);
         try {
-            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(productCostList), "");
+            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(productCostList), receiveCartProductCostsTopic);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
