@@ -1,0 +1,22 @@
+.product-card {
+  /*border-top: 2px solid  black;*/
+  height: 210px;
+
+}
+
+.element-diagram {
+  /*min-width: 80px;*/
+  min-width: auto;
+  /*max-width: max-content;*/
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 160px;
+}
+
+.element-picture {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: normal;
+}

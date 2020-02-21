@@ -5,17 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class ProductCostDto extends AbstractBaseDto {
+public class ProductCostInCartDto extends ProductCostDto {
 
-    private String property;
-
-    private BigDecimal price;
-
-    private Integer discount;
+    private ProductDto product;
 
 }

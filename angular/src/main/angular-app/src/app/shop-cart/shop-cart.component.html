@@ -1,4 +1,4 @@
-<p>Shopping Cart</p>
+<p style="padding: 15px;"> Shopping Cart</p>
 <div *ngFor="let element of productList">
-  <app-product-card ></app-product-card>
+  <app-product-card [product-element]="element"></app-product-card>
 </div>

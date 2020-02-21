@@ -1,1 +1,18 @@
-<p>product-card works!</p>
+<!--<hr/>-->
+<mat-card class="product-card">
+  <mat-card-content>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="3%">
+      <div class="element-diagram" fxFlex="10%">
+        <div class="element-picture"> {{productElement.picture}}</div>
+      </div>
+      <div class="element-description" fxFlex="40%"  fxLayout.lt-md="column">
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <mat-card-title>{{productElement.name}}</mat-card-title>
+          <mat-card-subtitle>{{productElement.description}}</mat-card-subtitle>
+        </div>
+
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>

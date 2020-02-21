@@ -21,8 +21,6 @@ public class ProductKafkaConsumer {
 
     private ProductService productService;
 
-    private Product product;
-
     @Value("${product.receive.product.all}")
     private String receiveAllProductsTopic;
 

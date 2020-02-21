@@ -14,6 +14,7 @@ export class ShopCartComponent implements OnInit {
   constructor(private data: DataService) { }
 
   ngOnInit(): void {
+    this.getProductsInCart();
   }
 
   getProductsInCart() {
