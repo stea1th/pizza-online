@@ -43,6 +43,18 @@ services:
     networks:
       - app-tier
 
+#  keycloak-database:
+#    image: postgres:latest
+#    container_name: keycloak-db
+#    environment:
+#      POSTGRES_DB: pizza-online-auth
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#      ports:
+#        - 5417:5433
+#      networks:
+#        - app-tier
+
   authorization:
     image: jboss/keycloak:latest
     container_name: keycloak

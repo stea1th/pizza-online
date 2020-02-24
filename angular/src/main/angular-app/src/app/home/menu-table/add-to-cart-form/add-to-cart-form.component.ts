@@ -70,7 +70,9 @@ export class AddToCartFormComponent implements OnInit {
   }
 
   private resetForm() {
-    this.addToCartForm.reset();
+    this.addToCartForm.reset({
+      quantity: 1
+    });
     Object.keys(this.addToCartForm.controls).forEach(key => {
       this.addToCartForm.get(key).setErrors(null);
     });
