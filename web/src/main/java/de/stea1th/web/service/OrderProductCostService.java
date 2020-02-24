@@ -4,6 +4,8 @@ import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 
 public interface OrderProductCostService {
 
-    void addToCart(OrderProductCostDto orderProductCostDto);
+    int addToCart(OrderProductCostDto orderProductCostDto);
+
+    int getQuantitiesSumInCart(String keycloak);
 
 }

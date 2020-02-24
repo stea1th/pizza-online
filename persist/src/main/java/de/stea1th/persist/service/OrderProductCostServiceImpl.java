@@ -23,8 +23,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     @Override
-    public OrderProductCost save(OrderProductCostDto orderProductCostDto) {
-        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+    public OrderProductCost save(OrderProductCostDto orderProductCostDto, Order order) {
         OrderProductCostPK orderProductCostPK = new OrderProductCostPK();
         orderProductCostPK.setOrderId(order.getId());
         orderProductCostPK.setProductCostId(orderProductCostDto.getProductCostId());
@@ -49,6 +48,22 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         orderProductCostId.setProductCostId(productCostId);
         return orderProductCostRepository.findQuantityById(orderProductCostId);
     }
+
+    public Integer addToCart(OrderProductCostDto orderProductCostDto) {
+        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        save(orderProductCostDto, order);
+        return getSumQuantitiesByOrderId(order.getId());
+    }
+
+    public Integer getQuantitiesSum(String keycloak) {
+        Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);
+        return getSumQuantitiesByOrderId(order.getId());
+    }
+
+    public Integer getSumQuantitiesByOrderId(int orderId) {
+        return orderProductCostRepository.findSumQuantitiesByOrderId(orderId);
+    }
+
 
     @Override
     public OrderProductCost delete(OrderProductCostPK orderProductId) {

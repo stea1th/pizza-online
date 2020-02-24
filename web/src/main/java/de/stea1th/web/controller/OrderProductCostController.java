@@ -24,10 +24,18 @@ public class OrderProductCostController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addToCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
+    public ResponseEntity<Integer> addToCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
         orderProductCostDto.setKeycloak(principal.getName());
         log.info("added to cart: {}", orderProductCostDto);
-        orderProductCostService.addToCart(orderProductCostDto);
-        return ResponseEntity.ok(HttpStatus.OK);
+        Integer sum = orderProductCostService.addToCart(orderProductCostDto);
+        return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/sum")
+    public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
+        String keycloak = principal.getName();
+        log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);
+        Integer sum = orderProductCostService.getQuantitiesSumInCart(keycloak);
+        return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 }

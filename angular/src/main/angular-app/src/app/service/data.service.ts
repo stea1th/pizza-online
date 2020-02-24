@@ -31,6 +31,10 @@ export class DataService {
     return this.get('/product/cart').pipe();
   }
 
+  public getQuantitiesSumInCart() {
+    return this.get('/order_product_cost/sum');
+  }
+
   public addProductToCart(body) {
     return this.post('/order_product_cost/add', body);
   }

@@ -14,4 +14,7 @@ public interface OrderProductCostRepository extends JpaRepository<OrderProductCo
     @Query("SELECT opc.quantity FROM OrderProductCost opc WHERE opc.id = :orderProductCostId ")
     Integer findQuantityById(@Param("orderProductCostId") OrderProductCostPK id);
 
+    @Query("SELECT SUM(opc.quantity) FROM OrderProductCost opc WHERE opc.order.id = :orderId ")
+    Integer findSumQuantitiesByOrderId(@Param("orderId") int orderId);
+
 }

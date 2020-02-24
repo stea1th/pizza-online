@@ -47,10 +47,10 @@ export class AddToCartFormComponent implements OnInit {
   onSubmit() {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
     this.data.addProductToCart(body).subscribe((d) => {
-      console.log(d);
       // this.closeRow.emit();
       this.resetForm();
-      this.sideNav.countProductsInCart();
+      this.sideNav.cart = d;
+      // this.sideNav.countProductsInCart();
     });
   }
 

@@ -1,4 +1,4 @@
-<div class="main-container" [class.is-mobile]="mobileQuery.matches" >
+<div class="main-container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
 
 
@@ -10,10 +10,11 @@
       <button mat-button>
         <i class="material-icons">search</i>
       </button>
-      <button mat-button (click) = getDetails()>
+      <button mat-button (click)=getDetails()>
         <i class="material-icons">perm_identity</i>
       </button>
-      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn" (click)="countProductsInCart()" routerLink="/shop-cart">
+      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"
+              routerLink="/shop-cart">
         <i class="material-icons">shopping_cart</i>
       </button>
       <button mat-raised-button (click)="logout()">Logout</button>

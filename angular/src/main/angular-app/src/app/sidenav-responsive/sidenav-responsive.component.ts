@@ -34,9 +34,12 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   }
 
   countProductsInCart() {
-    this.data.getCartProducts().subscribe(d => {
-      return this.cart = d.length;
-    });
+    // this.data.getCartProducts().subscribe(d => {
+    //   return this.cart = d.length;
+    // });
+    this.data.getQuantitiesSumInCart().subscribe(d => {
+      return this.cart = d;
+    })
 
   }
 

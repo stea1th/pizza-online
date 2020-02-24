@@ -24,10 +24,16 @@ export class ProductCardComponent implements OnInit {
     this.quantity = '' + this.productCostElement.quantity;
     this.formNormalPrice = Creator.createPrice(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
+    this.quantitySelect.markAsPristine();
   }
 
-  createRange(n: number) {
-    return Array(n);
+  createRange() {
+    return Array(this.productCostElement.quantity + 5);
   }
 
+  onChange(val: any) {
+    if(this.quantitySelect.pristine == false) {
+      console.log(this.quantitySelect.value);
+    }
+  }
 }
