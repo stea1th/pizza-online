@@ -38,10 +38,7 @@ public class OrderProductCostKafkaConsumer {
             OrderProductCostDto orderProductCostDto = objectMapper.readValue(message, OrderProductCostDto.class);
             log.info("order-product-cost dto: {} prepared to save", objectMapper.writeValueAsString(orderProductCostDto));
             Integer sum = orderProductCostService.addToCart(orderProductCostDto);
-            if(sum != null) {
-                kafkaProducer.produce(receiveSumTopic, "pizza-online", sum);
-                log.info("sum: {} sent to topic {}", sum, receiveSumTopic);
-            }
+            sendSum(sum);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
@@ -51,6 +48,24 @@ public class OrderProductCostKafkaConsumer {
     public void processGetSum(String message) {
         log.info("received message = {}", message);
         Integer sum = orderProductCostService.getQuantitiesSum(message);
+        sendSum(sum);
+    }
+
+    @KafkaListener(topics = "${order-product-cost.cart.update}", groupId = "pizza-online")
+    public void processUpdateOrderProductCost(String message) {
+        log.info("received message = {}", message);
+        try {
+            OrderProductCostDto orderProductCostDto = objectMapper.readValue(message, OrderProductCostDto.class);
+            log.info("order-product-cost dto: {} prepared to update", objectMapper.writeValueAsString(orderProductCostDto));
+            Integer sum = orderProductCostService.updateQuantity(orderProductCostDto);
+            sendSum(sum);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+
+    }
+
+    private void sendSum(Integer sum) {
         if(sum != null) {
             kafkaProducer.produce(receiveSumTopic, "pizza-online", sum);
             log.info("sum: {} sent to topic {}", sum, receiveSumTopic);

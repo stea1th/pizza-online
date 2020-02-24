@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.security.Principal;
 
 @CrossOrigin
@@ -36,6 +37,14 @@ public class OrderProductCostController {
         String keycloak = principal.getName();
         log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);
         Integer sum = orderProductCostService.getQuantitiesSumInCart(keycloak);
+        return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> updateInCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
+        orderProductCostDto.setKeycloak(principal.getName());
+        log.info("updated in cart: {}", orderProductCostDto);
+        Integer sum = orderProductCostService.updateInCart(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 }

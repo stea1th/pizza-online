@@ -42,6 +42,10 @@ export class DataService {
   public getCartProductCosts(): Observable<any> {
     return  this.get('/product-cost/cart').pipe();
   }
+
+  public updateProductQuantityInCart(body) {
+    return this.post('/order_product_cost/update', body);
+  }
 }
 
 

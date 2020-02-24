@@ -8,4 +8,6 @@ public interface OrderProductCostService {
 
     int getQuantitiesSumInCart(String keycloak);
 
+    int updateInCart(OrderProductCostDto orderProductCostDto);
+
 }

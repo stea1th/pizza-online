@@ -3,10 +3,8 @@ package de.stea1th.web.service;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.web.kafka.OrderProductCostKafkaConsumer;
-import de.stea1th.web.kafka.ProductCostKafkaConsumer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +30,9 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     @Value("${order-product-cost.get.sum}")
     private String productOrderGetSum;
 
+    @Value("${order-product-cost.cart.update}")
+    private String productOrderUpdateInCartTopic;
+
     public OrderProductCostServiceImpl(KafkaProducer kafkaProducer, OrderProductCostKafkaConsumer orderProductCostKafkaConsumer) {
         this.kafkaProducer = kafkaProducer;
         this.orderProductCostKafkaConsumer = orderProductCostKafkaConsumer;
@@ -39,17 +40,22 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     @Override
     public int addToCart(OrderProductCostDto orderProductCostDto) {
-        return getIntFromPersist(orderProductCostDto, productOrderAddToCartTopic);
+        return getSumFromPersist(orderProductCostDto, productOrderAddToCartTopic);
     }
 
 
     @Override
     public int getQuantitiesSumInCart(String keycloak) {
-        return getIntFromPersist(keycloak, productOrderGetSum);
+        return getSumFromPersist(keycloak, productOrderGetSum);
+    }
+
+    @Override
+    public int updateInCart(OrderProductCostDto orderProductCostDto) {
+        return getSumFromPersist(orderProductCostDto, productOrderUpdateInCartTopic);
     }
 
     @SneakyThrows
-    private <T> int getIntFromPersist(T object, String topic) {
+    private <T> int getSumFromPersist(T object, String topic) {
         log.info("sending with kafka: {}", object);
         kafkaProducer.produce(topic, "pizza-online", object);
         Integer sum = null;

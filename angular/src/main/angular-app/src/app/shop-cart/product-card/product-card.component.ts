@@ -3,6 +3,8 @@ import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import {Creator} from "../../helper/creator";
+import {DataService} from "../../service/data.service";
+import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
 
 
 @Component({
@@ -18,7 +20,7 @@ export class ProductCardComponent implements OnInit {
   quantitySelect;
   faEuro = faEuroSign;
 
-  constructor() { }
+  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent) { }
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
@@ -31,9 +33,12 @@ export class ProductCardComponent implements OnInit {
     return Array(this.productCostElement.quantity + 5);
   }
 
-  onChange(val: any) {
+  onChange(id: number) {
     if(this.quantitySelect.pristine == false) {
-      console.log(this.quantitySelect.value);
+      const body = {productCostId: id, quantity: this.quantitySelect.value};
+      this.data.updateProductQuantityInCart(body).subscribe((d) => {
+        this.sideNav.cart = d;
+      });
     }
   }
 }

@@ -24,14 +24,11 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     @Override
     public OrderProductCost save(OrderProductCostDto orderProductCostDto, Order order) {
-        OrderProductCostPK orderProductCostPK = new OrderProductCostPK();
-        orderProductCostPK.setOrderId(order.getId());
-        orderProductCostPK.setProductCostId(orderProductCostDto.getProductCostId());
-        OrderProductCost orderProductCost = orderProductCostRepository.findById(orderProductCostPK).orElse(null);
+        OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
         if(orderProductCost == null) {
             log.info("new order-product-cost created");
             orderProductCost = new OrderProductCost();
-            orderProductCost.setId(orderProductCostPK);
+            orderProductCost.setId(createPK(order.getId(), orderProductCostDto.getProductCostId()));
             orderProductCost.setQuantity(orderProductCostDto.getQuantity());
         } else {
             log.info("existing order-product-cost updated");
@@ -49,19 +46,47 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         return orderProductCostRepository.findQuantityById(orderProductCostId);
     }
 
+    @Override
+    public Integer updateQuantity(OrderProductCostDto orderProductCostDto) {
+        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
+
+        if(orderProductCost != null) {
+            log.info("in order-product-cost product quantity updated");
+            orderProductCost.setQuantity(orderProductCostDto.getQuantity());
+            orderProductCostRepository.save(orderProductCost);
+        }
+        return getSumQuantitiesByOrderId(order.getId());
+    }
+
+    @Override
     public Integer addToCart(OrderProductCostDto orderProductCostDto) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
         save(orderProductCostDto, order);
         return getSumQuantitiesByOrderId(order.getId());
     }
 
+    @Override
     public Integer getQuantitiesSum(String keycloak) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);
         return getSumQuantitiesByOrderId(order.getId());
     }
 
-    public Integer getSumQuantitiesByOrderId(int orderId) {
-        return orderProductCostRepository.findSumQuantitiesByOrderId(orderId);
+    private Integer getSumQuantitiesByOrderId(int orderId) {
+        Integer sum = orderProductCostRepository.findSumQuantitiesByOrderId(orderId);
+        return sum == null? 0 : sum;
+    }
+
+    private OrderProductCost get(int orderId, int productCostId) {
+        OrderProductCostPK orderProductCostPK = createPK(orderId, productCostId);
+        return orderProductCostRepository.findById(orderProductCostPK).orElse(null);
+    }
+
+    private OrderProductCostPK createPK(int orderId, int productCostId) {
+        OrderProductCostPK orderProductCostPK = new OrderProductCostPK();
+        orderProductCostPK.setOrderId(orderId);
+        orderProductCostPK.setProductCostId(productCostId);
+        return orderProductCostPK;
     }
 
 

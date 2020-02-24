@@ -19,4 +19,5 @@ public interface OrderProductCostService {
 
     int getQuantityByOrderProductCostId(int orderId, int productCostId);
 
+    Integer updateQuantity(OrderProductCostDto orderProductCostDto);
 }
