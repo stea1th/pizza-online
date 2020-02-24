@@ -5,7 +5,7 @@
       <div class="element-diagram" fxFlex="10%">
         <div class="element-picture"> {{productCostElement.product.picture}}</div>
       </div>
-      <div class="element-description" fxFlex="40%" fxLayout.lt-md="column">
+      <div class="element-description" fxFlex="60%" fxLayout.lt-md="column">
         <div fxLayout="column" fxLayoutAlign="start start">
           <mat-card-title>{{productCostElement.product.name}}, {{productCostElement.property}}</mat-card-title>
           <mat-card-subtitle>{{productCostElement.product.description}}</mat-card-subtitle>
@@ -17,6 +17,11 @@
             </mat-select>
           </mat-form-field>
         </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end" class="price-form">
+        <div>
+          {{formNormalPrice}}
+        </div>&nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
       </div>
     </div>
   </mat-card-content>

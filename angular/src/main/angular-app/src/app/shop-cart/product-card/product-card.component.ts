@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
+import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
+import {Creator} from "../../helper/creator";
 
 
 @Component({
@@ -11,14 +13,16 @@ import {FormControl, Validators} from "@angular/forms";
 export class ProductCardComponent implements OnInit {
 
   @Input("product-element") productCostElement: ProductCostElement;
+  formNormalPrice: string;
   quantity: string;
   quantitySelect;
+  faEuro = faEuroSign;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.productCostElement);
     this.quantity = '' + this.productCostElement.quantity;
+    this.formNormalPrice = Creator.createPrice(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
   }
 

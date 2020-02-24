@@ -70,6 +70,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatSelectModule,
     MatInputModule,
     MatCardModule,
+    FontAwesomeModule,
+
   ],
   providers: [
     KeycloakService,

@@ -2,6 +2,8 @@ import {Component, EventEmitter, Host, Inject, Input, OnInit, Output} from '@ang
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
+import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
+import {Creator} from "../../../helper/creator";
 
 
 @Component({
@@ -18,6 +20,8 @@ export class AddToCartFormComponent implements OnInit {
   isSubmitButtonHidden = true;
   isNormalPriceHidden = true;
   quantity = 1;
+
+  faEuro = faEuroSign;
 
   formDiscountPrice: string;
   formNormalPrice: string;
@@ -54,12 +58,12 @@ export class AddToCartFormComponent implements OnInit {
     this.discount = val?.discount;
     if(this.discount != undefined) {
       if(this.discount == 0) {
-        this.formDiscountPrice = val?.price.toFixed(2);
+        this.formDiscountPrice = Creator.createPrice(val.price);
         this.isNormalPriceHidden = true;
       } else {
-        let price = val?.price;
-        this.formNormalPrice = price.toFixed(2);
-        this.formDiscountPrice = (price - price * this.discount / 100).toFixed(2);
+        const price = val?.price;
+        this.formNormalPrice = Creator.createPrice(price);
+        this.formDiscountPrice = Creator.createPrice(price - price * this.discount / 100);
         this.isNormalPriceHidden = false;
       }
     } else {
@@ -78,4 +82,6 @@ export class AddToCartFormComponent implements OnInit {
     });
     this.isSubmitButtonHidden = true;
   }
+
+
 }

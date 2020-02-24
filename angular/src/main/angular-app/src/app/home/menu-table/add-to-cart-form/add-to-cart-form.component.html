@@ -26,12 +26,19 @@
           <td>Price:</td>
           <td
             class="price-cell"
-            [ngClass]="formDiscountPrice == undefined ? 'null' : 'discount'">{{formDiscountPrice == undefined ? 'Please choose product size' : formDiscountPrice + ' Euro'}}</td>
+            [ngClass]="formDiscountPrice == undefined ? 'null' : 'discount'" fxLayout="row" fxLayoutAlign="end center">
+            <div>
+              {{formDiscountPrice == undefined ? 'Please choose product size' : formDiscountPrice }}
+            </div>&nbsp;<span [hidden]="formDiscountPrice == undefined"><fa-icon [icon]="faEuro"></fa-icon></span>
+          </td>
         </tr>
         <tr [hidden]="isNormalPriceHidden">
           <td></td>
-          <td class="price-cell">
-            <div [ngClass]="isNormalPriceHidden ?  'null' : 'strikethrough' ">{{formNormalPrice + ' Euro'}}</div>
+          <td class="price-cell" fxLayout="column" fxLayoutAlign="end end">
+            <div [ngClass]="isNormalPriceHidden ?  'null' : 'strikethrough' " fxLayout="row" >
+              <div >{{formNormalPrice}}</div>
+              &nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
+            </div>
             <span class="discount"> {{'-' + discount + '%'}}</span>
           </td>
         </tr>

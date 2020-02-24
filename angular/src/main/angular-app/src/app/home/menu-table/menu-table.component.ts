@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
+import {Creator} from "../../helper/creator";
 
 @Component({
   selector: 'app-menu-table',
@@ -49,7 +50,7 @@ export class MenuTableComponent implements OnInit {
     });
     let min = Math.min(...resultArr);
     let max = Math.max(...resultArr);
-    return min.toFixed(2) + " - " + max.toFixed(2);
+    return Creator.createPrice(min) + " - " + Creator.createPrice(max);
   }
 }
 
