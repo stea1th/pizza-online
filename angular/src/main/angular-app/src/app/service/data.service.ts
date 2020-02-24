@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -9,7 +9,8 @@ export class DataService {
 
   baseUrl = 'http://localhost:8081/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   private get(path) {
     return this.http.get(this.baseUrl + path);
@@ -17,6 +18,11 @@ export class DataService {
 
   private post(path, body) {
     return this.http.post(this.baseUrl + path, body);
+  }
+
+  private delete(path, options) {
+
+    return this.http.delete(this.baseUrl + path, options);
   }
 
   public getDetails() {
@@ -40,11 +46,17 @@ export class DataService {
   }
 
   public getCartProductCosts(): Observable<any> {
-    return  this.get('/product-cost/cart').pipe();
+    return this.get('/product-cost/cart').pipe();
   }
 
   public updateProductQuantityInCart(body) {
     return this.post('/order_product_cost/update', body);
+  }
+
+  public deleteProductFromCart(id) {
+    const params = new HttpParams().set('productCostId', id);
+    let options = {params: params};
+    return this.delete('/order_product_cost/delete', options);
   }
 }
 

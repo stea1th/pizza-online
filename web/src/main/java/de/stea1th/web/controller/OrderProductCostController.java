@@ -3,6 +3,7 @@ package de.stea1th.web.controller;
 import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.web.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +44,18 @@ public class OrderProductCostController {
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateInCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
         orderProductCostDto.setKeycloak(principal.getName());
-        log.info("updated in cart: {}", orderProductCostDto);
+        log.info("update in cart: {}", orderProductCostDto);
         Integer sum = orderProductCostService.updateInCart(orderProductCostDto);
+        return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Integer> deleteFromCart(@RequestParam("productCostId") int productCostId, Principal principal) {
+        log.info("delete from cart {}", productCostId);
+        var orderProductCostDto = new OrderProductCostDto();
+        orderProductCostDto.setKeycloak(principal.getName());
+        orderProductCostDto.setProductCostId(productCostId);
+        Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 }

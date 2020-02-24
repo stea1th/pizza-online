@@ -15,9 +15,9 @@ public interface OrderProductCostService {
 
     Integer addToCart(OrderProductCostDto orderProductCostDto);
 
-    OrderProductCost delete(OrderProductCostPK orderProductId);
-
     int getQuantityByOrderProductCostId(int orderId, int productCostId);
 
     Integer updateQuantity(OrderProductCostDto orderProductCostDto);
+
+    Integer deleteFromCart(OrderProductCostDto orderProductCostDto);
 }

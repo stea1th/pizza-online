@@ -10,4 +10,5 @@ public interface OrderProductCostService {
 
     int updateInCart(OrderProductCostDto orderProductCostDto);
 
+    int deleteFromCart(OrderProductCostDto orderProductCostDto);
 }

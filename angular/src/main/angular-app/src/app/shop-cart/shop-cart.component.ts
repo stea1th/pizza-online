@@ -18,13 +18,10 @@ export class ShopCartComponent implements OnInit {
 
   getProductsInCart() {
     this.data.getCartProductCosts().subscribe(data => {
-      console.log(data);
       this.productCostList = data;
-      console.log(this.productCostList);
       return this.productCostList;
     });
   }
-
 }
 
 export class ProductCostElement {

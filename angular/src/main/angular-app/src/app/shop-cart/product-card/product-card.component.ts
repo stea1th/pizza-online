@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +15,9 @@ import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-respo
 export class ProductCardComponent implements OnInit {
 
   @Input("product-element") productCostElement: ProductCostElement;
+
+  @Output() refreshElements = new EventEmitter();
+
   formNormalPrice: string;
   quantity: string;
   quantitySelect;
@@ -33,12 +36,19 @@ export class ProductCardComponent implements OnInit {
     return Array(this.productCostElement.quantity + 5);
   }
 
-  onChange(id: number) {
+  onChange() {
     if(this.quantitySelect.pristine == false) {
-      const body = {productCostId: id, quantity: this.quantitySelect.value};
+      const body = {productCostId: this.productCostElement.id, quantity: this.quantitySelect.value};
       this.data.updateProductQuantityInCart(body).subscribe((d) => {
         this.sideNav.cart = d;
       });
     }
+  }
+
+  removeFromCart() {
+    this.data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
+      this.sideNav.cart = d;
+      this.refreshElements.emit();
+    });
   }
 }

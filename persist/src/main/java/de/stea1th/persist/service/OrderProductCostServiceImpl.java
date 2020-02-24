@@ -60,6 +60,14 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     @Override
+    public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
+        log.info("delete from order-product-cost product");
+        var order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        orderProductCostRepository.deleteById(createPK(order.getId(), orderProductCostDto.getProductCostId()));
+        return getSumQuantitiesByOrderId(order.getId());
+    }
+
+    @Override
     public Integer addToCart(OrderProductCostDto orderProductCostDto) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
         save(orderProductCostDto, order);
@@ -87,11 +95,5 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         orderProductCostPK.setOrderId(orderId);
         orderProductCostPK.setProductCostId(productCostId);
         return orderProductCostPK;
-    }
-
-
-    @Override
-    public OrderProductCost delete(OrderProductCostPK orderProductId) {
-        return null;
     }
 }

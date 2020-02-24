@@ -33,6 +33,9 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     @Value("${order-product-cost.cart.update}")
     private String productOrderUpdateInCartTopic;
 
+    @Value("${order-product-cost.cart.delete}")
+    private String productOrderDeleteFromCartTopic;
+
     public OrderProductCostServiceImpl(KafkaProducer kafkaProducer, OrderProductCostKafkaConsumer orderProductCostKafkaConsumer) {
         this.kafkaProducer = kafkaProducer;
         this.orderProductCostKafkaConsumer = orderProductCostKafkaConsumer;
@@ -52,6 +55,11 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     @Override
     public int updateInCart(OrderProductCostDto orderProductCostDto) {
         return getSumFromPersist(orderProductCostDto, productOrderUpdateInCartTopic);
+    }
+
+    @Override
+    public int deleteFromCart(OrderProductCostDto orderProductCostDto) {
+        return getSumFromPersist(orderProductCostDto, productOrderDeleteFromCartTopic);
     }
 
     @SneakyThrows

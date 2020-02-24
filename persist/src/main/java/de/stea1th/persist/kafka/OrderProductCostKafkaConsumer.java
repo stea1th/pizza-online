@@ -62,11 +62,23 @@ public class OrderProductCostKafkaConsumer {
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
+    }
 
+    @KafkaListener(topics = "${order-product-cost.cart.delete}", groupId = "pizza-online")
+    public void processDeleteOrderProductCost(String message) {
+        log.info("received message = {}", message);
+        try {
+            OrderProductCostDto orderProductCostDto = objectMapper.readValue(message, OrderProductCostDto.class);
+            log.info("order-product-cost dto: {} prepared to update", objectMapper.writeValueAsString(orderProductCostDto));
+            Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
+            sendSum(sum);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private void sendSum(Integer sum) {
-        if(sum != null) {
+        if (sum != null) {
             kafkaProducer.produce(receiveSumTopic, "pizza-online", sum);
             log.info("sum: {} sent to topic {}", sum, receiveSumTopic);
         }
