@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-horizontal-stepper>
+    <mat-step>
+      <app-shop-cart></app-shop-cart>
+    </mat-step>
+    <mat-step>
+      Second Step!
+      <div>
+        <button [color]="'accent'" mat-button mat-raised-button matStepperPrevious>Back</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      Last Step!
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

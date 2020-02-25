@@ -1,0 +1,15 @@
+<mat-card class="mat-elevation-z8">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="6%">
+    <div fxFlex="10%">
+      <div>
+        <button [color]="'accent'" mat-button mat-raised-button matStepperNext>Proceed to Checkout</button>
+      </div>
+    </div>
+    <div fxFlex="80%" fxLayoutAlign="end center" class="subtotal">Subtotal ({{totalQuantity}} {{totalQuantity==1? 'item' : 'items'}}):</div>
+    <div fxLayout="row" fxLayoutAlign="end" fxFlex="10%" class="price-form">
+      <div>
+        {{totalPay}}
+      </div>&nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
+    </div>
+  </div>
+</mat-card>

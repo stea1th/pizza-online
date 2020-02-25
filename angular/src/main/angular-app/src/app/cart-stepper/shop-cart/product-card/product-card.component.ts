@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
-import {Creator} from "../../helper/creator";
-import {DataService} from "../../service/data.service";
-import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
+import {Creator} from "../../../helper/creator";
+import {DataService} from "../../../service/data.service";
+import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 
 
 @Component({

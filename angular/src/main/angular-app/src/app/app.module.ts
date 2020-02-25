@@ -29,10 +29,12 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
-import { ShopCartComponent } from './shop-cart/shop-cart.component';
-import { ProductCardComponent } from './shop-cart/product-card/product-card.component';
+import { ShopCartComponent } from './cart-stepper/shop-cart/shop-cart.component';
+import { ProductCardComponent } from './cart-stepper/shop-cart/product-card/product-card.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { FooterTotalComponent } from './shop-cart/footer-total/footer-total.component';
+import { FooterTotalComponent } from './cart-stepper/shop-cart/footer-total/footer-total.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import { CartStepperComponent } from './cart-stepper/cart-stepper.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -49,34 +51,36 @@ export function kcFactory(keycloakService: KeycloakService) {
     ShopCartComponent,
     ProductCardComponent,
     FooterTotalComponent,
+    CartStepperComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatCardModule,
-        MatButtonModule,
-        MatProgressBarModule,
-        MatTableModule,
-        FontAwesomeModule,
-        NgKeycloakModule,
-        MatSidenavModule,
-        MatListModule,
-        FlexLayoutModule,
-        MatBadgeModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatOptionModule,
-        MatSelectModule,
-        MatInputModule,
-        MatCardModule,
-        FontAwesomeModule,
-        MatPaginatorModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatTableModule,
+    FontAwesomeModule,
+    NgKeycloakModule,
+    MatSidenavModule,
+    MatListModule,
+    FlexLayoutModule,
+    MatBadgeModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCardModule,
+    FontAwesomeModule,
+    MatPaginatorModule,
+    MatStepperModule,
 
-    ],
+  ],
   providers: [
     KeycloakService,
     {
