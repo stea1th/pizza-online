@@ -35,6 +35,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import { FooterTotalComponent } from './cart-stepper/shop-cart/footer-total/footer-total.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import { CartStepperComponent } from './cart-stepper/cart-stepper.component';
+import { HeaderCardComponent } from './cart-stepper/shop-cart/header-card/header-card.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -52,6 +53,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     ProductCardComponent,
     FooterTotalComponent,
     CartStepperComponent,
+    HeaderCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<p style="padding: 15px;"> Shopping Cart</p>
+<app-header-card></app-header-card>
 <div *ngFor="let element of productCostList">
   <app-product-card [product-element]="element" (refreshElements)="getProductsInCart()"></app-product-card>
 </div>
