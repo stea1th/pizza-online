@@ -1,8 +1,8 @@
 INSERT INTO person(keycloak)
-VALUES ('"8a1e689b-8b18-410a-8d38-11cc7942c230"');
+VALUES ('"8e0b12eb-1063-48b2-aaab-9dc0b8852453"');
 
 INSERT INTO person (first_name, last_name, email, keycloak)
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"3fbdd4e1-3494-4725-812f-a2bd8e91b51e"'),
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"b27c839b-0e47-40c8-8574-1cd45273a8ab"'),
        ('Ivan', 'Ogurcov', 'b@b.de', '"4562d862-1ce1-474d-bbd1-eba52def4b2e"');
 
 INSERT INTO product(name, description, picture)

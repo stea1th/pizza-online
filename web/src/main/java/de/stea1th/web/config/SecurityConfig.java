@@ -56,7 +56,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/**").hasAnyRole("admin", "manager")
+                .antMatchers("/api/**").hasAnyRole("pizza_admin", "pizza_member")
                 .anyRequest().permitAll();
     }
 

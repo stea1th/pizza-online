@@ -38,22 +38,29 @@ services:
       POSTGRES_DB: pizza_online
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    depends_on:
+      - kafka
     ports:
-      - 5416:5432
+      - 5416:5433
+    expose:
+      - 5433
+    command: -p 5433
     networks:
       - app-tier
 
-#  keycloak-database:
-#    image: postgres:latest
-#    container_name: keycloak-db
-#    environment:
-#      POSTGRES_DB: pizza-online-auth
-#      POSTGRES_USER: user
-#      POSTGRES_PASSWORD: password
-#      ports:
-#        - 5417:5433
-#      networks:
-#        - app-tier
+  keycloak-database:
+    image: postgres:latest
+    container_name: keycloak-database
+    environment:
+      POSTGRES_DB: pizza-online-auth
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    depends_on:
+      - kafka
+    ports:
+      - 5417:5432
+    networks:
+      - app-tier
 
   authorization:
     image: jboss/keycloak:latest
@@ -61,11 +68,11 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - database
+      - keycloak-database
     environment:
       DB_VENDOR: "POSTGRES"
-      DB_ADDR: postgres
-      DB_DATABASE: pizza_online
+      DB_ADDR: keycloak-database
+      DB_DATABASE: pizza-online-auth
       DB_PORT: 5432
       DB_USER: user
       DB_PASSWORD: password
@@ -76,9 +83,11 @@ services:
       - app-tier
 
   frontend:
-#    image: stea1th/pizza-ang:latest
+    #    image: stea1th/pizza-ang:latest
     build: ./angular/src/main/angular-app
     container_name: angular
+    depends_on:
+      - authorization
     ports:
       - 90:80
     networks:
