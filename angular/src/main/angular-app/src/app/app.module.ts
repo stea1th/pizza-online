@@ -31,6 +31,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import { ShopCartComponent } from './shop-cart/shop-cart.component';
 import { ProductCardComponent } from './shop-cart/product-card/product-card.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { FooterTotalComponent } from './shop-cart/footer-total/footer-total.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -46,33 +48,35 @@ export function kcFactory(keycloakService: KeycloakService) {
     AddToCartFormComponent,
     ShopCartComponent,
     ProductCardComponent,
+    FooterTotalComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatTableModule,
-    FontAwesomeModule,
-    NgKeycloakModule,
-    MatSidenavModule,
-    MatListModule,
-    FlexLayoutModule,
-    MatBadgeModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCardModule,
-    FontAwesomeModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCardModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatTableModule,
+        FontAwesomeModule,
+        NgKeycloakModule,
+        MatSidenavModule,
+        MatListModule,
+        FlexLayoutModule,
+        MatBadgeModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule,
+        MatCardModule,
+        FontAwesomeModule,
+        MatPaginatorModule,
 
-  ],
+    ],
   providers: [
     KeycloakService,
     {

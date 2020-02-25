@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-menu-table',
@@ -17,7 +19,8 @@ import {Creator} from "../../helper/creator";
 })
 export class MenuTableComponent implements OnInit {
 
-  myDataArray: ProductElement[];
+  // myDataArray: ProductElement[];
+  myDataArray: any;
   testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
@@ -27,15 +30,18 @@ export class MenuTableComponent implements OnInit {
   columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
     this.dataService.getAllProducts().subscribe(data => {
-      this.myDataArray = data;
-      for (let i = 0; i < this.myDataArray.length ; i++) {
-        this.myDataArray[i].price = this.createPrice(data[i].productCostList);
-        this.myDataArray[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
+      this.myDataArray = new MatTableDataSource<ProductElement>(data);
+      this.myDataArray.paginator = this.paginator;
+      for (let i = 0; i < this.myDataArray.filteredData.length ; i++) {
+        this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
+        this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
       }
     });
   }

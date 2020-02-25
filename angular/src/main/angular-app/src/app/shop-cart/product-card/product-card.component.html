@@ -1,35 +1,39 @@
 <!--<hr/>-->
-<mat-card class="product-card">
-  <mat-card-content>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="3%">
-      <div class="element-diagram" fxFlex="10%">
-        <div class="element-picture"> {{productCostElement.product.picture}}</div>
-      </div>
-      <div class="element-description" fxFlex="60%" fxLayout.lt-md="column">
-        <div fxLayout="column" fxLayoutAlign="start start">
-          <mat-card-title>{{productCostElement.product.name}}, {{productCostElement.property}}</mat-card-title>
-          <mat-card-subtitle>{{productCostElement.product.description}}</mat-card-subtitle>
-          <div fxLayout="row" fxLayoutGap="5%">
-            <mat-form-field>
-              <mat-label>Quantity</mat-label>
-              <mat-select [formControl]="quantitySelect" [(ngModel)]="productCostElement.quantity" (ngModelChange)="onChange()" required>
-                <mat-option *ngFor="let item of createRange(); let i = index"
-                            [value]="i + 1">{{i + 1}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button mat-raised-button color="warn" type="button" (click)="removeFromCart()">
-              <i class="material-icons">
-                remove_shopping_cart
-              </i>
-            </button>
+<!--<div class="mat-elevation-z8">-->
+  <mat-card class="product-card mat-elevation-z8" >
+    <mat-card-content>
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="3%">
+        <div class="element-diagram" fxFlex="10%">
+          <div class="element-picture"> {{productCostElement.product.picture}}</div>
+        </div>
+        <div class="element-description" fxFlex="60%" fxLayout.lt-md="column">
+          <div fxLayout="column" fxLayoutAlign="start start">
+            <mat-card-title>{{productCostElement.product.name}}, {{productCostElement.property}}</mat-card-title>
+            <mat-card-subtitle>{{productCostElement.product.description}}</mat-card-subtitle>
+            <div fxLayout="row" fxLayoutGap="5%">
+              <mat-form-field>
+                <mat-label>Quantity</mat-label>
+                <mat-select [formControl]="quantitySelect" [(ngModel)]="productCostElement.quantity"
+                            (ngModelChange)="onChange()" required>
+                  <mat-option *ngFor="let item of createRange(); let i = index"
+                              [value]="i + 1">{{i + 1}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-raised-button color="warn" type="button" (click)="removeFromCart()">
+                <i class="material-icons">
+                  remove_shopping_cart
+                </i>
+              </button>
+            </div>
           </div>
         </div>
+        <div fxLayout="row" fxLayoutAlign="end" class="price-form">
+          <div>
+            {{formNormalPrice}}
+          </div>&nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
+        </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="end" class="price-form">
-        <div>
-          {{formNormalPrice}}
-        </div>&nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+<!--</div>-->
+<!--<mat-divider></mat-divider>-->

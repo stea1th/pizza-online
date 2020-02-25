@@ -41,6 +41,7 @@ export class ProductCardComponent implements OnInit {
       const body = {productCostId: this.productCostElement.id, quantity: this.quantitySelect.value};
       this.data.updateProductQuantityInCart(body).subscribe((d) => {
         this.sideNav.cart = d;
+        this.refreshElements.emit();
       });
     }
   }

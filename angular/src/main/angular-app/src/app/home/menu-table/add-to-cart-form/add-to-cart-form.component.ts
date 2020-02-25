@@ -62,8 +62,8 @@ export class AddToCartFormComponent implements OnInit {
         this.isNormalPriceHidden = true;
       } else {
         const price = val?.price;
-        this.formNormalPrice = Creator.createPrice(price);
         this.formDiscountPrice = Creator.createPrice(price - price * this.discount / 100);
+        this.formNormalPrice = Creator.createPrice(price);
         this.isNormalPriceHidden = false;
       }
     } else {

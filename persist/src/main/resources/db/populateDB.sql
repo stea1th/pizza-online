@@ -38,7 +38,23 @@ VALUES (1016, 1006, 1),
        (1018, 1013, 2),
        (1015, 1006, 7);
 
+INSERT INTO product(name, description, picture)
+VALUES ('Pizza Diavolo', 'Meat, Tomato, Pepperoni, Cheese', 'Diavolo.jpg'),
+       ('Pizza Piccolo Salami', 'Piccolo Salami, Tomato, Cheese', 'Pic-Salami.jpg'),
+       ('Pizza 4 Season', 'Different cheese arts, Tomato, Noodle, Potato', '4Season.jpg');
+
 INSERT INTO product_cost(product_id, property, price, discount)
 VALUES (1005, 'family size', 20.59, 12);
+
+INSERT INTO product_cost(product_id, property, price)
+VALUES (1019, 'small size', 6.65),
+       (1019, 'middle size', 6.95),
+       (1019, 'big size', 8.65),
+       (1020, 'small size', 5.20),
+       (1020, 'middle size', 6.35),
+--        (1004, 'big size', 7.90),
+       (1021, 'small size', 3.60),
+       (1021, 'medium size', 7.60),
+       (1021, 'big size', 9.55);
 
 
