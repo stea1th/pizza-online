@@ -12,7 +12,8 @@ public interface ProductCostRepository extends JpaRepository<ProductCost, Intege
 
     @Query("SELECT pc FROM ProductCost pc " +
             "LEFT JOIN OrderProductCost opc ON pc = opc.productCost " +
-            "LEFT JOIN Order o ON o = opc.order WHERE o.id = :orderId ")
+            "LEFT JOIN Order o ON o = opc.order WHERE o.id = :orderId " +
+            "ORDER BY pc.id DESC ")
     List<ProductCost> getAllByOrderId(@Param("orderId") int orderId);
 
 
