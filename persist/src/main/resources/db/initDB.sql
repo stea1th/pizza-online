@@ -26,7 +26,7 @@ CREATE TABLE PERSON
     last_name  VARCHAR(40),
     email      VARCHAR(50),
     keycloak   VARCHAR(255) NOT NULL,
-    address_id INTEGER,
+    address_id INTEGER NOT NULL,
     FOREIGN KEY (address_id) REFERENCES ADDRESS (id) ON DELETE CASCADE
 );
 

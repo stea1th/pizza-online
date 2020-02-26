@@ -10,9 +10,7 @@ import java.nio.file.Files;
 import java.util.Base64;
 
 @Component
-public class PicConverter {
-
-
+public class ImageConverter {
 
     public String encodeFileFromResourcesToBase64(String fileName) throws IOException {
         File file = ResourceUtils.getFile("classpath:pic/" + fileName);

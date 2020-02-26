@@ -2,8 +2,10 @@ package de.stea1th.persist.service;
 
 import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.entity.Person;
+import de.stea1th.persist.repository.AddressRepository;
 import de.stea1th.persist.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +16,12 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
 
+    private AddressRepository addressRepository;
+
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository) {
+    public PersonServiceImpl(PersonRepository personRepository, AddressRepository addressRepository) {
         this.personRepository = personRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -39,6 +44,8 @@ public class PersonServiceImpl implements PersonService {
             log.error("no such person with keycloak id: {} exists", keycloak);
             person = new Person();
             person.setKeycloak(keycloak);
+            var address = addressRepository.createEmptyAddress();
+            person.setAddress(address);
             log.info("new person with keycloak id: {} created", keycloak);
             person = save(person);
         }

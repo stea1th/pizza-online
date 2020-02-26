@@ -36,6 +36,9 @@ import { FooterTotalComponent } from './cart-stepper/shop-cart/footer-total/foot
 import {MatStepperModule} from "@angular/material/stepper";
 import { CartStepperComponent } from './cart-stepper/cart-stepper.component';
 import { HeaderCardComponent } from './cart-stepper/shop-cart/header-card/header-card.component';
+import { PersonTabsComponent } from './person-tabs/person-tabs.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { PersonInfoComponent } from './person-tabs/person-info/person-info.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -54,35 +57,38 @@ export function kcFactory(keycloakService: KeycloakService) {
     FooterTotalComponent,
     CartStepperComponent,
     HeaderCardComponent,
+    PersonTabsComponent,
+    PersonInfoComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatTableModule,
-    FontAwesomeModule,
-    NgKeycloakModule,
-    MatSidenavModule,
-    MatListModule,
-    FlexLayoutModule,
-    MatBadgeModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCardModule,
-    FontAwesomeModule,
-    MatPaginatorModule,
-    MatStepperModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCardModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatTableModule,
+        FontAwesomeModule,
+        NgKeycloakModule,
+        MatSidenavModule,
+        MatListModule,
+        FlexLayoutModule,
+        MatBadgeModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule,
+        MatCardModule,
+        FontAwesomeModule,
+        MatPaginatorModule,
+        MatStepperModule,
+        MatTabsModule,
 
-  ],
+    ],
   providers: [
     KeycloakService,
     {
