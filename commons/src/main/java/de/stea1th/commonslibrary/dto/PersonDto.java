@@ -16,4 +16,6 @@ public class PersonDto extends AbstractBaseDto {
     private String email;
 
     private String keycloak;
+
+    private AddressDto addressDto;
 }

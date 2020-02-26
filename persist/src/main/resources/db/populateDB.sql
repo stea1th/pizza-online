@@ -4,17 +4,22 @@ DELETE FROM orders;
 DELETE FROM product_cost;
 DELETE FROM product;
 DELETE FROM person;
+DELETE FROM address;
 
 ALTER SEQUENCE global_seq
-    RESTART WITH 1000;
+    RESTART WITH 997;
 
+INSERT INTO address(street, zip, city, country)
+VALUES ('Hauptstrasse 6', '12345', 'Essen', 'Deutschland'),
+       ('Schobertweg 3', '45678', 'München', 'Deutschland'),
+       ('Sedulinos 7', '23452', 'Ignalina', 'Litauen');
 
-INSERT INTO person(keycloak)
-VALUES ('"1da62b10-f76e-4b31-b885-78bfd0185198"');
+INSERT INTO person(keycloak, address_id)
+VALUES ('"1da62b10-f76e-4b31-b885-78bfd0185198"', 998);
 
-INSERT INTO person (first_name, last_name, email, keycloak)
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"abf185bf-80cd-4a3c-a44e-dc65e901fbe6"'),
-       ('Ivan', 'Ogurcov', 'b@b.de', '"ebc92d12-b8b5-4d76-887e-4d73f655255e"');
+INSERT INTO person (first_name, last_name, email, keycloak, address_id)
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"abf185bf-80cd-4a3c-a44e-dc65e901fbe6"', 997),
+       ('Ivan', 'Ogurcov', 'b@b.de', '"ebc92d12-b8b5-4d76-887e-4d73f655255e"', 999);
 
 INSERT INTO product(name, description, picture)
 VALUES ('Pizza Tonno', 'Fish, Tomato, Cheese', 'Tonno.jpg'),
