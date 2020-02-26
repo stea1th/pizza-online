@@ -1,14 +1,25 @@
+
+DELETE FROM order_product_cost;
+DELETE FROM orders;
+DELETE FROM product_cost;
+DELETE FROM product;
+DELETE FROM person;
+
+ALTER SEQUENCE global_seq
+    RESTART WITH 1000;
+
+
 INSERT INTO person(keycloak)
-VALUES ('"9fad1f20-fb96-4476-878e-0107bdf9c5e0"');
+VALUES ('"1da62b10-f76e-4b31-b885-78bfd0185198"');
 
 INSERT INTO person (first_name, last_name, email, keycloak)
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"213a9708-4d94-4910-91fa-17b3a2976790"'),
-       ('Ivan', 'Ogurcov', 'b@b.de', '"f5660a3e-04ad-47d4-84a3-e55a2f729e6a"');
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"abf185bf-80cd-4a3c-a44e-dc65e901fbe6"'),
+       ('Ivan', 'Ogurcov', 'b@b.de', '"ebc92d12-b8b5-4d76-887e-4d73f655255e"');
 
 INSERT INTO product(name, description, picture)
 VALUES ('Pizza Tonno', 'Fish, Tomato, Cheese', 'Tonno.jpg'),
        ('Pizza Salami', 'Salami, Tomato, Cheese', 'Salami.jpg'),
-       ('Pizza Mozarella', 'Different cheese arts, Tomato, Potato', 'Mozarella.jpg');
+       ('Pizza Mozzarella', 'Different cheese arts, Tomato, Potato', 'Mozzarella.jpg');
 
 INSERT INTO product_cost(product_id, property, price)
 VALUES (1003, 'small size', 5.60),
@@ -40,7 +51,7 @@ VALUES (1016, 1006, 1),
 
 INSERT INTO product(name, description, picture)
 VALUES ('Pizza Diavolo', 'Meat, Tomato, Pepperoni, Cheese', 'Diavolo.jpg'),
-       ('Pizza Piccolo Salami', 'Piccolo Salami, Tomato, Cheese', 'Pic-Salami.jpg'),
+       ('Pizza Piccolo Salami', 'Piccolo Salami, Tomato, Cheese', 'Piccolo.jpg'),
        ('Pizza 4 Season', 'Different cheese arts, Tomato, Noodle, Potato', '4Season.jpg');
 
 INSERT INTO product_cost(product_id, property, price, discount)

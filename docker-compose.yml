@@ -63,7 +63,7 @@ services:
       - app-tier
 
   authorization:
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:8.0.2
     container_name: keycloak
     ports:
       - 8080:8080

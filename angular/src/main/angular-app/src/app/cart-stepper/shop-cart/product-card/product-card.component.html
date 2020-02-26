@@ -4,7 +4,8 @@
     <mat-card-content>
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="3%">
         <div class="element-diagram" fxFlex="10%">
-          <div class="element-picture"> {{productCostElement.product.picture}}</div>
+<!--          <div class="element-picture"> {{productCostElement.product.picture}}</div>-->
+          <img [src]="image" />
         </div>
         <div class="element-description" fxFlex="60%" fxLayout.lt-md="column">
           <div fxLayout="column" fxLayoutAlign="start start">

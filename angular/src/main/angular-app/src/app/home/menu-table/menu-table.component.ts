@@ -4,6 +4,7 @@ import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-menu-table',
@@ -32,7 +33,7 @@ export class MenuTableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class MenuTableComponent implements OnInit {
       this.myDataArray = new MatTableDataSource<ProductElement>(data);
       this.myDataArray.paginator = this.paginator;
       for (let i = 0; i < this.myDataArray.filteredData.length ; i++) {
+        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any).changingThisBreaksApplicationSecurity;
         this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
         this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
       }

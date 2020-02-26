@@ -5,10 +5,8 @@
 }
 
 .element-diagram {
-  /*min-width: 80px;*/
-  min-width: auto;
-  /*max-width: max-content;*/
-  border: 2px solid black;
+  min-width: 80px;
+  max-width: max-content;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
@@ -26,4 +24,11 @@
   font-size: 17px;
   font-weight: 700;
   margin-right: 30px;
+}
+
+img {
+  max-width: 100%;
+  min-width: 80px;
+  height: 100%;
+  margin: 8px 0;
 }

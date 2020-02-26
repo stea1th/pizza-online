@@ -5,6 +5,7 @@ import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import {Creator} from "../../../helper/creator";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -22,14 +23,17 @@ export class ProductCardComponent implements OnInit {
   quantity: string;
   quantitySelect;
   faEuro = faEuroSign;
+  image: string;
 
-  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent) { }
+  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
     this.formNormalPrice = Creator.createPrice(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
     this.quantitySelect.markAsPristine();
+    this.image = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(this.productCostElement.product.picture) as any).changingThisBreaksApplicationSecurity;
+
   }
 
   createRange() {

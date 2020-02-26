@@ -13,7 +13,8 @@
           <div fxLayout="row" fxLayoutAlign="space-around center" class="menu-layout-row" fxLayout.lt-md="column"
                fxLayoutGap="1%">
             <div class="element-diagram" fxFlex="20%">
-              <div class="element-picture"> {{element.picture}}</div>
+<!--              <div class="element-picture"> {{element.picture}}</div>-->
+              <img [src]="element.picture" alt="Product picture"/>
             </div>
             <div class="element-description" fxFlex="40%" fxLayoutAlign="center center">
               {{testData}}
