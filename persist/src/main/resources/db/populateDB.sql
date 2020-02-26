@@ -1,9 +1,9 @@
 INSERT INTO person(keycloak)
-VALUES ('"8e0b12eb-1063-48b2-aaab-9dc0b8852453"');
+VALUES ('"9fad1f20-fb96-4476-878e-0107bdf9c5e0"');
 
 INSERT INTO person (first_name, last_name, email, keycloak)
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"b27c839b-0e47-40c8-8574-1cd45273a8ab"'),
-       ('Ivan', 'Ogurcov', 'b@b.de', '"4562d862-1ce1-474d-bbd1-eba52def4b2e"');
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"213a9708-4d94-4910-91fa-17b3a2976790"'),
+       ('Ivan', 'Ogurcov', 'b@b.de', '"f5660a3e-04ad-47d4-84a3-e55a2f729e6a"');
 
 INSERT INTO product(name, description, picture)
 VALUES ('Pizza Tonno', 'Fish, Tomato, Cheese', 'Tonno.jpg'),

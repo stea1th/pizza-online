@@ -3,6 +3,7 @@ package de.stea1th.persist.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.ProductDto;
 import de.stea1th.persist.entity.Product;
 import de.stea1th.persist.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class ProductKafkaConsumer {
     @KafkaListener(topics = "${product.get.all}", groupId = "pizza-online")
     public void processGetAllProducts() {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Product> products = productService.getAll();
+        List<ProductDto> products = productService.getAll();
         kafkaProducer.produce(receiveAllProductsTopic, "pizza-online", products);
         try {
             log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveAllProductsTopic);
@@ -49,7 +50,7 @@ public class ProductKafkaConsumer {
     @KafkaListener(topics = "${product.get.cart}", groupId = "pizza-online")
     public void processGetAllProducts(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Product> products = productService.getAllProductsByKeycloak(message);
+        List<ProductDto> products = productService.getAllProductsByKeycloak(message);
         kafkaProducer.produce(receiveCartProductsTopic, "pizza-online", products);
         try {
             log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveCartProductsTopic);

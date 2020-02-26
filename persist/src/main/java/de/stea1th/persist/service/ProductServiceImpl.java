@@ -1,14 +1,15 @@
 package de.stea1th.persist.service;
 
-import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
+import de.stea1th.commonslibrary.dto.ProductDto;
+import de.stea1th.persist.converter.ProductConverter;
 import de.stea1th.persist.entity.Order;
-import de.stea1th.persist.entity.Product;
 import de.stea1th.persist.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -18,34 +19,45 @@ public class ProductServiceImpl implements ProductService {
 
     private OrderService orderService;
 
+    private ProductConverter productConverter;
+
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, OrderService orderService) {
+    public ProductServiceImpl(ProductRepository productRepository, OrderService orderService, ProductConverter productConverter) {
         this.productRepository = productRepository;
         this.orderService = orderService;
+        this.productConverter = productConverter;
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<ProductDto> getAll() {
         log.info("get all products");
-        return productRepository.findAll();
+        return productRepository
+                .findAll()
+                .stream()
+                .map(x -> productConverter.convertToDto(x))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Product get(int productId) {
-        Product product = null;
-        try {
-            product = productRepository.get(productId);
-        } catch (MyEntityNotFoundException e) {
-            log.error(e.getMessage());
-        }
-        log.info("get product with id: {}", productId);
-        return product;
-    }
+//    @Override
+//    public ProductDto get(int productId) {
+//        Product product = null;
+//        try {
+//            product = productRepository.get(productId);
+//        } catch (MyEntityNotFoundException e) {
+//            log.error(e.getMessage());
+//        }
+//        log.info("get product with id: {}", productId);
+//        return product;
+//    }
 
     @Override
-    public List<Product> getAllProductsByKeycloak(String keycloak) {
+    public List<ProductDto> getAllProductsByKeycloak(String keycloak) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);
         log.info("get products for keycloak: {}", keycloak);
-        return productRepository.getAllByOrderId(order.getId());
+        return productRepository
+                .getAllByOrderId(order.getId())
+                .stream()
+                .map(x -> productConverter.convertToDto(x))
+                .collect(Collectors.toList());
     }
 }

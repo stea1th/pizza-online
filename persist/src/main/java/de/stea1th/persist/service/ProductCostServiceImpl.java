@@ -2,9 +2,8 @@ package de.stea1th.persist.service;
 
 
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
-import de.stea1th.commonslibrary.dto.ProductDto;
+import de.stea1th.persist.converter.ProductCostConverter;
 import de.stea1th.persist.entity.Order;
-import de.stea1th.persist.entity.Product;
 import de.stea1th.persist.entity.ProductCost;
 import de.stea1th.persist.repository.ProductCostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +22,13 @@ public class ProductCostServiceImpl implements ProductCostService {
 
     private final ProductCostRepository productCostRepository;
 
-    public ProductCostServiceImpl(OrderService orderService, OrderProductCostService orderProductCostService, ProductCostRepository productCostRepository) {
+    private ProductCostConverter productCostConverter;
+
+    public ProductCostServiceImpl(OrderService orderService, OrderProductCostService orderProductCostService, ProductCostRepository productCostRepository, ProductCostConverter productCostConverter) {
         this.orderService = orderService;
         this.orderProductCostService = orderProductCostService;
         this.productCostRepository = productCostRepository;
+        this.productCostConverter = productCostConverter;
     }
 
     @Override
@@ -35,27 +37,9 @@ public class ProductCostServiceImpl implements ProductCostService {
         log.info("get product-costs for keycloak: {}", keycloak);
         int orderId = order.getId();
         List<ProductCost> allByOrderId = productCostRepository.getAllByOrderId(orderId);
-        return allByOrderId.stream().map(x-> transform(x, orderId)).collect(Collectors.toList());
+        return allByOrderId.stream().map(productCost -> {
+            int quantity = orderProductCostService.getQuantityByOrderProductCostId(orderId, productCost.getId());
+            return productCostConverter.convertToDtoInCart(productCost, quantity);
+        }).collect(Collectors.toList());
     }
-
-    private ProductCostInCartDto transform(ProductCost productCost, int orderId) {
-        int quantity = orderProductCostService.getQuantityByOrderProductCostId(orderId, productCost.getId());
-        ProductCostInCartDto productCostDto = new ProductCostInCartDto();
-        ProductDto productDto = new ProductDto();
-        Product product = productCost.getProduct();
-        productDto.setId(product.getId());
-        productDto.setName(product.getName());
-        productDto.setDescription(product.getDescription());
-        productDto.setPicture(product.getPicture());
-        productCostDto.setProduct(productDto);
-        productCostDto.setId(productCost.getId());
-        productCostDto.setProperty(productCost.getProperty());
-        productCostDto.setDiscount(productCost.getDiscount());
-        productCostDto.setPrice(productCost.getPrice());
-        productCostDto.setQuantity(quantity);
-        return productCostDto;
-    }
-
-
-
 }
