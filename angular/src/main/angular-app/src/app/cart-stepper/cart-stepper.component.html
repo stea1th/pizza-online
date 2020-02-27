@@ -1,16 +1,20 @@
 <mat-card>
   <mat-horizontal-stepper>
     <mat-step>
+      <ng-template matStepLabel>Items overview</ng-template>
       <app-shop-cart></app-shop-cart>
     </mat-step>
     <mat-step>
-      Second Step!
-      <div>
-        <button [color]="'accent'" mat-button mat-raised-button matStepperPrevious>Back</button>
-      </div>
+      <ng-template matStepLabel>Address overview</ng-template>
+      <app-person-details></app-person-details>
     </mat-step>
     <mat-step>
-      Last Step!
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="done">
+        Congratulations!
+
+        Order accepted!
+      </div>
     </mat-step>
   </mat-horizontal-stepper>
 </mat-card>

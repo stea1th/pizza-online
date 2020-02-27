@@ -1,0 +1,80 @@
+<div class="large-box mat-elevation-z4">
+  <mat-card class="mat-elevation-z8">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="6%">
+      <div fxFlex="20%">
+        <div class="delivery-address">
+          Delivery address
+        </div>
+      </div>
+      <div fxFlex="90%" fxLayoutAlign="end end">
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="mat-elevation-z8">
+    <mat-vertical-stepper [linear]="isLinear" #stepper class="vertical-stepper">
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Fill out your name</ng-template>
+          <div fxLayout="column" fxFlex="20%">
+            <mat-form-field class="full-width">
+              <mat-label>First name</mat-label>
+              <input formControlName="firstName" [ngModel]="personDetails?.firstName" matInput required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Last Name</mat-label>
+              <input formControlName="lastName" [ngModel]="personDetails?.lastName" matInput required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Fill out your address</ng-template>
+          <div fxLayout="column" fxFlex="20%">
+            <mat-form-field class="full-width">
+              <mat-label>Address</mat-label>
+              <input formControlName="street" matInput [ngModel]="personDetails?.address.street" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>City</mat-label>
+              <input formControlName="city" matInput [ngModel]="personDetails?.address.city" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Country</mat-label>
+              <input formControlName="country" matInput [ngModel]="personDetails?.address.country" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Postal Code</mat-label>
+              <input formControlName="zip" matInput #postalCode maxlength="5" [ngModel]="personDetails?.address.zip"
+                     required>
+              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext (click)="toggleDisabled()">Next</button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious (click)="toggleDisabled()">Back</button>
+          <button mat-button (click)="stepper.reset(); toggleDisabled()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+  <mat-card class="mat-elevation-z8">
+    <div fxFlex="30%" fxLayout="row" fxLayoutGap="3%">
+      <button [color]="'accent'" mat-button mat-raised-button matStepperPrevious>Back</button>
+      <button [color]="'accent'" [disabled]="isDisabled" mat-button mat-raised-button matStepperNext>Order now
+      </button>
+    </div>
+  </mat-card>
+</div>

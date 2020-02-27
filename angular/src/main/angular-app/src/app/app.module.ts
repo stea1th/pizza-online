@@ -39,6 +39,7 @@ import { HeaderCardComponent } from './cart-stepper/shop-cart/header-card/header
 import { PersonTabsComponent } from './person-tabs/person-tabs.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { PersonInfoComponent } from './person-tabs/person-info/person-info.component';
+import { PersonDetailsComponent } from './cart-stepper/person-details/person-details.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -59,6 +60,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     HeaderCardComponent,
     PersonTabsComponent,
     PersonInfoComponent,
+    PersonDetailsComponent,
   ],
     imports: [
         BrowserModule,
