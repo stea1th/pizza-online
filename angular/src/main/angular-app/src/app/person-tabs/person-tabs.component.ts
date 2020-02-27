@@ -10,11 +10,11 @@ export class PersonTabsComponent implements OnInit {
 
   personDetails: PersonDetails;
 
-  constructor(private data: DataService) {
+  constructor(private _data: DataService) {
   }
 
   ngOnInit(): void {
-    this.data.getPersonDetails().subscribe(data => {
+    this._data.getPersonDetails().subscribe(data => {
       this.personDetails = data;
     });
   }

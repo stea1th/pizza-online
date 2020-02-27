@@ -10,20 +10,20 @@ export class DataService {
 
   baseUrl = 'http://localhost:8081/api';
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   private get(path) {
-    return this.http.get(this.baseUrl + path);
+    return this._http.get(this.baseUrl + path);
   }
 
   private post(path, body) {
-    return this.http.post(this.baseUrl + path, body);
+    return this._http.post(this.baseUrl + path, body);
   }
 
   private delete(path, options) {
 
-    return this.http.delete(this.baseUrl + path, options);
+    return this._http.delete(this.baseUrl + path, options);
   }
 
   public getPersonDetails(): Observable<any> {

@@ -33,15 +33,15 @@ export class MenuTableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dataService: DataService, private sanitizer: DomSanitizer) {
+  constructor(private _data: DataService, private _sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
-    this.dataService.getAllProducts().subscribe(data => {
+    this._data.getAllProducts().subscribe(data => {
       this.myDataArray = new MatTableDataSource<ProductElement>(data);
       this.myDataArray.paginator = this.paginator;
       for (let i = 0; i < this.myDataArray.filteredData.length ; i++) {
-        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any).changingThisBreaksApplicationSecurity;
+        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any).changingThisBreaksApplicationSecurity;
         this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
         this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
       }

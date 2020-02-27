@@ -8,11 +8,11 @@ import {concatMap, map} from "rxjs/operators";
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor{
 
-  constructor(private auth: KeycloakService) {
+  constructor(private _auth: KeycloakService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const tokenPromise: Promise<string> = this.auth.getToken();
+    const tokenPromise: Promise<string> = this._auth.getToken();
     const tokenObservable: Observable<string> = from(tokenPromise);
 
     return tokenObservable.pipe(

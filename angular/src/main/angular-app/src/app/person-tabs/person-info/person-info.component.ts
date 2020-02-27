@@ -13,7 +13,7 @@ export class PersonInfoComponent implements OnInit {
 
   @Input() personDetails: PersonDetails;
 
-  constructor(private data: DataService) { }
+  constructor(private _data: DataService) { }
 
   ngOnInit(): void {
     this.personDetailsForm = new FormGroup({
@@ -33,7 +33,7 @@ export class PersonInfoComponent implements OnInit {
     this.personDetails.address.zip = this.personDetailsForm.value.zip;
     this.personDetails.address.city = this.personDetailsForm.value.city;
     this.personDetails.address.country = this.personDetailsForm.value.country;
-    this.data.savePersonDetails(this.personDetails).subscribe(d=> console.log());
+    this._data.savePersonDetails(this.personDetails).subscribe(d=> console.log());
   }
 
 }

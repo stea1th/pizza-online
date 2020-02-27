@@ -35,8 +35,8 @@
         <tr [hidden]="isNormalPriceHidden">
           <td></td>
           <td class="price-cell" fxLayout="column" fxLayoutAlign="end end">
-            <div [ngClass]="isNormalPriceHidden ?  'null' : 'strikethrough' " fxLayout="row" >
-              <div >{{formNormalPrice}}</div>
+            <div [ngClass]="isNormalPriceHidden ?  'null' : 'strikethrough' " fxLayout="row">
+              <div>{{formNormalPrice}}</div>
               &nbsp;<span><fa-icon [icon]="faEuro"></fa-icon></span>
             </div>
             <span class="discount"> {{'-' + discount + '%'}}</span>

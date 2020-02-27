@@ -13,9 +13,9 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   private readonly _mobileQueryListener: () => void;
   cart: any;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private media: MediaMatcher, private auth: KeycloakService, private data: DataService) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+  constructor(private _changeDetectorRef: ChangeDetectorRef, private _media: MediaMatcher, private _auth: KeycloakService, private _data: DataService) {
+    this.mobileQuery = _media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => _changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change', () => this._mobileQueryListener);
   }
 
@@ -24,11 +24,11 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   }
 
   logout() {
-    this.auth.logout();
+    this._auth.logout();
   }
 
   getDetails() {
-    this.data.getPersonDetails().subscribe(d => {
+    this._data.getPersonDetails().subscribe(d => {
       return console.log("Admin: " + JSON.stringify(d));
     });
   }
@@ -37,7 +37,7 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
     // this.data.getCartProducts().subscribe(d => {
     //   return this.cart = d.length;
     // });
-    this.data.getQuantitiesSumInCart().subscribe(d => {
+    this._data.getQuantitiesSumInCart().subscribe(d => {
       return this.cart = d;
     })
 

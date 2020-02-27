@@ -4,6 +4,7 @@ import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import {Creator} from "../../../helper/creator";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -33,7 +34,7 @@ export class AddToCartFormComponent implements OnInit {
     quantity: new FormControl('', Validators.required),
   });
 
-  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent) {
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
   }
 
 
@@ -46,11 +47,11 @@ export class AddToCartFormComponent implements OnInit {
 
   onSubmit() {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
-    this.data.addProductToCart(body).subscribe((d) => {
+    this._data.addProductToCart(body).subscribe((d) => {
       // this.closeRow.emit();
+
       this.resetForm();
-      this.sideNav.cart = d;
-      // this.sideNav.countProductsInCart();
+      this._sideNav.cart = d;
     });
   }
 

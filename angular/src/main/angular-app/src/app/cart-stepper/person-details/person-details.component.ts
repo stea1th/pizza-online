@@ -16,11 +16,11 @@ export class PersonDetailsComponent implements OnInit {
   personDetails: PersonDetails;
   needToSave = false;
 
-  constructor(private data: DataService) {
+  constructor(private _data: DataService) {
   }
 
   ngOnInit(): void {
-    this.data.getPersonDetails().subscribe(data => {
+    this._data.getPersonDetails().subscribe(data => {
       this.personDetails = data;
     });
     this.firstFormGroup = new FormGroup({
@@ -49,7 +49,7 @@ export class PersonDetailsComponent implements OnInit {
       this.needToSave = true;
     }
     if (this.needToSave) {
-      this.data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
+      this._data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
     }
   }
 }

@@ -13,7 +13,7 @@ export class ShopCartComponent implements OnInit {
   totalPay: string;
   totalQuantity: number;
 
-  constructor(private data: DataService) {
+  constructor(private _data: DataService) {
   }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class ShopCartComponent implements OnInit {
   }
 
   getProductsInCart() {
-    this.data.getCartProductCosts().subscribe(data => {
+    this._data.getCartProductCosts().subscribe(data => {
       this.productCostList = data;
       this.createTotal(this.productCostList);
       return this.productCostList;

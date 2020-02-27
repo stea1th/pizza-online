@@ -25,14 +25,14 @@ export class ProductCardComponent implements OnInit {
   faEuro = faEuroSign;
   image: string;
 
-  constructor(private data: DataService, private sideNav: SidenavResponsiveComponent, private sanitizer: DomSanitizer) { }
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
     this.formNormalPrice = Creator.createPrice(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
     this.quantitySelect.markAsPristine();
-    this.image = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(this.productCostElement.product.picture) as any).changingThisBreaksApplicationSecurity;
+    this.image = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(this.productCostElement.product.picture) as any).changingThisBreaksApplicationSecurity;
 
   }
 
@@ -43,16 +43,16 @@ export class ProductCardComponent implements OnInit {
   onChange() {
     if(this.quantitySelect.pristine == false) {
       const body = {productCostId: this.productCostElement.id, quantity: this.quantitySelect.value};
-      this.data.updateProductQuantityInCart(body).subscribe((d) => {
-        this.sideNav.cart = d;
+      this._data.updateProductQuantityInCart(body).subscribe((d) => {
+        this._sideNav.cart = d;
         this.refreshElements.emit();
       });
     }
   }
 
   removeFromCart() {
-    this.data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
-      this.sideNav.cart = d;
+    this._data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
+      this._sideNav.cart = d;
       this.refreshElements.emit();
     });
   }
