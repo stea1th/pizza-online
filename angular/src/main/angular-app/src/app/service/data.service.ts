@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {PersonDetails} from "../person-tabs/person-tabs.component";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class DataService {
     return this.http.delete(this.baseUrl + path, options);
   }
 
-  public getDetails() {
-    return this.get('/person/details');
+  public getPersonDetails(): Observable<any> {
+    return this.get('/person/details').pipe();
   }
 
   public getAllProducts(): Observable<any> {

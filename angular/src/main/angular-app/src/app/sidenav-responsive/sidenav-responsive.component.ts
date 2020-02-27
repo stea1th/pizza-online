@@ -28,7 +28,7 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   }
 
   getDetails() {
-    this.data.getDetails().subscribe(d => {
+    this.data.getPersonDetails().subscribe(d => {
       return console.log("Admin: " + JSON.stringify(d));
     });
   }

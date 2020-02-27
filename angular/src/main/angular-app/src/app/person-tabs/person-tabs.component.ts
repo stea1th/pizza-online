@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "../service/data.service";
 
 @Component({
   selector: 'app-person-tabs',
@@ -7,9 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonTabsComponent implements OnInit {
 
-  constructor() { }
+  personDetails: PersonDetails;
 
-  ngOnInit(): void {
+  constructor(private data: DataService) {
   }
 
+  ngOnInit(): void {
+    this.data.getPersonDetails().subscribe(data => {
+      console.log(data);
+      this.personDetails = data;
+    });
+  }
+}
+
+export interface PersonDetails {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: AddressDetails;
+
+}
+
+export interface AddressDetails {
+  id: number;
+  street: string;
+  zip: string;
+  city: string;
+  country: string;
 }

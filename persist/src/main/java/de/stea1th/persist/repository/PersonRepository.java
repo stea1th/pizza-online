@@ -8,9 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
-    default Person get(int id) throws MyEntityNotFoundException {
-        return this.findById(id).orElseThrow(() -> new MyEntityNotFoundException("no such person with id: " + id + " exists"));
-    }
-
     Person getByKeycloak(String keycloak);
 }

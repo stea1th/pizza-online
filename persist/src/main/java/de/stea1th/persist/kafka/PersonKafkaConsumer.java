@@ -3,6 +3,7 @@ package de.stea1th.persist.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class PersonKafkaConsumer {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private Person person;
+    private PersonDto person;
 
     @Value("${person.receive.person}")
     private String receivePersonTopic;
@@ -51,7 +52,7 @@ public class PersonKafkaConsumer {
     public void processGetPersonByKeycloak(String keycloak) {
         log.info("received keycloak = {}", keycloak);
         try {
-            person = personService.getByKeycloak(keycloak);
+            person = personService.getDtoByKeycloak(keycloak);
             if (person != null) {
                 kafkaProducer.produce(receivePersonTopic, "pizza-online", person);
                 log.info("person data: {} sent to topic {}", objectMapper.writeValueAsString(person), receivePersonTopic);

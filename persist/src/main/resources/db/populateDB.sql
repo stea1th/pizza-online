@@ -15,11 +15,11 @@ VALUES ('Hauptstrasse 6', '12345', 'Essen', 'Deutschland'),
        ('Sedulinos 7', '23452', 'Ignalina', 'Litauen');
 
 INSERT INTO person(keycloak, address_id)
-VALUES ('"1da62b10-f76e-4b31-b885-78bfd0185198"', 998);
+VALUES ('"b04bf0fe-135e-4dc5-a130-48a0109543a6"', 998);
 
 INSERT INTO person (first_name, last_name, email, keycloak, address_id)
-VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"abf185bf-80cd-4a3c-a44e-dc65e901fbe6"', 997),
-       ('Ivan', 'Ogurcov', 'b@b.de', '"ebc92d12-b8b5-4d76-887e-4d73f655255e"', 999);
+VALUES ('Dmitrij', 'Gusev', 'a@a.de', '"273719a1-2df0-46c9-a214-debeef8d3165"', 997),
+       ('Ivan', 'Ogurcov', 'b@b.de', '"cd55a854-1b96-44d0-ba30-73176a0708f5"', 999);
 
 INSERT INTO product(name, description, picture)
 VALUES ('Pizza Tonno', 'Fish, Tomato, Cheese', 'Tonno.jpg'),

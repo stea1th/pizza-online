@@ -1,6 +1,8 @@
 package de.stea1th.persist.service;
 
+import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
+import de.stea1th.persist.converter.PersonConverter;
 import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.repository.AddressRepository;
 import de.stea1th.persist.repository.PersonRepository;
@@ -18,22 +20,20 @@ public class PersonServiceImpl implements PersonService {
 
     private AddressRepository addressRepository;
 
+    private PersonConverter personConverter;
+
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository, AddressRepository addressRepository) {
+    public PersonServiceImpl(PersonRepository personRepository, AddressRepository addressRepository, PersonConverter personConverter) {
         this.personRepository = personRepository;
         this.addressRepository = addressRepository;
+        this.personConverter = personConverter;
     }
 
     @Override
     @Transactional
-    public Person get(int personId) {
-        Person person = null;
-        try {
-            person = personRepository.get(personId);
-        } catch (MyEntityNotFoundException e) {
-            log.error(e.getMessage());
-        }
-        return person;
+    public PersonDto get(int personId) {
+        Person person = personRepository.getOne(personId);
+        return personConverter.convertToDto(person);
     }
 
     @Override
@@ -53,7 +53,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public PersonDto getDtoByKeycloak(String keycloak) {
+        var person = getByKeycloak(keycloak);
+        return personConverter.convertToDto(person);
+    }
+
     @Transactional
+    @Override
     public Person save(Person person) {
         log.info("person: {} successful saved", person);
         return personRepository.save(person);

@@ -17,5 +17,5 @@ public class PersonDto extends AbstractBaseDto {
 
     private String keycloak;
 
-    private AddressDto addressDto;
+    private AddressDto address;
 }
