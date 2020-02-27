@@ -15,7 +15,6 @@ export class PersonTabsComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.getPersonDetails().subscribe(data => {
-      console.log(data);
       this.personDetails = data;
     });
   }

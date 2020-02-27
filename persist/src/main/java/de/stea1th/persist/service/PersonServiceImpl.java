@@ -62,6 +62,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person save(Person person) {
         log.info("person: {} successful saved", person);
+        addressRepository.save(person.getAddress());
         return personRepository.save(person);
     }
 }
