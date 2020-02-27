@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PersonDetails} from "../../person-tabs/person-tabs.component";
 import {DataService} from "../../service/data.service";
@@ -14,8 +14,10 @@ export class PersonDetailsComponent implements OnInit {
   isLinear = true;
   isDisabled = true;
   personDetails: PersonDetails;
+  needToSave = false;
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService) {
+  }
 
   ngOnInit(): void {
     this.data.getPersonDetails().subscribe(data => {
@@ -37,4 +39,21 @@ export class PersonDetailsComponent implements OnInit {
     this.isDisabled = !this.isDisabled;
   }
 
+  saveDetails() {
+    if (this.firstFormGroup.touched) {
+      this.personDetails.firstName = this.firstFormGroup.value.firstName;
+      this.personDetails.lastName = this.firstFormGroup.value.lastName;
+      this.needToSave = true;
+    }
+    if (this.secondFormGroup.touched) {
+      this.personDetails.address.street = this.secondFormGroup.value.street;
+      this.personDetails.address.zip = this.secondFormGroup.value.zip;
+      this.personDetails.address.city = this.secondFormGroup.value.city;
+      this.personDetails.address.country = this.secondFormGroup.value.country;
+      this.needToSave = true;
+    }
+    if (this.needToSave) {
+      this.data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
+    }
+  }
 }
