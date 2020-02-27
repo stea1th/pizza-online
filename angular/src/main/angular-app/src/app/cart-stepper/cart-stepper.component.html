@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-horizontal-stepper>
+  <mat-horizontal-stepper [linear]="isLinear">
     <mat-step>
       <ng-template matStepLabel>Items overview</ng-template>
       <app-shop-cart></app-shop-cart>
@@ -10,10 +10,13 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
-      <div class="done">
-        Congratulations!
-
-        Order accepted!
+      <div class="done" fxLayout="column">
+        <p>
+          Congratulations! Order accepted!
+        </p>
+        <button mat-raised-button color="accent" routerLink="/">
+          Back to home
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartStepperComponent implements OnInit {
 
+  isLinear = true;
+
   constructor() { }
 
   ngOnInit(): void {

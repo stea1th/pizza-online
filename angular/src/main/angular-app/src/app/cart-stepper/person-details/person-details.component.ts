@@ -35,10 +35,6 @@ export class PersonDetailsComponent implements OnInit {
     });
   }
 
-  toggleDisabled() {
-    this.isDisabled = !this.isDisabled;
-  }
-
   saveDetails() {
     if (this.firstFormGroup.touched) {
       this.personDetails.firstName = this.firstFormGroup.value.firstName;
