@@ -61,4 +61,15 @@ public class PersonKafkaConsumer {
             log.error(e.getMessage());
         }
     }
+
+    @KafkaListener(topics="${person.save.details}", groupId = "pizza-online")
+    public void processSavePerson(String message) {
+        log.info("received person = {}", message);
+        try {
+            Person person = objectMapper.readValue(message, Person.class);
+            personService.save(person);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+    }
 }

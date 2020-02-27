@@ -36,6 +36,9 @@ public class PersonServiceImpl implements PersonService {
     @Value("${person.get.keycloak}")
     private String personGetKeycloakTopic;
 
+    @Value("${person.save.details}")
+    private String personSaveTopic;
+
     @Autowired
     public PersonServiceImpl(KafkaProducer kafkaProducer, PersonKafkaConsumer personKafkaConsumer) {
         this.kafkaProducer = kafkaProducer;
@@ -62,6 +65,11 @@ public class PersonServiceImpl implements PersonService {
             setPersonDetails(accessToken, personDto);
         }
         return personDto;
+    }
+
+    @Override
+    public void save(PersonDto personDto) {
+        kafkaProducer.produce(personSaveTopic, "pizza-online", personDto);
     }
 
     @SneakyThrows

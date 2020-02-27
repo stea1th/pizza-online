@@ -30,6 +30,10 @@ export class DataService {
     return this.get('/person/details').pipe();
   }
 
+  public savePersonDetails(body) {
+    return this.post('/person/save', body);
+  }
+
   public getAllProducts(): Observable<any> {
     return this.get('/product').pipe();
   }

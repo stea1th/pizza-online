@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {PersonDetails} from "../person-tabs.component";
+import {DataService} from "../../service/data.service";
 
 @Component({
   selector: 'app-person-info',
@@ -12,7 +13,7 @@ export class PersonInfoComponent implements OnInit {
 
   @Input() personDetails: PersonDetails;
 
-  constructor() { }
+  constructor(private data: DataService) { }
 
   ngOnInit(): void {
     this.personDetailsForm = new FormGroup({
@@ -23,6 +24,16 @@ export class PersonInfoComponent implements OnInit {
       zip: new FormControl(''),
       country: new FormControl('')
     });
+  }
+
+  onSubmit() {
+    this.personDetails.firstName = this.personDetailsForm.value.firstName;
+    this.personDetails.lastName = this.personDetailsForm.value.lastName;
+    this.personDetails.address.street = this.personDetailsForm.value.street;
+    this.personDetails.address.zip = this.personDetailsForm.value.zip;
+    this.personDetails.address.city = this.personDetailsForm.value.city;
+    this.personDetails.address.country = this.personDetailsForm.value.country;
+    this.data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
   }
 
 }

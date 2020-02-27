@@ -1,46 +1,60 @@
-
 <!--<form [formGroup]="addToCartForm" (ngSubmit)="onSubmit()" class="person-details-form">-->
-<form [formGroup]="personDetailsForm" class="person-details-form">
+<form [formGroup]="personDetailsForm" class="person-details-form" (ngSubmit)="onSubmit()">
   <mat-form-field class="full-width">
     <mat-label>Email (disabled)</mat-label>
-    <input  matInput disabled [value]="personDetails?.email">
+    <input matInput disabled [value]="personDetails?.email">
   </mat-form-field>
 
-  <table class="full-width" cellspacing="0"><tr>
-    <td><mat-form-field class="full-width">
-      <mat-label>First name</mat-label>
-      <input formControlName="firstName" matInput [value]="personDetails?.firstName">
-    </mat-form-field></td>
-    <td><mat-form-field class="full-width">
-      <mat-label>Last Name </mat-label>
-      <input formControlName="lastName" matInput [value]="personDetails?.lastName">
-    </mat-form-field></td>
-  </tr></table>
+  <table class="full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>First name</mat-label>
+          <input formControlName="firstName" matInput [ngModel]="personDetails?.firstName">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput [ngModel]="personDetails?.lastName">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
 
   <p>
     <mat-form-field class="full-width">
       <mat-label>Address</mat-label>
-      <input formControlName="street" matInput [value]="personDetails?.address.street">
+      <input formControlName="street" matInput [ngModel]="personDetails?.address.street">
     </mat-form-field>
-<!--    <mat-form-field class="full-width">-->
-<!--      <mat-label>Address 2</mat-label>-->
-<!--      <textarea matInput></textarea>-->
-<!--    </mat-form-field>-->
   </p>
 
-  <table class="full-width" cellspacing="0"><tr>
-    <td><mat-form-field class="full-width">
-      <mat-label>City</mat-label>
-      <input formControlName="city" matInput [value]="personDetails?.address.city">
-    </mat-form-field></td>
-    <td><mat-form-field class="full-width">
-      <mat-label>Country</mat-label>
-      <input formControlName="country" matInput [value]="personDetails?.address.country">
-    </mat-form-field></td>
-    <td><mat-form-field class="full-width">
-      <mat-label>Postal Code</mat-label>
-      <input formControlName="zip" matInput #postalCode maxlength="5" [value]="personDetails?.address.zip">
-      <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-    </mat-form-field></td>
-  </tr></table>
+  <table class="full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>City</mat-label>
+          <input formControlName="city" matInput [ngModel]="personDetails?.address.city">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>Country</mat-label>
+          <input formControlName="country" matInput [ngModel]="personDetails?.address.country">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>Postal Code</mat-label>
+          <input formControlName="zip" matInput #postalCode maxlength="5" [ngModel]="personDetails?.address.zip">
+          <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+  <button mat-raised-button color="accent" type="submit" class="submit-button">
+    Save changes
+  </button>
+
 </form>
+
