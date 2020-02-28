@@ -40,18 +40,6 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public ProductDto get(int productId) {
-//        Product product = null;
-//        try {
-//            product = productRepository.get(productId);
-//        } catch (MyEntityNotFoundException e) {
-//            log.error(e.getMessage());
-//        }
-//        log.info("get product with id: {}", productId);
-//        return product;
-//    }
-
     @Override
     public List<ProductDto> getAllProductsByKeycloak(String keycloak) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);

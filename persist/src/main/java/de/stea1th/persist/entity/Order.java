@@ -1,6 +1,5 @@
 package de.stea1th.persist.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,12 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "orders")
 @ToString(exclude = {"orderProductCosts"})
-public class Order extends AbstractBaseEntity{
+public class Order extends AbstractBaseEntity {
 
-//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime created = LocalDateTime.now();
 
-//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime completed;
 
     @JsonManagedReference

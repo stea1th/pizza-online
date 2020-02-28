@@ -10,12 +10,9 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     default Address createEmptyAddress() {
         var address = findAddressByStreetAndZipAndCityAndCountry(null, null, null, null);
-        if(address == null) address = this.save(new Address());
+        if (address == null) address = this.save(new Address());
         return address;
     }
 
     Address findAddressByStreetAndZipAndCityAndCountry(String street, String zip, String city, String country);
-
-
-
 }

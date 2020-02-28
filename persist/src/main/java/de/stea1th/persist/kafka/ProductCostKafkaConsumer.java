@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
-import de.stea1th.persist.entity.ProductCost;
 import de.stea1th.persist.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +29,7 @@ public class ProductCostKafkaConsumer {
         this.productCostService = productCostService;
     }
 
-    @KafkaListener(topics="${product-cost.get.cart}", groupId = "pizza-online")
+    @KafkaListener(topics = "${product-cost.get.cart}", groupId = "pizza-online")
     public void processGetAllProductCosts(String message) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<ProductCostInCartDto> allProductCostsByKeycloak = productCostService.getAllProductCostsByKeycloak(message);

@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     public Order completeOrder(String keycloak) {
         Person person = personService.getByKeycloak(keycloak);
         Order order = getUncompletedOrderByPerson(person);
-        if(!order.getOrderProductCosts().isEmpty()) {
+        if (!order.getOrderProductCosts().isEmpty()) {
             order.setCompleted(LocalDateTime.now());
             order = orderRepository.save(order);
             createEmptyOrder(person);

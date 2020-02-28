@@ -14,7 +14,6 @@ public class PersonConverter {
         this.addressConverter = addressConverter;
     }
 
-
     public PersonDto convertToDto(Person person) {
         var personDto = new PersonDto();
         personDto.setId(person.getId());
@@ -22,9 +21,8 @@ public class PersonConverter {
         personDto.setLastName(person.getLastName());
         personDto.setEmail(person.getEmail());
         personDto.setKeycloak(person.getKeycloak());
-        var addresDto = addressConverter.convertToDto(person.getAddress());
-        personDto.setAddress(addresDto);
+        var addressDto = addressConverter.convertToDto(person.getAddress());
+        personDto.setAddress(addressDto);
         return personDto;
     }
-
 }

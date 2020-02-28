@@ -27,7 +27,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     @Override
     public OrderProductCost save(OrderProductCostDto orderProductCostDto, Order order) {
         OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
-        if(orderProductCost == null) {
+        if (orderProductCost == null) {
             log.info("new order-product-cost created");
             orderProductCost = new OrderProductCost();
             orderProductCost.setId(createPK(order.getId(), orderProductCostDto.getProductCostId()));
@@ -53,7 +53,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
         OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
 
-        if(orderProductCost != null) {
+        if (orderProductCost != null) {
             log.info("in order-product-cost product quantity updated");
             orderProductCost.setQuantity(orderProductCostDto.getQuantity());
             orderProductCostRepository.save(orderProductCost);
@@ -84,7 +84,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     private Integer getSumQuantitiesByOrderId(int orderId) {
         Integer sum = orderProductCostRepository.findSumQuantitiesByOrderId(orderId);
-        return sum == null? 0 : sum;
+        return sum == null ? 0 : sum;
     }
 
     private OrderProductCost get(int orderId, int productCostId) {

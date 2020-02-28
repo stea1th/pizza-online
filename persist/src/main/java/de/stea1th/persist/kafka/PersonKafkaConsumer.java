@@ -62,7 +62,7 @@ public class PersonKafkaConsumer {
         }
     }
 
-    @KafkaListener(topics="${person.save.details}", groupId = "pizza-online")
+    @KafkaListener(topics = "${person.save.details}", groupId = "pizza-online")
     public void processSavePerson(String message) {
         log.info("received person = {}", message);
         try {

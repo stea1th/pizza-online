@@ -1,7 +1,6 @@
 package de.stea1th.persist.service.impl;
 
 import de.stea1th.commonslibrary.dto.PersonDto;
-import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
 import de.stea1th.persist.converter.PersonConverter;
 import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.repository.AddressRepository;
@@ -41,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public Person getByKeycloak(String keycloak) {
         Person person = personRepository.getByKeycloak(keycloak);
-        if(person == null) {
+        if (person == null) {
             log.error("no such person with keycloak id: {} exists", keycloak);
             person = new Person();
             person.setKeycloak(keycloak);
