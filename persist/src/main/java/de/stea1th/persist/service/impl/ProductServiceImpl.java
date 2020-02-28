@@ -1,9 +1,11 @@
-package de.stea1th.persist.service;
+package de.stea1th.persist.service.impl;
 
 import de.stea1th.commonslibrary.dto.ProductDto;
 import de.stea1th.persist.converter.ProductConverter;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.repository.ProductRepository;
+import de.stea1th.persist.service.OrderService;
+import de.stea1th.persist.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

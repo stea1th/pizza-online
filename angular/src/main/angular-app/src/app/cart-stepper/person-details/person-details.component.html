@@ -73,7 +73,8 @@
   <mat-card class="mat-elevation-z8">
     <div fxFlex="30%" fxLayout="row" fxLayoutGap="3%">
       <button [color]="'accent'" mat-button mat-raised-button matStepperPrevious>Back</button>
-      <button [color]="'accent'" [disabled]="isDisabled" mat-button mat-raised-button matStepperNext>Order now
+      <button [color]="'accent'" [disabled]="isDisabled" mat-button mat-raised-button matStepperNext (click) = "completeOrder()">
+        Order now
       </button>
     </div>
   </mat-card>

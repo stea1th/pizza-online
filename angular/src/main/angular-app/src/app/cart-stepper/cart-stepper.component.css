@@ -4,3 +4,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.error-div {
+  color: #B12704;
+}

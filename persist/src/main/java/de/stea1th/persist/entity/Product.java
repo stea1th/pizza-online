@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString(exclude = "productCostList")
+@ToString(exclude = {"productCostList", "picture"})
 @Entity
 @Data
 @NoArgsConstructor

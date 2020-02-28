@@ -1,5 +1,6 @@
 package de.stea1th.persist.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ public class OrderProductCost {
     @NotNull
     private Integer quantity;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, updatable = false, insertable = false)
     private Order order;

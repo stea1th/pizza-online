@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PersonDetails} from "../person-tabs/person-tabs.component";
+import {OrderDateTime} from "../cart-stepper/person-details/person-details.component";
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,10 @@ export class DataService {
     const params = new HttpParams().set('productCostId', id);
     let options = {params: params};
     return this.delete('/order_product_cost/delete', options);
+  }
+
+  public getCompleteOrderTime(): Observable<any> {
+    return this.get('/order/complete').pipe();
   }
 }
 

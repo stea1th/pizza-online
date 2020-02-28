@@ -1,6 +1,7 @@
-package de.stea1th.web.kafka;
+package de.stea1th.web.kafka.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.stea1th.web.kafka.OrderProductCostKafkaConsumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class OrderProductCostKafkaConsumerImpl implements OrderProductCostKafkaC
     }
 
     @KafkaListener(topics = "${order-product-cost.receive.sum}", groupId = "pizza-online")
-    public void processGetSumQuantites(String message) {
+    public void processReceiveSumQuantites(String message) {
         log.info("received sum of products in cart = {}", message);
         ObjectMapper objectMapper = new ObjectMapper();
         try {

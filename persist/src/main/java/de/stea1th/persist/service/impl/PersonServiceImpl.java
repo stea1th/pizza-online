@@ -1,4 +1,4 @@
-package de.stea1th.persist.service;
+package de.stea1th.persist.service.impl;
 
 import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stea1th.commonslibrary.exception.MyEntityNotFoundException;
@@ -6,6 +6,7 @@ import de.stea1th.persist.converter.PersonConverter;
 import de.stea1th.persist.entity.Person;
 import de.stea1th.persist.repository.AddressRepository;
 import de.stea1th.persist.repository.PersonRepository;
+import de.stea1th.persist.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;

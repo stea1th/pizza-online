@@ -39,10 +39,10 @@ VALUES (1003, 'small size', 5.60),
 
 
 INSERT INTO orders(person_id, created, completed)
-VALUES (1000, now() - INTERVAL '1 day', true),
-       (1002, now() - INTERVAL '3 hours 20 minutes', true),
-       (1001, now() - INTERVAL '1 day 3 hours', true),
-       (1000, now(), false);
+VALUES (1000, now() - INTERVAL '1 day', now()),
+       (1002, now() - INTERVAL '3 hours 20 minutes', now()),
+       (1001, now() - INTERVAL '1 day 3 hours', now()),
+       (1000, now(), NULL);
 
 INSERT INTO order_product_cost(order_id, product_cost_id, quantity)
 VALUES (1016, 1006, 1),

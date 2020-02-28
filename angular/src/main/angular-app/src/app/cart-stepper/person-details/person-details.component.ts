@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PersonDetails} from "../../person-tabs/person-tabs.component";
 import {DataService} from "../../service/data.service";
@@ -15,6 +15,9 @@ export class PersonDetailsComponent implements OnInit {
   isDisabled = true;
   personDetails: PersonDetails;
   needToSave = false;
+  orderDateTime: OrderDateTime;
+
+  @Output() setOrderDateTime = new EventEmitter();
 
   constructor(private _data: DataService) {
   }
@@ -52,4 +55,19 @@ export class PersonDetailsComponent implements OnInit {
       this._data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
     }
   }
+
+  completeOrder() {
+    this._data.getCompleteOrderTime().subscribe(d => {
+      this.orderDateTime = d;
+      this.setOrderDateTime.emit(this.orderDateTime);
+    });
+  }
+}
+
+export interface OrderDateTime {
+  year: number;
+  monthValue: number;
+  dayOfMonth: number;
+  hour: number;
+  minute: number;
 }

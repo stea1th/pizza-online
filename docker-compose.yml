@@ -78,7 +78,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
-    restart: always
+    restart: on-failure
     networks:
       - app-tier
 

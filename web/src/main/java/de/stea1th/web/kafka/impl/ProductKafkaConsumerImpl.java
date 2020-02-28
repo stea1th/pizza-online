@@ -1,8 +1,9 @@
-package de.stea1th.web.kafka;
+package de.stea1th.web.kafka.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.dto.ProductDto;
+import de.stea1th.web.kafka.ProductKafkaConsumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

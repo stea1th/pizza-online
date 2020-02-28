@@ -58,8 +58,8 @@ CREATE TABLE ORDERS
 (
     id        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     person_id INTEGER NOT NULL,
-    created   TIMESTAMP,
-    completed BOOLEAN NOT NULL    DEFAULT FALSE,
+    created   TIMESTAMP NOT NULL,
+    completed TIMESTAMP,
     FOREIGN KEY (person_id) REFERENCES PERSON (id) ON DELETE CASCADE
 );
 
