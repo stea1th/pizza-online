@@ -27,11 +27,11 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
     this._auth.logout();
   }
 
-  getDetails() {
-    this._data.getPersonDetails().subscribe(d => {
-      return console.log("Admin: " + JSON.stringify(d));
-    });
-  }
+  // getDetails() {
+  //   this._data.getPersonDetails().subscribe(d => {
+  //     return console.log("Admin: " + JSON.stringify(d));
+  //   });
+  // }
 
   countProductsInCart() {
     // this.data.getCartProducts().subscribe(d => {

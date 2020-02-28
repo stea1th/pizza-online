@@ -44,7 +44,7 @@ export class ProductCardComponent implements OnInit {
     if(this.quantitySelect.pristine == false) {
       const body = {productCostId: this.productCostElement.id, quantity: this.quantitySelect.value};
       this._data.updateProductQuantityInCart(body).subscribe((d) => {
-        this._sideNav.cart = d;
+        // this._sideNav.cart = d;
         this.refreshElements.emit();
       });
     }
@@ -52,7 +52,7 @@ export class ProductCardComponent implements OnInit {
 
   removeFromCart() {
     this._data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
-      this._sideNav.cart = d;
+      // this._sideNav.cart = d;
       this.refreshElements.emit();
     });
   }

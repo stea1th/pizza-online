@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PersonDetails} from "../../person-tabs/person-tabs.component";
 import {DataService} from "../../service/data.service";
+import {ShopCartComponent} from "../shop-cart/shop-cart.component";
+import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
 
 @Component({
   selector: 'app-person-details',
@@ -18,8 +20,9 @@ export class PersonDetailsComponent implements OnInit {
   orderDateTime: OrderDateTime;
 
   @Output() setOrderDateTime = new EventEmitter();
+  @Output() refreshCart = new EventEmitter();
 
-  constructor(private _data: DataService) {
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
   }
 
   ngOnInit(): void {
@@ -60,6 +63,7 @@ export class PersonDetailsComponent implements OnInit {
     this._data.getCompleteOrderTime().subscribe(d => {
       this.orderDateTime = d;
       this.setOrderDateTime.emit(this.orderDateTime);
+      this.refreshCart.emit();
     });
   }
 }

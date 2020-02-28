@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
 
@@ -9,37 +9,21 @@ import {Creator} from "../../helper/creator";
 })
 export class ShopCartComponent implements OnInit {
 
-  productCostList: ProductCostElement[];
-  totalPay: string;
-  totalQuantity: number;
+  @Output() refreshCart = new EventEmitter();
+  @Input() totalPay: string;
+  @Input() totalQuantity: number;
+  @Input() productCostList: ProductCostElement[];
 
-  constructor(private _data: DataService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.getProductsInCart();
+    this.refreshElements();
   }
 
-  getProductsInCart() {
-    this._data.getCartProductCosts().subscribe(data => {
-      this.productCostList = data;
-      this.createTotal(this.productCostList);
-      return this.productCostList;
-    });
+  refreshElements() {
+    this.refreshCart.emit();
   }
-
-  createTotal(array: ProductCostElement[]) {
-    let totalPrice = 0;
-    this.totalQuantity = 0;
-    for (let i = 0; i < array.length; i++) {
-      const price = array[i].price;
-      const quantity = array[i].quantity;
-      totalPrice += (price - price * array[i].discount / 100) * quantity;
-      this.totalQuantity += quantity;
-    }
-    this.totalPay = Creator.createPrice(totalPrice);
-  }
-
 }
 
 export class ProductCostElement {
