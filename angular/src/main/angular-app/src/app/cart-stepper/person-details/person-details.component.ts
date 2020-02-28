@@ -4,6 +4,7 @@ import {PersonDetails} from "../../person-tabs/person-tabs.component";
 import {DataService} from "../../service/data.service";
 import {ShopCartComponent} from "../shop-cart/shop-cart.component";
 import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-person-details',
@@ -16,13 +17,12 @@ export class PersonDetailsComponent implements OnInit {
   isLinear = true;
   isDisabled = true;
   personDetails: PersonDetails;
-  needToSave = false;
   orderDateTime: OrderDateTime;
 
   @Output() setOrderDateTime = new EventEmitter();
   @Output() refreshCart = new EventEmitter();
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -42,20 +42,22 @@ export class PersonDetailsComponent implements OnInit {
   }
 
   saveDetails() {
-    if (this.firstFormGroup.touched) {
+    if (!this.firstFormGroup.pristine) {
       this.personDetails.firstName = this.firstFormGroup.value.firstName;
       this.personDetails.lastName = this.firstFormGroup.value.lastName;
-      this.needToSave = true;
     }
-    if (this.secondFormGroup.touched) {
+    if (!this.secondFormGroup.pristine) {
       this.personDetails.address.street = this.secondFormGroup.value.street;
       this.personDetails.address.zip = this.secondFormGroup.value.zip;
       this.personDetails.address.city = this.secondFormGroup.value.city;
       this.personDetails.address.country = this.secondFormGroup.value.country;
-      this.needToSave = true;
     }
-    if (this.needToSave) {
-      this._data.savePersonDetails(this.personDetails).subscribe(d => console.log(d));
+    if (!this.firstFormGroup.pristine || !this.secondFormGroup.pristine) {
+      this._data.savePersonDetails(this.personDetails).subscribe(d => {
+        this._snackBar.open("Your details are updated successfully");
+        this.firstFormGroup.pristine = true;
+        this.secondFormGroup.pristine = true;
+      });
     }
   }
 

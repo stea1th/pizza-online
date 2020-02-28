@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Host, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import {Creator} from "../../../helper/creator";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({

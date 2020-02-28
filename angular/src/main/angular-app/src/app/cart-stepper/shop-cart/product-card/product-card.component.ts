@@ -6,6 +6,7 @@ import {Creator} from "../../../helper/creator";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 import {DomSanitizer} from "@angular/platform-browser";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -25,7 +26,8 @@ export class ProductCardComponent implements OnInit {
   faEuro = faEuroSign;
   image: string;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _sanitizer: DomSanitizer) { }
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
@@ -41,9 +43,12 @@ export class ProductCardComponent implements OnInit {
   }
 
   onChange() {
-    if(this.quantitySelect.pristine == false) {
+    if (this.quantitySelect.pristine == false) {
       const body = {productCostId: this.productCostElement.id, quantity: this.quantitySelect.value};
       this._data.updateProductQuantityInCart(body).subscribe((d) => {
+        const message = this.quantitySelect.value + " x " + this.productCostElement.product.name + ", " + this.productCostElement.property + " was updated  in cart";
+        this._snackBar.open(message);
+
         // this._sideNav.cart = d;
         this.refreshElements.emit();
       });
@@ -53,6 +58,8 @@ export class ProductCardComponent implements OnInit {
   removeFromCart() {
     this._data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
       // this._sideNav.cart = d;
+      const message = this.quantitySelect.value + " x " + this.productCostElement.product.name + ", " + this.productCostElement.property + " was removed from cart";
+      this._snackBar.open(message);
       this.refreshElements.emit();
     });
   }

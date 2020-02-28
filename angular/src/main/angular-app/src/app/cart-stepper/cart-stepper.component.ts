@@ -3,6 +3,7 @@ import {DataService} from "../service/data.service";
 import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {Creator} from "../helper/creator";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -55,5 +56,9 @@ export class CartStepperComponent implements OnInit {
     }
     return sum;
   }
+
+  // openSnackBar(message: string) {
+  //   this._snackBar.open(message);
+  // }
 }
 

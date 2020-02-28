@@ -11,6 +11,8 @@ export class ShopCartComponent implements OnInit {
 
   @Output() refreshCart = new EventEmitter();
 
+  @Output() openSnackBar = new EventEmitter();
+
   @Input() totalPay: string;
   @Input() totalQuantity: number;
   @Input() productCostList: ProductCostElement[];
