@@ -13,5 +13,4 @@ public class ProductCostInCartDto extends ProductCostDto {
     private ProductDto product;
 
     private int quantity;
-
 }
