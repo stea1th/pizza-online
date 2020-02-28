@@ -16,6 +16,7 @@ export class ShopCartComponent implements OnInit {
   @Input() productCostList: ProductCostElement[];
 
 
+
   constructor() {
   }
 
