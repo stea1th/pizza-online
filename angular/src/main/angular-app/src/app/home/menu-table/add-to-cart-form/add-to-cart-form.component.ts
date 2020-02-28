@@ -16,7 +16,11 @@ export class AddToCartFormComponent implements OnInit {
 
   @Input('product-cost-list') productCostList: any[];
 
+  @Input() elementName: string;
+
   @Output() closeRow = new EventEmitter();
+
+  @Output() openSnackBar = new EventEmitter();
 
   isSubmitButtonHidden = true;
   isNormalPriceHidden = true;
@@ -37,7 +41,6 @@ export class AddToCartFormComponent implements OnInit {
   constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
   }
 
-
   createRange(n: number) {
     return Array(n);
   }
@@ -49,7 +52,8 @@ export class AddToCartFormComponent implements OnInit {
     const body = {productCostId: this.addToCartForm.value.productCost.id, quantity: this.addToCartForm.value.quantity};
     this._data.addProductToCart(body).subscribe((d) => {
       // this.closeRow.emit();
-
+      const message = this.addToCartForm.value.quantity + " x " + this.elementName + ", " + this.addToCartForm.value.productCost.property + " was added to cart";
+      this.openSnackBar.emit(message);
       this.resetForm();
       this._sideNav.cart = d;
     });
@@ -57,8 +61,8 @@ export class AddToCartFormComponent implements OnInit {
 
   onChange(val: any) {
     this.discount = val?.discount;
-    if(this.discount != undefined) {
-      if(this.discount == 0) {
+    if (this.discount != undefined) {
+      if (this.discount == 0) {
         this.formDiscountPrice = Creator.createPrice(val.price);
         this.isNormalPriceHidden = true;
       } else {
@@ -83,6 +87,4 @@ export class AddToCartFormComponent implements OnInit {
     });
     this.isSubmitButtonHidden = true;
   }
-
-
 }

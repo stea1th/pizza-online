@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {KeycloakService} from "./service/keycloak.service";
-import {DataService} from "./service/data.service";
 
 @Component({
   selector: 'app-root',

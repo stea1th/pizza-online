@@ -13,14 +13,16 @@
           <div fxLayout="row" fxLayoutAlign="space-around center" class="menu-layout-row" fxLayout.lt-md="column"
                fxLayoutGap="1%">
             <div class="element-diagram" fxFlex="20%">
-<!--              <div class="element-picture"> {{element.picture}}</div>-->
               <img [src]="element.picture" alt="Product picture"/>
             </div>
             <div class="element-description" fxFlex="40%" fxLayoutAlign="center center">
               {{testData}}
             </div>
             <div fxFlex="40%" fxLayoutAlign="space-around center">
-              <app-add-to-cart-form [product-cost-list]="element.productCostList" (closeRow)="closeRow()" ></app-add-to-cart-form>
+              <app-add-to-cart-form [product-cost-list]="element.productCostList"
+                (closeRow)="closeRow()"
+                (openSnackBar)="openSnackBar($event)"
+                [elementName]="element.name"></app-add-to-cart-form>
             </div>
           </div>
         </div>

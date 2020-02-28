@@ -5,6 +5,7 @@ import {Creator} from "../../helper/creator";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-menu-table',
@@ -20,7 +21,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class MenuTableComponent implements OnInit {
 
-  // myDataArray: ProductElement[];
   myDataArray: any;
   testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -33,17 +33,17 @@ export class MenuTableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private _data: DataService, private _sanitizer: DomSanitizer) {
+  constructor(private _data: DataService, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this._data.getAllProducts().subscribe(data => {
       this.myDataArray = new MatTableDataSource<ProductElement>(data);
       this.myDataArray.paginator = this.paginator;
-      for (let i = 0; i < this.myDataArray.filteredData.length ; i++) {
+      for (let i = 0; i < this.myDataArray.filteredData.length; i++) {
         this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any).changingThisBreaksApplicationSecurity;
         this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
-        this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x=> x.discount > 0).length > 0 ? '%' : '';
+        this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
       }
     });
   }
@@ -53,13 +53,18 @@ export class MenuTableComponent implements OnInit {
   }
 
   createPrice(arr: any[]): string {
-    let resultArr = arr.map(function(x) {
+    let resultArr = arr.map(function (x) {
       return x.price;
     });
     let min = Math.min(...resultArr);
     let max = Math.max(...resultArr);
     return Creator.createPrice(min) + " - " + Creator.createPrice(max);
   }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message);
+  }
+
 }
 
 export class ProductElement {

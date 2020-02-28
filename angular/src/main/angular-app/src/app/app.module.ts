@@ -40,7 +40,7 @@ import {PersonTabsComponent} from './person-tabs/person-tabs.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {PersonInfoComponent} from './person-tabs/person-info/person-info.component';
 import {PersonDetailsComponent} from './cart-stepper/person-details/person-details.component';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -90,6 +90,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatPaginatorModule,
     MatStepperModule,
     MatTabsModule,
+    MatSnackBarModule,
+
 
   ],
   providers: [
