@@ -10,9 +10,11 @@ import {Creator} from "../../helper/creator";
 export class ShopCartComponent implements OnInit {
 
   @Output() refreshCart = new EventEmitter();
+
   @Input() totalPay: string;
   @Input() totalQuantity: number;
   @Input() productCostList: ProductCostElement[];
+
 
   constructor() {
   }

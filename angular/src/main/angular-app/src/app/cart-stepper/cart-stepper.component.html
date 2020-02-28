@@ -2,11 +2,14 @@
   <mat-horizontal-stepper [linear]="isLinear">
     <mat-step>
       <ng-template matStepLabel>Items overview</ng-template>
-      <app-shop-cart (refreshCart)="getProductsInCart()" [totalPay]="totalPay" [totalQuantity]="totalQuantity" [productCostList]="productCostList"></app-shop-cart>
+      <app-shop-cart (refreshCart)="getProductsInCart()" [totalPay]="totalPay" [totalQuantity]="totalQuantity"
+                     [productCostList]="productCostList">
+      </app-shop-cart>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Address overview</ng-template>
-      <app-person-details (setOrderDateTime)="setOrderDateTime($event)" (refreshCart)="getProductsInCart()"></app-person-details>
+      <app-person-details (setOrderDateTime)="setOrderDateTime($event)"
+                          (refreshCart)="getProductsInCart()"></app-person-details>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>

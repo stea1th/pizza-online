@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {format} from "util";
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {Creator} from "../helper/creator";
@@ -8,7 +7,8 @@ import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsi
 @Component({
   selector: 'app-cart-stepper',
   templateUrl: './cart-stepper.component.html',
-  styleUrls: ['./cart-stepper.component.css']
+  styleUrls: ['./cart-stepper.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CartStepperComponent implements OnInit {
 
@@ -55,6 +55,5 @@ export class CartStepperComponent implements OnInit {
     }
     return sum;
   }
-
 }
 

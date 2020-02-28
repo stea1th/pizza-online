@@ -8,3 +8,7 @@
 .error-div {
   color: #B12704;
 }
+
+.mat-step-header {
+  pointer-events: none !important;
+}
