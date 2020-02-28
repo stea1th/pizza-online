@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.security.Principal;
 
 @CrossOrigin
@@ -33,7 +32,7 @@ public class OrderProductCostController {
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
-    @GetMapping(value="/sum")
+    @GetMapping(value = "/sum")
     public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
         String keycloak = principal.getName();
         log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);

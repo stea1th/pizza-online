@@ -22,7 +22,7 @@ public class OrderProductCostKafkaConsumerImpl implements OrderProductCostKafkaC
     }
 
     @KafkaListener(topics = "${order-product-cost.receive.sum}", groupId = "pizza-online")
-    public void processReceiveSumQuantites(String message) {
+    public void processReceiveSumQuantities(String message) {
         log.info("received sum of products in cart = {}", message);
         ObjectMapper objectMapper = new ObjectMapper();
         try {

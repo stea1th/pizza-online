@@ -73,6 +73,6 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
             sum = orderProductCostKafkaConsumer.getCountProductsInCart();
             if (sum != null) break;
         }
-        return sum == null? 0 : sum;
+        return sum == null ? 0 : sum;
     }
 }

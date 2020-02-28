@@ -19,8 +19,6 @@ public class ProductKafkaConsumerImpl implements ProductKafkaConsumer {
 
     private List<ProductDto> productsInCart;
 
-//    private ProductDto productDto;
-
     public List<ProductDto> getAllProducts() {
         List<ProductDto> tempProducts = allProducts;
         allProducts = null;

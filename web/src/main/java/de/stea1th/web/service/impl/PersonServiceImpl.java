@@ -46,7 +46,6 @@ public class PersonServiceImpl implements PersonService {
         this.personKafkaConsumer = personKafkaConsumer;
     }
 
-
     @Override
     public PersonDto get(int id) {
         kafkaProducer.produce(personGetIdTopic, "pizza-online", id);

@@ -32,8 +32,6 @@ public class ProductServiceImpl implements ProductService {
     @Value("${product.get.cart}")
     private String productsGetCartTopic;
 
-
-
     public ProductServiceImpl(KafkaProducer kafkaProducer, ProductKafkaConsumer productKafkaConsumer) {
         this.kafkaProducer = kafkaProducer;
         this.productKafkaConsumer = productKafkaConsumer;

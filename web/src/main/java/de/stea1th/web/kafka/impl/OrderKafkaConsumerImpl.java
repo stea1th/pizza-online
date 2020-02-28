@@ -3,7 +3,6 @@ package de.stea1th.web.kafka.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.stea1th.commonslibrary.dto.OrderDto;
 import de.stea1th.web.kafka.OrderKafkaConsumer;
 import lombok.extern.slf4j.Slf4j;

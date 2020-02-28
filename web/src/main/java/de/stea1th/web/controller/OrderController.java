@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @CrossOrigin
 @RestController
@@ -33,7 +30,6 @@ public class OrderController {
         String keycloak = principal.getName();
         LocalDateTimeDto complete = orderService.complete(keycloak);
         return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
-//                new ResponseEntity<>("'" + complete.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + "'", HttpStatus.OK);
                 new ResponseEntity<>(complete, HttpStatus.OK);
     }
 }

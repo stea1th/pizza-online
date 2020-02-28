@@ -11,5 +11,4 @@ public interface PersonService {
     PersonDto getByPrincipal(Principal principal);
 
     void save(PersonDto personDto);
-
 }
