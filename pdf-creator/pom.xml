@@ -17,7 +17,6 @@
     <properties>
         <java.version>1.8</java.version>
         <itext.version>RELEASE</itext.version>
-        <commons-library.version>0.0.1-SNAPSHOT</commons-library.version>
     </properties>
 
     <dependencies>
@@ -51,7 +50,7 @@
         <dependency>
             <groupId>de.stea1th</groupId>
             <artifactId>commons-library</artifactId>
-            <version>${commons-library.version}</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
