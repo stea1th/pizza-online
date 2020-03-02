@@ -13,5 +13,6 @@
         <module>persist</module>
         <module>angular</module>
         <module>commons</module>
+        <module>pdf-creator</module>
     </modules>
 </project>
