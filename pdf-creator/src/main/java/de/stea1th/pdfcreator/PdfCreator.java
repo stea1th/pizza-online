@@ -3,7 +3,6 @@ package de.stea1th.pdfcreator;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.HorizontalAlignment;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PdfCreator {
+
+    public  static final int LEADING = 16;
 
 
     @SneakyThrows
@@ -75,13 +76,47 @@ public class PdfCreator {
             table2.setMarginLeft(30);
             table2.setMarginRight(30);
             table2.setMarginTop(10);
+            table2.setMarginBottom(5);
             table2.setFontSize(10);
+
             table2.addHeaderCell(new Cell().add(new Paragraph("Pos.")).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
             table2.addHeaderCell(new Cell().add(new Paragraph("Bezeichnung")).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
-            table2.addHeaderCell(new Cell().add(new Paragraph("Menge")).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
-            table2.addHeaderCell(new Cell().add(new Paragraph("Einzel")).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
-            table2.addHeaderCell(new Cell().add(new Paragraph("Gesamt")).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
+            table2.addHeaderCell(new Cell().add(new Paragraph("Menge")).setTextAlignment(TextAlignment.CENTER).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
+            table2.addHeaderCell(new Cell().add(new Paragraph("Einzel")).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
+            table2.addHeaderCell(new Cell().add(new Paragraph("Gesamt")).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBold().setBorderTop(new SolidBorder(1)).setBorderBottom(new SolidBorder(1)));
+            table2.addCell(new Cell().add(new Paragraph("1")).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("Pizza Tonne, big size")).setBorder(null).setBold());
+            table2.addCell(new Cell().add(new Paragraph("2 Stück")).setTextAlignment(TextAlignment.CENTER).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("8,25")).setTextAlignment(TextAlignment.RIGHT).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("16,50")).setTextAlignment(TextAlignment.RIGHT).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("2")).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("Pizza Salami, big size")).setBorder(null).setBold());
+            table2.addCell(new Cell().add(new Paragraph("1 Stück")).setTextAlignment(TextAlignment.CENTER).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("5,00")).setTextAlignment(TextAlignment.RIGHT).setBorder(null));
+            table2.addCell(new Cell().add(new Paragraph("5,00")).setTextAlignment(TextAlignment.RIGHT).setBorder(null));
 
+            Table table3 = new Table(new float[]{7, 3});
+            table3.setWidth(UnitValue.createPercentValue(40));
+            table3.setHorizontalAlignment(HorizontalAlignment.RIGHT).setTextAlignment(TextAlignment.RIGHT);
+            table3.setMarginRight(30);
+            table3.setFontSize(10);
+//            table3.setBorder(Border.NO_BORDER);
+            table3.addCell(new Cell().add(new Paragraph("Summe Netto")).setBorder(null).setBorderBottom(new SolidBorder(1)));
+            table3.addCell(new Cell().add(new Paragraph("21,50")).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBorderBottom(new SolidBorder(1)));
+            table3.addCell(new Cell().add(new Paragraph("USt 7,00%")).setBorder(null).setBorderBottom(new SolidBorder(1)));
+            table3.addCell(new Cell().add(new Paragraph("1,50")).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBorderBottom(new SolidBorder(1)));
+            table3.addCell(new Cell().add(new Paragraph("Betrag")).setBorder(null).setBold().setBorderBottom(new SolidBorder(1)));
+            table3.addCell(new Cell().add(new Paragraph("23,00")).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBold().setBorderBottom(new SolidBorder(1)));
+
+            Paragraph p4 = new Paragraph();
+            p4.setPaddingLeft(30);
+            p4.setPaddingRight(30);
+            p4.setPaddingTop(15);
+            p4.setFontSize(10);
+            p4.add(new Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut\n" +
+                    "       labore et dolore magna aliqua Ut enim ad minim veniam. \n\n" +
+                    "Mit freundlichen Grüßen\n" +
+                    "Mathilda Musterfrau"));
 
 
             document.add(p);
@@ -90,6 +125,8 @@ public class PdfCreator {
             document.add(p1);
             document.add(p2);
             document.add(table2);
+            document.add(table3);
+            document.add(p4);
 
         }
     }
