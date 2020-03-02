@@ -19,13 +19,18 @@ export class CartStepperComponent implements OnInit {
   totalPay: string;
   totalQuantity: number;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) { }
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
+  }
 
   ngOnInit(): void {
   }
 
   setOrderDateTime(event) {
-    this.orderDateTime = event.dayOfMonth + '.' + event.monthValue + '.' + event.year + ' ' + event.hour + ':' + event.minute;
+    this.orderDateTime = this.attachZero(event.dayOfMonth) + '.'
+      + this.attachZero(event.monthValue) + '.'
+      + event.year + ' '
+      + this.attachZero(event.hour) + ':'
+      + this.attachZero(event.minute);
   }
 
   getProductsInCart() {
@@ -51,10 +56,15 @@ export class CartStepperComponent implements OnInit {
 
   sumAllQuantitiesInCart(array: ProductCostElement[]) {
     let sum = 0;
-    for (let i = 0; i <array.length ; i++) {
+    for (let i = 0; i < array.length; i++) {
       sum += array[i].quantity;
     }
     return sum;
+  }
+
+  attachZero(num: number): string {
+    const str = '' + num;
+    return str.length == 1 ? '0' + str : str;
   }
 
   // openSnackBar(message: string) {
