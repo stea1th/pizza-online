@@ -31,13 +31,13 @@ public class ProductCostKafkaConsumer {
 
     @KafkaListener(topics = "${product-cost.get.cart}", groupId = "pizza-online")
     public void processGetAllProductCosts(String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
+//        ObjectMapper objectMapper = new ObjectMapper();
         List<ProductCostInCartDto> allProductCostsByKeycloak = productCostService.getAllProductCostsByKeycloak(message);
         kafkaProducer.produce(receiveCartProductCostsTopic, "pizza-online", allProductCostsByKeycloak);
-        try {
-            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(allProductCostsByKeycloak), receiveCartProductCostsTopic);
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
-        }
+//        try {
+//            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(allProductCostsByKeycloak), receiveCartProductCostsTopic);
+//        } catch (JsonProcessingException e) {
+//            log.error(e.getMessage());
+//        }
     }
 }

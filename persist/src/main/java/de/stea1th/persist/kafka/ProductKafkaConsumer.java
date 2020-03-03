@@ -21,22 +21,23 @@ public class ProductKafkaConsumer {
 
     private ProductService productService;
 
+    private ObjectMapper objectMapper;
+
     @Value("${product.receive.product.all}")
     private String receiveAllProductsTopic;
 
     @Value("${product.receive.product.cart}")
     private String receiveCartProductsTopic;
 
-
     @Autowired
     public ProductKafkaConsumer(KafkaProducer kafkaProducer, ProductService productService) {
         this.kafkaProducer = kafkaProducer;
         this.productService = productService;
+        objectMapper = new ObjectMapper();
     }
 
     @KafkaListener(topics = "${product.get.all}", groupId = "pizza-online")
     public void processGetAllProducts() {
-        ObjectMapper objectMapper = new ObjectMapper();
         List<ProductDto> products = productService.getAll();
         kafkaProducer.produce(receiveAllProductsTopic, "pizza-online", products);
         try {
@@ -48,7 +49,6 @@ public class ProductKafkaConsumer {
 
     @KafkaListener(topics = "${product.get.cart}", groupId = "pizza-online")
     public void processGetAllProducts(String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
         List<ProductDto> products = productService.getAllProductsByKeycloak(message);
         kafkaProducer.produce(receiveCartProductsTopic, "pizza-online", products);
         try {
