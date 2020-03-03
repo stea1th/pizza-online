@@ -24,7 +24,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-//import java.util.ArrayList;
 
 @Component
 public class InvoicePdfBlockCreator {
@@ -141,6 +140,9 @@ public class InvoicePdfBlockCreator {
             table.addCell(new Cell().add(new Paragraph(String.format("%s", dto.getPrice())).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
             table.addCell(new Cell().add(new Paragraph(String.format("%s", (dto.getPrice().multiply(new BigDecimal(dto.getQuantity()))))).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
         }
+        if (sumDiscount(dtoList).doubleValue() > 0) {
+
+        }
         return table;
     }
 
@@ -151,7 +153,7 @@ public class InvoicePdfBlockCreator {
         table.setMarginRight(30);
         table.setFontSize(10);
 
-        var total = sumTotal(dtoList);
+        var total = sumTotal(dtoList).subtract(sumDiscount(dtoList));
         var tax = getTax(total);
 
         table.addCell(new Cell().add(new Paragraph("Summe Netto")).setBorder(null).setBorderBottom(new SolidBorder(1)));
@@ -203,8 +205,27 @@ public class InvoicePdfBlockCreator {
     }
 
     private BigDecimal sumTotal(java.util.List<ProductCostInCartDto> dtoList) {
-        double sum = dtoList.stream().mapToDouble(x -> x.getPrice().doubleValue()).sum();
+        double sum = dtoList
+                .stream()
+                .mapToDouble(x -> {
+                    var price = x.getPrice().doubleValue();
+                    return (price - calculateDiscount(x)) * x.getQuantity();
+                })
+                .sum();
         return new BigDecimal(sum).setScale(2, RoundingMode.CEILING);
+    }
+
+    private BigDecimal sumDiscount(java.util.List<ProductCostInCartDto> dtoList) {
+        double sum = dtoList
+                .stream()
+                .filter(x -> x.getDiscount() > 0)
+                .mapToDouble(this::calculateDiscount)
+                .sum();
+        return new BigDecimal(sum).setScale(2, RoundingMode.CEILING);
+    }
+
+    private double calculateDiscount(ProductCostInCartDto dto) {
+        return dto.getPrice().doubleValue() * dto.getDiscount() / 100;
     }
 
     private BigDecimal getTax(BigDecimal bigDecimal) {
