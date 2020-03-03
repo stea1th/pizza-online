@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Transactional(readOnly = true)
 public interface OrderProductCostRepository extends JpaRepository<OrderProductCost, OrderProductCostPK> {

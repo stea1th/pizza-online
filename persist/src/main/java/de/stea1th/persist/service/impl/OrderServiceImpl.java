@@ -1,18 +1,31 @@
 package de.stea1th.persist.service.impl;
 
 
+import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.OrderDto;
+import de.stea1th.commonslibrary.dto.PdfCreatorDto;
+import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
+import de.stea1th.persist.converter.OrderConverter;
+import de.stea1th.persist.converter.ProductCostConverter;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.entity.Person;
+import de.stea1th.persist.entity.ProductCost;
 import de.stea1th.persist.repository.OrderRepository;
+import de.stea1th.persist.repository.ProductCostRepository;
+import de.stea1th.persist.service.OrderProductCostService;
 import de.stea1th.persist.service.OrderService;
 import de.stea1th.persist.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -22,10 +35,34 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderRepository orderRepository;
 
+    private ProductCostRepository productCostRepository;
+
+    private ProductCostConverter productCostConverter;
+
+    private OrderProductCostService orderProductCostService;
+
+    private OrderConverter orderConverter;
+
+    private KafkaProducer kafkaProducer;
+
+    @Value("${pdf-creator.create.invoice}")
+    private String pdfCreateTopic;
+
+
     @Autowired
-    public OrderServiceImpl(PersonService personService, OrderRepository orderRepository) {
+    public OrderServiceImpl(PersonService personService,
+                            OrderRepository orderRepository,
+                            ProductCostRepository productCostRepository,
+                            ProductCostConverter productCostConverter,
+                            @Lazy OrderProductCostService orderProductCostService,
+                            OrderConverter orderConverter, KafkaProducer kafkaProducer) {
         this.personService = personService;
         this.orderRepository = orderRepository;
+        this.productCostRepository = productCostRepository;
+        this.productCostConverter = productCostConverter;
+        this.orderProductCostService = orderProductCostService;
+        this.orderConverter = orderConverter;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @Override
@@ -43,6 +80,37 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order completeOrder(String keycloak) {
+        Order order = complete(keycloak);
+        produceInvoiceAsPdf(order);
+        return order;
+    }
+
+
+    public void produceInvoiceAsPdf(Order order) {
+        PdfCreatorDto pdfCreatorDto = createPdfCreatorDto(order);
+        kafkaProducer.produce(pdfCreateTopic, pdfCreatorDto);
+    }
+
+
+    @Transactional
+    public PdfCreatorDto createPdfCreatorDto(Order order) {
+        List<ProductCost> productCostList = productCostRepository.getAllByOrderId(order.getId());
+        List<ProductCostInCartDto> dtoList = productCostList
+                .stream()
+                .map(productCost -> {
+                    int quantity = orderProductCostService.getQuantityByOrderProductCostId(order.getId(), productCost.getId());
+                    return productCostConverter.convertToDtoInCart(productCost, quantity);
+                }).collect(Collectors.toList());
+        OrderDto orderDto = orderConverter.convertToDtoWithoutOPC(order);
+        var pdfCreatorDto = new PdfCreatorDto();
+        pdfCreatorDto.setOrderDto(orderDto);
+        pdfCreatorDto.setProductCostInCartDtoList(dtoList);
+        return pdfCreatorDto;
+    }
+
+
+    @Transactional
+    public Order complete(String keycloak) {
         Person person = personService.getByKeycloak(keycloak);
         Order order = getUncompletedOrderByPerson(person);
         if (!order.getOrderProductCosts().isEmpty()) {

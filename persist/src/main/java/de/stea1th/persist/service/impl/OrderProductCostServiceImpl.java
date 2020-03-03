@@ -9,6 +9,7 @@ import de.stea1th.persist.service.OrderProductCostService;
 import de.stea1th.persist.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     private final OrderService orderService;
 
-    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, OrderService orderService) {
+    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository,@Lazy OrderService orderService) {
         this.orderProductCostRepository = orderProductCostRepository;
         this.orderService = orderService;
     }
@@ -42,10 +43,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     @Override
     public int getQuantityByOrderProductCostId(int orderId, int productCostId) {
-        var orderProductCostId = new OrderProductCostPK();
-        orderProductCostId.setOrderId(orderId);
-        orderProductCostId.setProductCostId(productCostId);
-        return orderProductCostRepository.findQuantityById(orderProductCostId);
+        return orderProductCostRepository.findQuantityById(createPK(orderId, productCostId));
     }
 
     @Override

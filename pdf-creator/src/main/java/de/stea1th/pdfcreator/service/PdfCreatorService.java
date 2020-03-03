@@ -1,18 +1,19 @@
-package de.stea1th.pdfcreator;
+package de.stea1th.pdfcreator.service;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
+import de.stea1th.pdfcreator.creator.InvoicePdfBlockCreator;
 import lombok.SneakyThrows;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
-public class PdfCreator {
+@Service
+public class PdfCreatorService {
 
     private InvoicePdfBlockCreator pdfBlockCreator;
 
-    public PdfCreator(InvoicePdfBlockCreator pdfBlockCreator) {
+    public PdfCreatorService(InvoicePdfBlockCreator pdfBlockCreator) {
         this.pdfBlockCreator = pdfBlockCreator;
     }
 

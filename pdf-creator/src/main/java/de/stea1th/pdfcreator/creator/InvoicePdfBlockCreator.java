@@ -1,4 +1,4 @@
-package de.stea1th.pdfcreator;
+package de.stea1th.pdfcreator.creator;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
