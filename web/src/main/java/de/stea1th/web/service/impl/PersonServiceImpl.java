@@ -84,8 +84,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void setPersonDetails(AccessToken accessToken, PersonDto personDto) {
-        if (personDto.getFirstName() == null) personDto.setFirstName(accessToken.getGivenName());
-        if (personDto.getLastName() == null) personDto.setLastName(accessToken.getFamilyName());
-        if (personDto.getEmail() == null) personDto.setEmail(accessToken.getEmail());
+        boolean needSave = false;
+        if (personDto.getFirstName() == null) {
+            personDto.setFirstName(accessToken.getGivenName());
+            needSave = true;
+        }
+        if (personDto.getLastName() == null) {
+            personDto.setLastName(accessToken.getFamilyName());
+            needSave = true;
+        }
+        if (personDto.getEmail() == null) {
+            personDto.setEmail(accessToken.getEmail());
+            needSave = true;
+        }
+        if (needSave) save(personDto);
     }
 }
