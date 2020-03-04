@@ -1,6 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataService} from "../../service/data.service";
-import {Creator} from "../../helper/creator";
 
 @Component({
   selector: 'app-shop-cart',
@@ -16,8 +14,6 @@ export class ShopCartComponent implements OnInit {
   @Input() totalPay: string;
   @Input() totalQuantity: number;
   @Input() productCostList: ProductCostElement[];
-
-
 
   constructor() {
   }

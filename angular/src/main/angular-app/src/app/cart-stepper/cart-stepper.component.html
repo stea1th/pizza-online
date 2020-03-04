@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-horizontal-stepper [linear]="isLinear">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step>
       <ng-template matStepLabel>Cart Overview</ng-template>
       <app-shop-cart (refreshCart)="getProductsInCart()" [totalPay]="totalPay" [totalQuantity]="totalQuantity"
@@ -9,7 +9,10 @@
     <mat-step>
       <ng-template matStepLabel>Person Overview</ng-template>
       <app-person-details (setOrderDateTime)="setOrderDateTime($event)"
-                          (refreshCart)="getProductsInCart()"></app-person-details>
+                          (refreshCart)="getProductsInCart()"
+                          [productCostList]="productCostList"
+                          [totalPay]="totalPay"
+                          (goForward)="goForward()"></app-person-details>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
@@ -24,6 +27,7 @@
             Some error occurred. Please try again later.
           </p>
         </ng-template>
+
         <button mat-raised-button color="accent" routerLink="/">
           Back to home
         </button>

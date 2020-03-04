@@ -3,7 +3,7 @@ import {DataService} from "../service/data.service";
 import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {Creator} from "../helper/creator";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatStepper} from "@angular/material/stepper";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -18,6 +18,9 @@ export class CartStepperComponent implements OnInit {
   productCostList: ProductCostElement[];
   totalPay: string;
   totalQuantity: number;
+
+  @ViewChild('stepper') stepper: MatStepper;
+
 
   constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
   }
@@ -67,8 +70,8 @@ export class CartStepperComponent implements OnInit {
     return str.length == 1 ? '0' + str : str;
   }
 
-  // openSnackBar(message: string) {
-  //   this._snackBar.open(message);
-  // }
+  goForward() {
+    this.stepper.next();
+  }
 }
 

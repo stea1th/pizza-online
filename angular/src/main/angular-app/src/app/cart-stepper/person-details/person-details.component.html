@@ -15,7 +15,7 @@
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Fill out your name</ng-template>
-          <div fxLayout="column" fxFlex="20%">
+          <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
             <mat-form-field class="full-width">
               <mat-label>First name</mat-label>
               <input formControlName="firstName" [ngModel]="personDetails?.firstName" matInput required>
@@ -33,8 +33,8 @@
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Fill out your address</ng-template>
-          <div fxLayout="column" fxFlex="20%">
+          <ng-template matStepLabel>Fill out your shipping address</ng-template>
+          <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
             <mat-form-field class="full-width">
               <mat-label>Address</mat-label>
               <input formControlName="street" matInput [ngModel]="personDetails?.address.street" required>
@@ -61,11 +61,13 @@
         </form>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now ready to order.</p>
-        <div>
-          <button mat-button matStepperPrevious (click)="isDisabled = true">Back</button>
-          <button mat-button (click)="stepper.reset(); isDisabled = true">Reset</button>
+        <ng-template matStepLabel>Order now</ng-template>
+        <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
+          <ngx-paypal [config]="payPalConfig" class="full-width"></ngx-paypal>
+          <div>
+            <button mat-button matStepperPrevious (click)="isDisabled = true">Back</button>
+            <button mat-button (click)="stepper.reset(); isDisabled = true">Reset</button>
+          </div>
         </div>
       </mat-step>
     </mat-vertical-stepper>
@@ -73,9 +75,10 @@
   <mat-card class="mat-elevation-z8">
     <div fxFlex="30%" fxLayout="row" fxLayoutGap="3%">
       <button [color]="'accent'" mat-button mat-raised-button matStepperPrevious>Back</button>
-      <button [color]="'accent'" [disabled]="isDisabled" mat-button mat-raised-button matStepperNext (click) = "completeOrder()">
-        Order now
-      </button>
+<!--      <button [color]="'accent'" [disabled]="isDisabled" mat-button mat-raised-button matStepperNext-->
+<!--              (click)="completeOrder()">-->
+<!--        Order now-->
+<!--      </button>-->
     </div>
   </mat-card>
 </div>

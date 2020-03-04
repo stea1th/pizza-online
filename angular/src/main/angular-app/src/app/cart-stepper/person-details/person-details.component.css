@@ -7,3 +7,8 @@
   font-weight: 700;
   font-family: sans-serif;
 }
+
+.full-width {
+  width: 30%;
+  padding-top: 5px;
+}
