@@ -31,6 +31,11 @@ public class InvoicePdfBlockCreator {
     @Value("${pdf.creator.base.path}")
     private String basePath;
 
+    private PriceCalculator priceCalculator;
+
+    public InvoicePdfBlockCreator(PriceCalculator priceCalculator) {
+        this.priceCalculator = priceCalculator;
+    }
 
     @SneakyThrows
     public void createPdf(PdfCreatorDto pdfCreatorDto) {
@@ -51,7 +56,6 @@ public class InvoicePdfBlockCreator {
             createFooter(pdf);
         }
     }
-
 
     private Paragraph createHeaderCompanySignature() {
         Paragraph paragraph = new Paragraph();
@@ -140,7 +144,7 @@ public class InvoicePdfBlockCreator {
             table.addCell(new Cell().add(new Paragraph(String.format("%s", dto.getPrice())).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
             table.addCell(new Cell().add(new Paragraph(String.format("%s", (dto.getPrice().multiply(new BigDecimal(dto.getQuantity()))))).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
         }
-        var discount = sumDiscount(dtoList);
+        var discount = priceCalculator.sumDiscount(dtoList);
         if (discount.doubleValue() > 0) {
             table.addCell(new Cell().add(new Paragraph(String.format("%d", dtoList.size() + 1))).setBorder(null));
             table.addCell(new Cell().add(new Paragraph("Rabatt")).setBorder(null).setBold());
@@ -158,8 +162,8 @@ public class InvoicePdfBlockCreator {
         table.setMarginRight(30);
         table.setFontSize(10);
 
-        var total = sumTotal(dtoList).subtract(sumDiscount(dtoList));
-        var tax = calculateTax(total);
+        var total = priceCalculator.sumTotal(dtoList).subtract(priceCalculator.sumDiscount(dtoList));
+        var tax = priceCalculator.calculateTax(total);
 
         table.addCell(new Cell().add(new Paragraph("Summe Netto")).setBorder(null).setBorderBottom(new SolidBorder(1)));
         table.addCell(new Cell().add(new Paragraph(total.subtract(tax).setScale(2, RoundingMode.CEILING).toString())).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBorderBottom(new SolidBorder(1)));
@@ -196,7 +200,6 @@ public class InvoicePdfBlockCreator {
         paragraph.setPaddingBottom(10);
         paragraph.setPaddingTop(10);
 
-
         float columnHeight = 30 * 2.5f;
         float x = 30 * 2;
         float columnWidth = (PageSize.A4.getWidth() - x * 2);
@@ -207,33 +210,5 @@ public class InvoicePdfBlockCreator {
 
     private String prependZero(int number) {
         return number < 10 ? "0" + number : "" + number;
-    }
-
-    private BigDecimal sumTotal(java.util.List<ProductCostInCartDto> dtoList) {
-        double sum = dtoList
-                .stream()
-                .mapToDouble(x -> {
-                    var price = x.getPrice().doubleValue();
-                    return price * x.getQuantity();
-                })
-                .sum();
-        return new BigDecimal(sum).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    private BigDecimal sumDiscount(java.util.List<ProductCostInCartDto> dtoList) {
-        double sum = dtoList
-                .stream()
-                .filter(x -> x.getDiscount() > 0)
-                .mapToDouble(dto -> calculateDiscount(dto) * dto.getQuantity())
-                .sum();
-        return new BigDecimal(sum).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    private double calculateDiscount(ProductCostInCartDto dto) {
-        return dto.getPrice().doubleValue() * dto.getDiscount() / 100;
-    }
-
-    private BigDecimal calculateTax(BigDecimal bigDecimal) {
-        return bigDecimal.multiply(BigDecimal.valueOf(0.07)).setScale(2, RoundingMode.HALF_UP);
     }
 }
