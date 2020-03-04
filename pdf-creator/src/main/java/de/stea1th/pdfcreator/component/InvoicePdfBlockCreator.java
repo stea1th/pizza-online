@@ -1,4 +1,4 @@
-package de.stea1th.pdfcreator.creator;
+package de.stea1th.pdfcreator.component;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -140,8 +140,13 @@ public class InvoicePdfBlockCreator {
             table.addCell(new Cell().add(new Paragraph(String.format("%s", dto.getPrice())).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
             table.addCell(new Cell().add(new Paragraph(String.format("%s", (dto.getPrice().multiply(new BigDecimal(dto.getQuantity()))))).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
         }
-        if (sumDiscount(dtoList).doubleValue() > 0) {
-
+        var discount = sumDiscount(dtoList);
+        if (discount.doubleValue() > 0) {
+            table.addCell(new Cell().add(new Paragraph(String.format("%d", dtoList.size() + 1))).setBorder(null));
+            table.addCell(new Cell().add(new Paragraph("Rabatt")).setBorder(null).setBold());
+            table.addCell(new Cell().add(new Paragraph("").setTextAlignment(TextAlignment.CENTER)).setBorder(null));
+            table.addCell(new Cell().add(new Paragraph("").setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
+            table.addCell(new Cell().add(new Paragraph(String.format("-%s", discount)).setTextAlignment(TextAlignment.RIGHT)).setBorder(null));
         }
         return table;
     }
@@ -154,7 +159,7 @@ public class InvoicePdfBlockCreator {
         table.setFontSize(10);
 
         var total = sumTotal(dtoList).subtract(sumDiscount(dtoList));
-        var tax = getTax(total);
+        var tax = calculateTax(total);
 
         table.addCell(new Cell().add(new Paragraph("Summe Netto")).setBorder(null).setBorderBottom(new SolidBorder(1)));
         table.addCell(new Cell().add(new Paragraph(total.subtract(tax).setScale(2, RoundingMode.CEILING).toString())).setTextAlignment(TextAlignment.RIGHT).setBorder(null).setBorderBottom(new SolidBorder(1)));
@@ -209,26 +214,26 @@ public class InvoicePdfBlockCreator {
                 .stream()
                 .mapToDouble(x -> {
                     var price = x.getPrice().doubleValue();
-                    return (price - calculateDiscount(x)) * x.getQuantity();
+                    return price * x.getQuantity();
                 })
                 .sum();
-        return new BigDecimal(sum).setScale(2, RoundingMode.CEILING);
+        return new BigDecimal(sum).setScale(2, RoundingMode.HALF_UP);
     }
 
     private BigDecimal sumDiscount(java.util.List<ProductCostInCartDto> dtoList) {
         double sum = dtoList
                 .stream()
                 .filter(x -> x.getDiscount() > 0)
-                .mapToDouble(this::calculateDiscount)
+                .mapToDouble(dto -> calculateDiscount(dto) * dto.getQuantity())
                 .sum();
-        return new BigDecimal(sum).setScale(2, RoundingMode.CEILING);
+        return new BigDecimal(sum).setScale(2, RoundingMode.HALF_UP);
     }
 
     private double calculateDiscount(ProductCostInCartDto dto) {
         return dto.getPrice().doubleValue() * dto.getDiscount() / 100;
     }
 
-    private BigDecimal getTax(BigDecimal bigDecimal) {
-        return bigDecimal.multiply(BigDecimal.valueOf(0.07)).setScale(2, RoundingMode.CEILING);
+    private BigDecimal calculateTax(BigDecimal bigDecimal) {
+        return bigDecimal.multiply(BigDecimal.valueOf(0.07)).setScale(2, RoundingMode.HALF_UP);
     }
 }
