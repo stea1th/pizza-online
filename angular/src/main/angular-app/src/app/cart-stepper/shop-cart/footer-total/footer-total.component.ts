@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
+import { Location } from '@angular/common';
 import {ProductCostElement} from "../shop-cart.component";
 
 @Component({
@@ -14,10 +15,14 @@ export class FooterTotalComponent implements OnInit {
 
   faEuro = faEuroSign;
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
   ngOnInit(): void {
 
+  }
+
+  goBack() {
+    this._location.back();
   }
 
 
