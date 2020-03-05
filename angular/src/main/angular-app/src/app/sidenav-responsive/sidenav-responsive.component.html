@@ -1,23 +1,31 @@
 <div class="main-container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
-
-
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <h1 class="app-name">Pizza-Online</h1>
-    <div fxLayout="row" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="3%" fxLayout.lt-sm="column">
-      <button mat-button>
-        <i class="material-icons">search</i>
-      </button>
-      <button mat-button routerLink="/person-tabs">
-        <i class="material-icons">perm_identity</i>
-      </button>
-      <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"
-              routerLink="/cart-stepper">
-        <i class="material-icons">shopping_cart</i>
-      </button>
-      <button mat-raised-button (click)="logout()">Logout</button>
+    <div fxLayout="row" fxFlex="100%">
+      <div fxLayout="row" fxFlex="20%" fxLayoutAlign="start center">
+        <button mat-icon-button (click)="snav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="app-name">Pizza-Online</h1>
+      </div>
+      <div fxFlex="60%" fxLayoutAlign="end center">
+        <mat-form-field class="search-field">
+          <!--        <mat-label>Filter</mat-label>-->
+          <input matInput >
+          <button mat-icon-button matSuffix>
+            <i class="material-icons">search</i>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxFlex="20%" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="7%" fxLayout.lt-sm="column">
+        <button mat-button routerLink="/person-tabs">
+          <i class="material-icons">perm_identity</i>
+        </button>
+        <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"
+                routerLink="/cart-stepper">
+          <i class="material-icons">shopping_cart</i>
+        </button>
+        <button mat-raised-button (click)="logout()">Logout</button>
+      </div>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container"

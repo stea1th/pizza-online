@@ -6,6 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-menu-table',
@@ -32,6 +33,7 @@ export class MenuTableComponent implements OnInit {
   expandedElement: ProductElement | null;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private _data: DataService, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
   }
@@ -41,9 +43,12 @@ export class MenuTableComponent implements OnInit {
       this.myDataArray = new MatTableDataSource<ProductElement>(data);
       this.myDataArray.paginator = this.paginator;
       for (let i = 0; i < this.myDataArray.filteredData.length; i++) {
-        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any).changingThisBreaksApplicationSecurity;
+        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
+          .changingThisBreaksApplicationSecurity;
         this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
         this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
+        this.myDataArray.sort = this.sort;
+        this.myDataArray.paginator = this.paginator;
       }
     });
   }

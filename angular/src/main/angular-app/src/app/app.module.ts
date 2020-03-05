@@ -43,6 +43,7 @@ import {PersonDetailsComponent} from './cart-stepper/person-details/person-detai
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import {NgxPayPalModule} from 'ngx-paypal';
 import { PaypalPaymentComponent } from './cart-stepper/person-details/paypal-payment/paypal-payment.component';
+import {MatSortModule} from "@angular/material/sort";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -95,6 +96,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatTabsModule,
     MatSnackBarModule,
     NgxPayPalModule,
+    MatSortModule,
   ],
   providers: [
     KeycloakService,
