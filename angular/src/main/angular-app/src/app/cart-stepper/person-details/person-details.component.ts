@@ -145,10 +145,11 @@ export class PersonDetailsComponent implements OnInit {
 
   private createTransactionItems(list: ProductCostElement[]) {
     return list.map(function (element) {
+      console.log(element.price - element.price * element.discount / 100);
       let amount = new UnitAmount();
       amount.currency_code = 'EUR';
-      // amount.value = (element.price - element.price * element.discount / 100) + '';
-      amount.value = element.price + '';
+      amount.value = (element.price - element.price * element.discount / 100).toFixed(2);
+      // amount.value = element.price + '';
       let item = new TransactionItem();
       item.name = element.product.name;
       item.unit_amount = amount;
