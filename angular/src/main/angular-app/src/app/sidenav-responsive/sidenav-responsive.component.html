@@ -1,26 +1,32 @@
 <div class="main-container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
     <div fxLayout="row" fxFlex="100%">
-      <div fxLayout="row" fxFlex="20%" fxLayoutAlign="start center">
+      <div fxLayout="row" fxFlex="0 1 20%" fxLayoutAlign="start center">
         <button mat-icon-button (click)="snav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
         <h1 class="app-name">Pizza-Online</h1>
       </div>
-      <div fxFlex="60%" fxLayoutAlign="end center">
-        <mat-form-field class="search-field">
-          <!--        <mat-label>Filter</mat-label>-->
-          <input matInput >
-          <button mat-icon-button matSuffix>
+      <!--      <div fxFlex="0 1 60%" fxLayoutAlign="end center">-->
+      <!--        -->
+      <!--      </div>-->
+      <div fxLayout="row" fxFlex="1 0 80%" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="3%"
+           fxLayout.lt-sm="column">
+          <mat-form-field class="search-field" [@searchOpenClose]="isOpen ? 'open' : 'closed'">
+            <input matInput placeholder="Search">
+          </mat-form-field>
+          <button mat-icon-button (click)="toggle()" [hidden]="!isOpen">
+            <i class="material-icons">
+              clear
+            </i>
+          </button>
+          <button mat-icon-button (click)="toggle()" [hidden]="isOpen">
             <i class="material-icons">search</i>
           </button>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxFlex="20%" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="7%" fxLayout.lt-sm="column">
         <button mat-button routerLink="/person-tabs">
           <i class="material-icons">perm_identity</i>
         </button>
-        <button mat-button [matBadge]=cart matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"
+        <button mat-button [matBadge]='cart' matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"
                 routerLink="/cart-stepper">
           <i class="material-icons">shopping_cart</i>
         </button>

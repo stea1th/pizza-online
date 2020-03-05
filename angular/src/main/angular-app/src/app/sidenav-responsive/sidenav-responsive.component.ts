@@ -2,16 +2,27 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from "@angular/cdk/layout";
 import {KeycloakService} from "../service/keycloak.service";
 import {DataService} from "../service/data.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-sidenav-responsive',
   templateUrl: './sidenav-responsive.component.html',
-  styleUrls: ['./sidenav-responsive.component.css']
+  styleUrls: ['./sidenav-responsive.component.css'],
+  animations: [
+    trigger('searchOpenClose', [
+      state('open', style({ width: '70%'})),
+      state('closed', style({width: '0px', minWidth: '0'})),
+      transition('open <=> closed', animate('0.5s')),
+    ]),
+  ],
 })
 export class SidenavResponsiveComponent implements OnDestroy, OnInit {
+
   mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
   cart: any;
+
+  isOpen = false;
 
   constructor(private _changeDetectorRef: ChangeDetectorRef, private _media: MediaMatcher, private _auth: KeycloakService, private _data: DataService) {
     this.mobileQuery = _media.matchMedia('(max-width: 600px)');
@@ -25,6 +36,10 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
 
   logout() {
     this._auth.logout();
+  }
+
+  toggle() {
+    this.isOpen = !this.isOpen;
   }
 
   // getDetails() {
