@@ -113,8 +113,13 @@ export class PersonDetailsComponent implements OnInit {
         commit: 'true'
       },
       style: {
-        label: 'paypal',
-        layout: 'vertical'
+        // label: 'paypal',
+        // layout: 'vertical',
+        label: "pay",
+        color: "gold",
+        shape: "pill",
+        size: "responsive",
+        layout: "horizontal",
       },
       onApprove: (data, actions) => {
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
@@ -145,11 +150,9 @@ export class PersonDetailsComponent implements OnInit {
 
   private createTransactionItems(list: ProductCostElement[]) {
     return list.map(function (element) {
-      console.log(element.price - element.price * element.discount / 100);
       let amount = new UnitAmount();
       amount.currency_code = 'EUR';
       amount.value = (element.price - element.price * element.discount / 100).toFixed(2);
-      // amount.value = element.price + '';
       let item = new TransactionItem();
       item.name = element.product.name;
       item.unit_amount = amount;
@@ -157,7 +160,6 @@ export class PersonDetailsComponent implements OnInit {
       return item;
     });
   }
-
 }
 
 export interface OrderDateTime {
