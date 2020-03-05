@@ -2,7 +2,7 @@
 <div *ngFor="let element of productCostList">
     <app-product-card [product-element]="element" (refreshElements)="refreshElements()"></app-product-card>
 </div>
-<app-footer-total [totalQuantity]="totalQuantity" [totalPay]="totalPay"></app-footer-total>
+<app-footer-total [totalQuantity]="totalQuantity" [totalPay]="totalPay" [createTransactionItems]="createTransactionItems"></app-footer-total>
 
 
 

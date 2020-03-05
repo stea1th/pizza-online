@@ -42,6 +42,7 @@ import {PersonInfoComponent} from './person-tabs/person-info/person-info.compone
 import {PersonDetailsComponent} from './cart-stepper/person-details/person-details.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import {NgxPayPalModule} from 'ngx-paypal';
+import { PaypalPaymentComponent } from './cart-stepper/person-details/paypal-payment/paypal-payment.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -63,6 +64,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     PersonTabsComponent,
     PersonInfoComponent,
     PersonDetailsComponent,
+    PaypalPaymentComponent,
   ],
   imports: [
     BrowserModule,

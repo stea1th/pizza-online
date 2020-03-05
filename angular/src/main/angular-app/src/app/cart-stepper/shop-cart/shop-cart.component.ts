@@ -11,12 +11,18 @@ export class ShopCartComponent implements OnInit {
 
   @Output() openSnackBar = new EventEmitter();
 
+  @Output() createTransactionItems = new EventEmitter();
+
   @Input() totalPay: string;
   @Input() totalQuantity: number;
   @Input() productCostList: ProductCostElement[];
 
   constructor() {
   }
+
+  // createTransactionItem() {
+  //   this.createTransactionItems.emit();
+  // }
 
   ngOnInit(): void {
     this.refreshElements();

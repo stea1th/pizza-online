@@ -3,7 +3,7 @@
     <mat-step>
       <ng-template matStepLabel>Cart Overview</ng-template>
       <app-shop-cart (refreshCart)="getProductsInCart()" [totalPay]="totalPay" [totalQuantity]="totalQuantity"
-                     [productCostList]="productCostList">
+                     [productCostList]="productCostList" (createTransactionItems)="createTransactionItems()">
       </app-shop-cart>
     </mat-step>
     <mat-step>

@@ -3,7 +3,7 @@
 
       <div fxFlex="30%" fxLayout="row" fxLayoutGap="3%">
         <button [color]="'accent'" mat-button mat-raised-button (click)="goBack()">Back</button>
-        <button [color]="'accent'" [disabled]="totalQuantity == 0" mat-button mat-raised-button matStepperNext>Proceed to
+        <button [color]="'accent'" [disabled]="totalQuantity == 0" mat-button mat-raised-button matStepperNext (click)="onClick()">Proceed to
           Checkout
         </button>
       </div>

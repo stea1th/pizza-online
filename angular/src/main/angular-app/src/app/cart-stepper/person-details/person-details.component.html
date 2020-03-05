@@ -63,7 +63,7 @@
       <mat-step>
         <ng-template matStepLabel>Order now</ng-template>
         <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
-          <ngx-paypal [config]="payPalConfig" class="full-width"></ngx-paypal>
+          <app-paypal-payment class="full-width" (completeOrder)="completeOrder()"></app-paypal-payment>
           <div>
             <button mat-button matStepperPrevious (click)="isDisabled = true">Back</button>
             <button mat-button (click)="stepper.reset(); isDisabled = true">Reset</button>

@@ -4,6 +4,12 @@ import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {Creator} from "../helper/creator";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
 import {MatStepper} from "@angular/material/stepper";
+import {
+  PaypalPaymentComponent,
+  TransactionItem,
+  UnitAmount
+} from "./person-details/paypal-payment/paypal-payment.component";
+import {PersonDetailsComponent} from "./person-details/person-details.component";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -18,11 +24,13 @@ export class CartStepperComponent implements OnInit {
   productCostList: ProductCostElement[];
   totalPay: string;
   totalQuantity: number;
+  transactionItems: TransactionItem[];
 
   @ViewChild('stepper') stepper: MatStepper;
 
+  @ViewChild(PersonDetailsComponent) personDetails: PersonDetailsComponent;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
+  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent,) {
   }
 
   ngOnInit(): void {
@@ -72,6 +80,20 @@ export class CartStepperComponent implements OnInit {
 
   goForward() {
     this.stepper.next();
+  }
+
+  createTransactionItems() {
+    this.transactionItems = this.productCostList.map(function (element) {
+      let amount = new UnitAmount();
+      amount.currency_code = 'EUR';
+      amount.value = (element.price - element.price * element.discount / 100).toFixed(2);
+      let item = new TransactionItem();
+      item.name = element.product.name;
+      item.unit_amount = amount;
+      item.quantity = element.quantity + '';
+      return item;
+    });
+    this.personDetails.paypalPayment.initConfig(this.totalPay, this.transactionItems);
   }
 }
 
