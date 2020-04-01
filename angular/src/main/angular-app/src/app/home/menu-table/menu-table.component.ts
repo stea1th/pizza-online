@@ -22,7 +22,7 @@ import {MatSort} from "@angular/material/sort";
 })
 export class MenuTableComponent implements OnInit {
 
-  myDataArray: any;
+  myDataSource = new MatTableDataSource<ProductElement>();
   testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
@@ -39,16 +39,21 @@ export class MenuTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fillTable();
+  }
+
+  fillTable() {
     this._data.getAllProducts().subscribe(data => {
-      this.myDataArray = new MatTableDataSource<ProductElement>(data);
-      this.myDataArray.paginator = this.paginator;
-      for (let i = 0; i < this.myDataArray.filteredData.length; i++) {
-        this.myDataArray.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
+      // this.myDataSource = new MatTableDataSource<ProductElement>(data);
+      this.myDataSource.data = data as ProductElement[];
+      this.myDataSource.paginator = this.paginator;
+      for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
+        this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
           .changingThisBreaksApplicationSecurity;
-        this.myDataArray.filteredData[i].price = this.createPrice(data[i].productCostList);
-        this.myDataArray.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
-        this.myDataArray.sort = this.sort;
-        this.myDataArray.paginator = this.paginator;
+        this.myDataSource.filteredData[i].price = this.createPrice(data[i].productCostList);
+        this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
+        this.myDataSource.sort = this.sort;
+        this.myDataSource.paginator = this.paginator;
       }
     });
   }

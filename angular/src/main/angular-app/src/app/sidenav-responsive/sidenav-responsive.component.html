@@ -13,7 +13,7 @@
       <div fxLayout="row" fxFlex="1 0 80%" fxLayoutAlign="end center" class="nav-row" fxLayoutGap="3%"
            fxLayout.lt-sm="column">
           <mat-form-field class="search-field" [@searchOpenClose]="isOpen ? 'open' : 'closed'">
-            <input matInput placeholder="Search">
+            <input matInput (keyup.enter)="applySearch($event)" placeholder="Search">
           </mat-form-field>
           <button mat-icon-button (click)="toggle()" [hidden]="!isOpen">
             <i class="material-icons">
