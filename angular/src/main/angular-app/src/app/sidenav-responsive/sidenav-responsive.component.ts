@@ -5,6 +5,7 @@ import {DataService} from "../service/data.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
+import {SearchService} from "../service/search.service";
 
 @Component({
   selector: 'app-sidenav-responsive',
@@ -30,8 +31,9 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
               private _media: MediaMatcher,
               private _auth: KeycloakService,
               private _data: DataService,
-              private _router: Router,
-              private _location: Location) {
+              private _location: Location,
+              private _search: SearchService,
+              private _router: Router) {
     this.mobileQuery = _media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => _changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change', () => this._mobileQueryListener);
@@ -67,9 +69,11 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
 
   applySearch(event: Event) {
     const searchValue = (event.target as HTMLInputElement).value;
-    console.log(searchValue.trim().toLowerCase());
-    console.log(this._location.path());
+    // console.log(searchValue.trim().toLowerCase());
+    // console.log(this._location.path());
+    this._search.find.emit(searchValue.trim().toLowerCase());
     this._router.navigateByUrl("");
+
 
   }
 

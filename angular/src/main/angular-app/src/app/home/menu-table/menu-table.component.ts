@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
@@ -7,6 +7,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatSort} from "@angular/material/sort";
+import {SearchService} from "../../service/search.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu-table',
@@ -20,7 +22,7 @@ import {MatSort} from "@angular/material/sort";
     ]),
   ],
 })
-export class MenuTableComponent implements OnInit {
+export class MenuTableComponent implements OnInit, AfterContentInit {
 
   myDataSource = new MatTableDataSource<ProductElement>();
   testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -32,14 +34,39 @@ export class MenuTableComponent implements OnInit {
   columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
+  searchValue = '';
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private _data: DataService, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
+  constructor(private _data: DataService,
+              private _sanitizer: DomSanitizer,
+              private _snackBar: MatSnackBar,
+              private _search: SearchService,
+              ) {
   }
 
   ngOnInit() {
+    // console.log(this.searchValue);
     this.fillTable();
+    // this.searchTable();
+  }
+
+  ngAfterContentInit() {
+    this._search.find.subscribe(data => {
+      this.myDataSource.filter = data;
+      // this.searchValue = data;
+      console.log(this.myDataSource.filter);
+    });
+  }
+
+  searchTable() {
+    // this._search.find.subscribe(data => {
+    //   console.log(data);
+
+    //
+    //   console.log(this.myDataSource.filter);
+    // });
   }
 
   fillTable() {
