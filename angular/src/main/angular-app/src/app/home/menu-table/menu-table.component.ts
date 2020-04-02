@@ -9,6 +9,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatSort} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
 import {Router} from "@angular/router";
+import {SpinnerService} from "../../service/spinner.service";
 
 @Component({
   selector: 'app-menu-table',
@@ -41,19 +42,16 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
               private _sanitizer: DomSanitizer,
               private _snackBar: MatSnackBar,
               private _search: SearchService,
+              private _spinner: SpinnerService
               ) {
-
   }
 
   ngOnInit() {
     this.fillTable();
-
-
   }
 
   ngAfterContentInit() {
     this._search.find.subscribe(data => {
-      // console.log(data);
       this.myDataSource.filter = data;
       return false;
     });
@@ -61,7 +59,7 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
 
 
   fillTable() {
-
+    this._spinner.showSpinner();
     this._data.getAllProducts().subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
       this.myDataSource.paginator = this.paginator;
@@ -73,6 +71,7 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
         this.myDataSource.sort = this.sort;
         this.myDataSource.paginator = this.paginator;
       }
+      this._spinner.stopSpinner();
     });
   }
 
