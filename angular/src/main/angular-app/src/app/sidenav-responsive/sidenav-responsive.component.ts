@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild} from '@angular/core';
 import {MediaMatcher} from "@angular/cdk/layout";
 import {KeycloakService} from "../service/keycloak.service";
 import {DataService} from "../service/data.service";
@@ -6,6 +6,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {SearchService} from "../service/search.service";
+import {MatStepper} from "@angular/material/stepper";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-sidenav-responsive',
@@ -26,6 +28,7 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   cart: any;
 
   isOpen = false;
+  @ViewChild('searchInput', {read: ElementRef}) searchInput: ElementRef;
 
   constructor(private _changeDetectorRef: ChangeDetectorRef,
               private _media: MediaMatcher,
@@ -49,6 +52,13 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
 
   toggle() {
     this.isOpen = !this.isOpen;
+    this.clearSearchInput();
+  }
+
+  clearSearchInput() {
+    if(!this.isOpen) {
+      this.searchInput.nativeElement.value = '';
+    }
   }
 
   // getDetails() {
