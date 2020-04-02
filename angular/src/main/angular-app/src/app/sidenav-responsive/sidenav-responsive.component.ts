@@ -13,7 +13,7 @@ import {SearchService} from "../service/search.service";
   styleUrls: ['./sidenav-responsive.component.css'],
   animations: [
     trigger('searchOpenClose', [
-      state('open', style({ width: '70%'})),
+      state('open', style({width: '70%'})),
       state('closed', style({width: '0px', minWidth: '0'})),
       transition('open <=> closed', animate('0.5s')),
     ]),
@@ -68,12 +68,12 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   }
 
   applySearch(event: Event) {
+    // event.cancelBubble = true;
     const searchValue = (event.target as HTMLInputElement).value;
-    // console.log(searchValue.trim().toLowerCase());
-    // console.log(this._location.path());
-    this._search.find.emit(searchValue.trim().toLowerCase());
-    this._router.navigateByUrl("");
-
+    // console.log(searchValue);
+    this._router.navigateByUrl("").then(x => {
+      this._search.find.emit(searchValue.trim().toLowerCase());
+    });
 
   }
 

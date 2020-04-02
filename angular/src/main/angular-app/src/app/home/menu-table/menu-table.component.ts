@@ -34,8 +34,6 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
   columnsToDisplay = ['name', 'description', 'price', 'discount'];
   expandedElement: ProductElement | null;
 
-  searchValue = '';
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -44,34 +42,27 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
               private _snackBar: MatSnackBar,
               private _search: SearchService,
               ) {
+
   }
 
   ngOnInit() {
-    // console.log(this.searchValue);
     this.fillTable();
-    // this.searchTable();
+
+
   }
 
   ngAfterContentInit() {
     this._search.find.subscribe(data => {
+      // console.log(data);
       this.myDataSource.filter = data;
-      // this.searchValue = data;
-      console.log(this.myDataSource.filter);
+      return false;
     });
   }
 
-  searchTable() {
-    // this._search.find.subscribe(data => {
-    //   console.log(data);
-
-    //
-    //   console.log(this.myDataSource.filter);
-    // });
-  }
 
   fillTable() {
+
     this._data.getAllProducts().subscribe(data => {
-      // this.myDataSource = new MatTableDataSource<ProductElement>(data);
       this.myDataSource.data = data as ProductElement[];
       this.myDataSource.paginator = this.paginator;
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
