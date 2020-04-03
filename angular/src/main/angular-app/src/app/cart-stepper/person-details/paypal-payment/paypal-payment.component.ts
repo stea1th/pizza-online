@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ICreateOrderRequest, IPayPalConfig, ITransactionItem, IUnitAmount} from "ngx-paypal";
 import {ProductCostElement} from "../../shop-cart/shop-cart.component";
+import {SpinnerService} from "../../../service/spinner.service";
 
 @Component({
   selector: 'app-paypal-payment',
@@ -17,7 +18,7 @@ export class PaypalPaymentComponent implements OnInit {
 
   // transactionItems: ITransactionItem[];
 
-  constructor() { }
+  constructor(private _spinner: SpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -57,6 +58,7 @@ export class PaypalPaymentComponent implements OnInit {
         layout: "horizontal",
       },
       onApprove: (data, actions) => {
+        this._spinner.showSpinner();
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
         actions.order.get().then(details => {
           console.log('onApprove - you can get full order details inside onApprove: ', details);
@@ -66,6 +68,7 @@ export class PaypalPaymentComponent implements OnInit {
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         this.completeOrder.emit();
+        this._spinner.stopSpinner();
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);

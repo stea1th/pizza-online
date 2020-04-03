@@ -10,6 +10,7 @@ import {
   UnitAmount
 } from "./person-details/paypal-payment/paypal-payment.component";
 import {PersonDetailsComponent} from "./person-details/person-details.component";
+import {SpinnerService} from "../service/spinner.service";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -30,7 +31,9 @@ export class CartStepperComponent implements OnInit {
 
   @ViewChild(PersonDetailsComponent) personDetails: PersonDetailsComponent;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent,) {
+  constructor(private _data: DataService,
+              private _sideNav: SidenavResponsiveComponent,
+              private _spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -45,10 +48,12 @@ export class CartStepperComponent implements OnInit {
   }
 
   getProductsInCart() {
+    this._spinner.showSpinner();
     this._data.getCartProductCosts().subscribe(data => {
       this.productCostList = data;
       this._sideNav.cart = this.sumAllQuantitiesInCart(data);
       this.createTotal(this.productCostList);
+      this._spinner.stopSpinner();
       return this.productCostList;
     });
   }

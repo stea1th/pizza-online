@@ -7,6 +7,7 @@ import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-respo
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ICreateOrderRequest, IPayPalConfig, ITransactionItem, IUnitAmount} from "ngx-paypal";
 import {PaypalPaymentComponent} from "./paypal-payment/paypal-payment.component";
+import {SpinnerService} from "../../service/spinner.service";
 
 @Component({
   selector: 'app-person-details',
@@ -33,7 +34,9 @@ export class PersonDetailsComponent implements OnInit {
 
   @ViewChild(PaypalPaymentComponent) paypalPayment: PaypalPaymentComponent;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _snackBar: MatSnackBar) {
+  constructor(private _data: DataService,
+              private _sideNav: SidenavResponsiveComponent,
+              private _snackBar: MatSnackBar,) {
   }
 
   ngOnInit(): void {
@@ -72,7 +75,6 @@ export class PersonDetailsComponent implements OnInit {
         this.secondFormGroup.pristine = true;
       });
     }
-    // this.initConfig();
   }
 
   completeOrder() {
