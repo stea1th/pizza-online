@@ -46,6 +46,7 @@ import { PaypalPaymentComponent } from './cart-stepper/person-details/paypal-pay
 import {MatSortModule} from "@angular/material/sort";
 import { OrderInfoComponent } from './person-tabs/order-info/order-info.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -101,6 +102,7 @@ export function kcFactory(keycloakService: KeycloakService) {
         NgxPayPalModule,
         MatSortModule,
         MatProgressSpinnerModule,
+        MatExpansionModule,
     ],
   providers: [
     KeycloakService,

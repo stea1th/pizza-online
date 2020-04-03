@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderInfoComponent implements OnInit {
 
+  years = [2019, 2018, 2017];
+  selected = 'sixMonth';
+
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+
 
 }

@@ -1,11 +1,15 @@
 .large-box {
   height: 500px;
+  /*height: 100%;*/
   width:90%;
   position: center;
   display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 16px;
   padding: 16px;
   border-radius: 8px;
+}
+
+.center-items {
+  align-items: center;
+  justify-content: center;
 }

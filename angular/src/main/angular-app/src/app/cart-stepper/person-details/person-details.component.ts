@@ -5,9 +5,7 @@ import {DataService} from "../../service/data.service";
 import {ProductCostElement} from "../shop-cart/shop-cart.component";
 import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ICreateOrderRequest, IPayPalConfig, ITransactionItem, IUnitAmount} from "ngx-paypal";
 import {PaypalPaymentComponent} from "./paypal-payment/paypal-payment.component";
-import {SpinnerService} from "../../service/spinner.service";
 
 @Component({
   selector: 'app-person-details',
