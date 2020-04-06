@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class TimeIntervalDto {
 
     public String name;
-    public int value;
+    public String description;
+//    public int value;
 
 }

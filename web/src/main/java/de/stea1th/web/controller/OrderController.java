@@ -43,8 +43,9 @@ public class OrderController {
     }
 
     @GetMapping("/interval")
-    public ResponseEntity<List<TimeIntervalDto>> getInterval() {
+    public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
 //        List<TimeIntervalDto> interval = orderService.getInterval();
-        return new ResponseEntity<>(orderService.getInterval(), HttpStatus.OK);
+        String keycloak = principal.getName();
+        return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
     }
 }

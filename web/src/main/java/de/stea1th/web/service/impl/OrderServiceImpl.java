@@ -28,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
     @Value("${order.get.complete}")
     private String orderGetCompleteTopic;
 
+    @Value("${order.get.complete.year}")
+    private String orderGetCompletedYear;
+
     @Value("#{new Integer('${kafka.service.attempt}')}")
     private Integer attempt;
 
@@ -55,11 +58,24 @@ public class OrderServiceImpl implements OrderService {
         return orderDto == null ? null : orderDto.getCompleted();
     }
 
-    public List<TimeIntervalDto> getInterval() {
+    @SneakyThrows
+    @Override
+    public List<TimeIntervalDto> getInterval(String keycloak) {
+        log.info("get time interval for keycloak {}", keycloak);
         var intervals = new ArrayList<TimeIntervalDto>();
         Arrays.stream(TimeInterval.values()).forEach(x -> {
-            intervals.add(new TimeIntervalDto(x.getDescription(), x.ordinal()));
+            intervals.add(new TimeIntervalDto(x.name(), x.getDescription()));
         });
+        List<Integer> years;
+        kafkaProducer.produce(orderGetCompletedYear, keycloak);
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
+            years = orderKafkaConsumer.getYears();
+            if(years != null) {
+                years.forEach(year-> intervals.add(new TimeIntervalDto(year.toString(), year.toString())));
+                break;
+            }
+        }
         return intervals;
     }
 }

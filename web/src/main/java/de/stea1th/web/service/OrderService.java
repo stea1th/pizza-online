@@ -9,5 +9,5 @@ public interface OrderService {
 
     LocalDateTimeDto complete(String keycloak);
 
-    List<TimeIntervalDto> getInterval();
+    List<TimeIntervalDto> getInterval(String keycloak);
 }

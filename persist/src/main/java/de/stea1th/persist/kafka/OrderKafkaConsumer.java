@@ -35,6 +35,11 @@ public class OrderKafkaConsumer {
         kafkaProducer.produce(orderReceiveCompleteTopic, order);
     }
 
+    @KafkaListener(topics = "${order.get.complete.year}", groupId = "pizza-online")
+    public void processGetCompletedYears(String keycloak) {
+        log.info("received keycloak = {}", keycloak);
+    }
+
 //    @KafkaListener(topics = "", groupId = "pizza-online")
 //    public void processGetCompletedOrders(String message) {
 //        log.info("received keycloak = {}", message);
