@@ -24,14 +24,17 @@ public class OrderKafkaConsumerImpl implements OrderKafkaConsumer {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public OrderDto getOrderDto() {
-//        var temp = orderDto;
-//        orderDto = null;
-//        return temp;
-        return getTemp(orderDto);
+        var temp = orderDto;
+        orderDto = null;
+        return temp;
+//        return getTemp(orderDto);
     }
 
     public List<Integer> getYears() {
-        return getTemp(years);
+        var temp = years;
+        years = null;
+        return temp;
+//        return getTemp(years);
     }
 
     private <T> T getTemp(T original) {
@@ -51,7 +54,7 @@ public class OrderKafkaConsumerImpl implements OrderKafkaConsumer {
         }
     }
 
-    @KafkaListener(topics = "", groupId = "pizza-online")
+    @KafkaListener(topics = "${order.receive.complete.year}", groupId = "pizza-online")
     public void processReceiveCompletedYears(String message) {
         log.info("received message = {}", message);
         try {

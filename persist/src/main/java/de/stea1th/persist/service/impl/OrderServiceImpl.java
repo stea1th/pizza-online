@@ -20,6 +20,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -129,6 +130,11 @@ public class OrderServiceImpl implements OrderService {
             createEmptyOrder(person);
         }
         return order;
+    }
+
+    public List<Integer> getCompletedYearsByPerson(String keycloak) {
+        var person = personService.getByKeycloak(keycloak);
+        return orderRepository.findCompletedYearsByPerson(person);
     }
 
 

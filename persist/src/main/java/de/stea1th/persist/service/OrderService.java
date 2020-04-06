@@ -17,4 +17,6 @@ public interface OrderService {
 
     List<PdfCreatorDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval);
 
+    List<Integer> getCompletedYearsByPerson(String keycloak);
+
 }

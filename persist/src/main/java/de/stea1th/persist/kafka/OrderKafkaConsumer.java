@@ -22,6 +22,9 @@ public class OrderKafkaConsumer {
     @Value("${order.receive.complete}")
     private String orderReceiveCompleteTopic;
 
+    @Value("${order.receive.complete.year}")
+    private String orderReceiveCompletedYears;
+
     public OrderKafkaConsumer(KafkaProducer kafkaProducer, OrderService orderService) {
         this.kafkaProducer = kafkaProducer;
         this.orderService = orderService;
@@ -38,6 +41,9 @@ public class OrderKafkaConsumer {
     @KafkaListener(topics = "${order.get.complete.year}", groupId = "pizza-online")
     public void processGetCompletedYears(String keycloak) {
         log.info("received keycloak = {}", keycloak);
+        var years = orderService.getCompletedYearsByPerson(keycloak);
+        log.info("Completed years sending: {}", years);
+        kafkaProducer.produce(orderReceiveCompletedYears, years);
     }
 
 //    @KafkaListener(topics = "", groupId = "pizza-online")
