@@ -78,6 +78,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<PdfCreatorDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval) {
+        Person person = personService.getByKeycloak(keycloak);
+        var orders = orderRepository.findByPersonAndCompletedBeforeOrderByCreatedAsc(person, interval);
+        return orders
+                .stream()
+                .map(this::createPdfCreatorDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public Order completeOrder(String keycloak) {
         Order order = complete(keycloak);
@@ -120,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
         }
         return order;
     }
+
 
     private Order createEmptyOrder(Person person) {
         Order order = new Order();

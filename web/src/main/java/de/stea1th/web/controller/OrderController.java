@@ -2,6 +2,8 @@ package de.stea1th.web.controller;
 
 
 import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
+import de.stea1th.commonslibrary.dto.TimeIntervalDto;
+import de.stea1th.commonslibrary.num.TimeInterval;
 import de.stea1th.web.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -31,5 +34,17 @@ public class OrderController {
         LocalDateTimeDto complete = orderService.complete(keycloak);
         return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
                 new ResponseEntity<>(complete, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/completed")
+    public ResponseEntity getAllByPrincipal(Principal principal) {
+
+        return null;
+    }
+
+    @GetMapping("/interval")
+    public ResponseEntity<List<TimeIntervalDto>> getInterval() {
+//        List<TimeIntervalDto> interval = orderService.getInterval();
+        return new ResponseEntity<>(orderService.getInterval(), HttpStatus.OK);
     }
 }

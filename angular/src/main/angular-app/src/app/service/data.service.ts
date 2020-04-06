@@ -68,6 +68,10 @@ export class DataService {
   public getCompleteOrderTime(): Observable<any> {
     return this.get('/order/complete').pipe();
   }
+
+  public getTimeInterval(): Observable<any> {
+    return this.get('/order/interval').pipe();
+  }
 }
 
 

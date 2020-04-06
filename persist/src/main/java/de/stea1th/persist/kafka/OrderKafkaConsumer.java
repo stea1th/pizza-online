@@ -1,9 +1,11 @@
 package de.stea1th.persist.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ public class OrderKafkaConsumer {
 
     private KafkaProducer kafkaProducer;
     private OrderService orderService;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${order.receive.complete}")
     private String orderReceiveCompleteTopic;
@@ -30,4 +34,10 @@ public class OrderKafkaConsumer {
         log.info("LocalDateTime sending: {}", order);
         kafkaProducer.produce(orderReceiveCompleteTopic, order);
     }
+
+//    @KafkaListener(topics = "", groupId = "pizza-online")
+//    public void processGetCompletedOrders(String message) {
+//        log.info("received keycloak = {}", message);
+//        var orders =
+//    }
 }

@@ -3,13 +3,19 @@ package de.stea1th.web.service.impl;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
 import de.stea1th.commonslibrary.dto.OrderDto;
+import de.stea1th.commonslibrary.dto.TimeIntervalDto;
+import de.stea1th.commonslibrary.num.TimeInterval;
 import de.stea1th.web.kafka.OrderKafkaConsumer;
 import de.stea1th.web.service.OrderService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -47,5 +53,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return orderDto == null ? null : orderDto.getCompleted();
+    }
+
+    public List<TimeIntervalDto> getInterval() {
+        var intervals = new ArrayList<TimeIntervalDto>();
+        Arrays.stream(TimeInterval.values()).forEach(x -> {
+            intervals.add(new TimeIntervalDto(x.getDescription(), x.ordinal()));
+        });
+        return intervals;
     }
 }

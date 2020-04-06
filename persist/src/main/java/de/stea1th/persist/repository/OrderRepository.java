@@ -13,4 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByPersonAndCompletedOrderByCreatedAsc(Person person, LocalDateTime completed);
 
+    List<Order> findByPersonAndCompletedBeforeOrderByCreatedAsc(Person person, LocalDateTime completed);
+
+
 }
