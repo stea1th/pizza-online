@@ -3,9 +3,8 @@
     <mat-form-field>
       <mat-label>Orders</mat-label>
       <mat-select [(value)]="selected">
-        <mat-option value="sixMonth">past six month</mat-option>
         <mat-option *ngFor="let item of years; let i = index"
-                    [value]="i + 1">{{item}}</mat-option>
+                    [value]="item.name">{{item.description}}</mat-option>
       </mat-select>
     </mat-form-field>
 <!--  </div>-->

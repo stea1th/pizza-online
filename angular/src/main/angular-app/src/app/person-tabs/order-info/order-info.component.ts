@@ -9,8 +9,8 @@ import {DataService} from "../../service/data.service";
 })
 export class OrderInfoComponent implements OnInit {
 
-  years = [2019, 2018, 2017];
-  selected = 'sixMonth';
+  years: TimeInterval[];
+  selected: string;
   // treeControl= new FlatTreeControl<ExampleFlatNode>(
   // node => node.level, node => node.expandable);
 
@@ -19,7 +19,8 @@ export class OrderInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this._data.getTimeInterval().subscribe(data => {
-      console.log(data);
+      this.years = data;
+      this.selected = this.years[0].name;
     });
   }
 
@@ -27,8 +28,7 @@ export class OrderInfoComponent implements OnInit {
 
 }
 
-interface ExampleFlatNode {
-  expandable: boolean;
+interface TimeInterval {
   name: string;
-  level: number;
+  description: string;
 }
