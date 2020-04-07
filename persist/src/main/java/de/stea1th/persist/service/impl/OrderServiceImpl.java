@@ -95,6 +95,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
         Person person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
+
+        log.info("!!!!!!!!!!!!!!!!!!!!!! {}", person.getId());
         List<Order> orders;
         try {
             var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
@@ -142,7 +144,6 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findCompletedYearsByPerson(person);
     }
 
-//    @Transactional
     private Order complete(String keycloak) {
         Person person = personService.getByKeycloak(keycloak);
         Order order = getUncompletedOrderByPerson(person);

@@ -20,7 +20,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     private final OrderService orderService;
 
-    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository,@Lazy OrderService orderService) {
+    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, @Lazy OrderService orderService) {
         this.orderProductCostRepository = orderProductCostRepository;
         this.orderService = orderService;
     }
@@ -48,7 +48,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     @Override
     public Integer updateQuantity(OrderProductCostDto orderProductCostDto) {
-        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        Order order = orderService.getUncompletedOrderByPersonKeycloak(orderProductCostDto.getKeycloak());
         OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
 
         if (orderProductCost != null) {
@@ -62,14 +62,14 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     @Override
     public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
         log.info("delete from order-product-cost product");
-        var order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        var order = orderService.getUncompletedOrderByPersonKeycloak(orderProductCostDto.getKeycloak());
         orderProductCostRepository.deleteById(createPK(order.getId(), orderProductCostDto.getProductCostId()));
         return getSumQuantitiesByOrderId(order.getId());
     }
 
     @Override
     public Integer addToCart(OrderProductCostDto orderProductCostDto) {
-        Order order = orderService.getUncompletedOrderByPersonKeycloak("\"" + orderProductCostDto.getKeycloak() + "\"");
+        Order order = orderService.getUncompletedOrderByPersonKeycloak(orderProductCostDto.getKeycloak());
         save(orderProductCostDto, order);
         return getSumQuantitiesByOrderId(order.getId());
     }

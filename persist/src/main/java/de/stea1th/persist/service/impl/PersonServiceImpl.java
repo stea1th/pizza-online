@@ -39,6 +39,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public Person getByKeycloak(String keycloak) {
+        keycloak = addQuotes(keycloak);
         Person person = personRepository.getByKeycloak(keycloak);
         if (person == null) {
             log.error("no such person with keycloak id: {} exists", keycloak);
@@ -64,5 +65,9 @@ public class PersonServiceImpl implements PersonService {
         log.info("person: {} successful saved", person);
         addressRepository.save(person.getAddress());
         return personRepository.save(person);
+    }
+
+    private String addQuotes(String keycloak) {
+        return keycloak.contains("\"") ?  keycloak : "\"" + keycloak + "\"";
     }
 }

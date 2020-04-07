@@ -64,7 +64,7 @@ public class OrderKafkaConsumerImpl implements OrderKafkaConsumer {
         }
     }
 
-    @KafkaListener(topics="order.receive.completed.orders", groupId = "pizza-online")
+    @KafkaListener(topics="${order.receive.completed.orders}", groupId = "pizza-online")
     public void processReceiveCompletedOrders(String message) {
         log.info("received message = {}", message);
         try {
