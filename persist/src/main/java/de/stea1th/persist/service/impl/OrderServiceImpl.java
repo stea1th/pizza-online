@@ -2,9 +2,11 @@ package de.stea1th.persist.service.impl;
 
 
 import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
+import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
 import de.stea1th.commonslibrary.dto.OrderDto;
-import de.stea1th.commonslibrary.dto.PdfCreatorDto;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
+import de.stea1th.commonslibrary.num.TimeInterval;
 import de.stea1th.persist.converter.OrderConverter;
 import de.stea1th.persist.converter.ProductCostConverter;
 import de.stea1th.persist.entity.Order;
@@ -20,7 +22,6 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -48,7 +49,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Value("${pdf-creator.create.invoice}")
     private String pdfCreateTopic;
-
 
     @Autowired
     public OrderServiceImpl(PersonService personService,
@@ -78,13 +78,33 @@ public class OrderServiceImpl implements OrderService {
         return orders.isEmpty() ? createEmptyOrder(person) : getUncompletedOrder(orders);
     }
 
+//    @Override
+//    public List<CompletedOrderDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval) {
+//        Person person = personService.getByKeycloak(keycloak);
+//        var orders = orderRepository.findByPersonAndCompletedBeforeOrderByCompletedDesc(person, interval);
+//        return orders
+//                .stream()
+//                .map(this::createCompletedOrderDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<CompletedOrderDto> getCompletedOrdersForYearByPersonKeycloak(String keycloak, String year) {
+//
+//    }
+
     @Override
-    public List<PdfCreatorDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval) {
-        Person person = personService.getByKeycloak(keycloak);
-        var orders = orderRepository.findByPersonAndCompletedBeforeOrderByCreatedAsc(person, interval);
+    public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
+        Person person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
+        List<Order> orders;
+        try {
+            var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
+            orders = orderRepository.findByPersonAndCompletedBeforeOrderByCompletedDesc(person, timeInterval.getTime());
+        } catch (IllegalArgumentException e) {
+            orders = orderRepository.findByPersonAndCompletedYear(person, completedOrdersRequestDto.getValue());
+        }
         return orders
                 .stream()
-                .map(this::createPdfCreatorDto)
+                .map(this::createCompletedOrderDto)
                 .collect(Collectors.toList());
     }
 
@@ -96,15 +116,13 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-
     public void produceInvoiceAsPdf(Order order) {
-        PdfCreatorDto pdfCreatorDto = createPdfCreatorDto(order);
-        kafkaProducer.produce(pdfCreateTopic, pdfCreatorDto);
+        CompletedOrderDto completedOrderDto = createCompletedOrderDto(order);
+        kafkaProducer.produce(pdfCreateTopic, completedOrderDto);
     }
 
-
     @Transactional
-    public PdfCreatorDto createPdfCreatorDto(Order order) {
+    public CompletedOrderDto createCompletedOrderDto(Order order) {
         List<ProductCost> productCostList = productCostRepository.getAllByOrderId(order.getId());
         List<ProductCostInCartDto> dtoList = productCostList
                 .stream()
@@ -113,15 +131,19 @@ public class OrderServiceImpl implements OrderService {
                     return productCostConverter.convertToDtoInCart(productCost, quantity);
                 }).collect(Collectors.toList());
         OrderDto orderDto = orderConverter.convertToDtoWithoutOPC(order);
-        var pdfCreatorDto = new PdfCreatorDto();
+        var pdfCreatorDto = new CompletedOrderDto();
         pdfCreatorDto.setOrderDto(orderDto);
         pdfCreatorDto.setProductCostInCartDtoList(dtoList);
         return pdfCreatorDto;
     }
 
+    public List<Integer> getCompletedYearsByPerson(String keycloak) {
+        var person = personService.getByKeycloak(keycloak);
+        return orderRepository.findCompletedYearsByPerson(person);
+    }
 
-    @Transactional
-    public Order complete(String keycloak) {
+//    @Transactional
+    private Order complete(String keycloak) {
         Person person = personService.getByKeycloak(keycloak);
         Order order = getUncompletedOrderByPerson(person);
         if (!order.getOrderProductCosts().isEmpty()) {
@@ -131,12 +153,6 @@ public class OrderServiceImpl implements OrderService {
         }
         return order;
     }
-
-    public List<Integer> getCompletedYearsByPerson(String keycloak) {
-        var person = personService.getByKeycloak(keycloak);
-        return orderRepository.findCompletedYearsByPerson(person);
-    }
-
 
     private Order createEmptyOrder(Person person) {
         Order order = new Order();

@@ -1,6 +1,7 @@
 package de.stea1th.persist.service;
 
-import de.stea1th.commonslibrary.dto.PdfCreatorDto;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
+import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.entity.Person;
 
@@ -15,8 +16,8 @@ public interface OrderService {
 
     Order completeOrder(String keycloak);
 
-    List<PdfCreatorDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval);
-
     List<Integer> getCompletedYearsByPerson(String keycloak);
+
+    List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto);
 
 }

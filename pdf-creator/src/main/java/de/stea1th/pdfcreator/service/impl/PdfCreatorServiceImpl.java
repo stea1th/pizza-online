@@ -1,6 +1,6 @@
 package de.stea1th.pdfcreator.service.impl;
 
-import de.stea1th.commonslibrary.dto.PdfCreatorDto;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
 import de.stea1th.pdfcreator.component.InvoicePdfBlockCreator;
 import de.stea1th.pdfcreator.service.PdfCreatorService;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ public class PdfCreatorServiceImpl implements PdfCreatorService {
     }
 
     @Override
-    public void createInvoiceAsPdf(PdfCreatorDto pdfCreatorDto) {
-        pdfBlockCreator.createPdf(pdfCreatorDto);
+    public void createInvoiceAsPdf(CompletedOrderDto completedOrderDto) {
+        pdfBlockCreator.createPdf(completedOrderDto);
     }
 
 

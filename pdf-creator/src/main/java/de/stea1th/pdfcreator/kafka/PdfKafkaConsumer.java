@@ -2,7 +2,7 @@ package de.stea1th.pdfcreator.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.stea1th.commonslibrary.dto.PdfCreatorDto;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
 import de.stea1th.pdfcreator.service.PdfCreatorService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -26,7 +26,7 @@ public class PdfKafkaConsumer {
     public void processGetPdfCreator(String message) {
         log.info("received message = {}", message);
         try {
-            var pdfCreator = objectMapper.readValue(message, PdfCreatorDto.class);
+            var pdfCreator = objectMapper.readValue(message, CompletedOrderDto.class);
             pdfCreatorService.createInvoiceAsPdf(pdfCreator);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());

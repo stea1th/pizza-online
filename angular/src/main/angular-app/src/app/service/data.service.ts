@@ -15,7 +15,12 @@ export class DataService {
   }
 
   private get(path) {
-    return this._http.get(this.baseUrl + path);
+    // return this._http.get(this.baseUrl + path);
+    return this.getWithParams(path, '');
+  }
+
+  private getWithParams(path, params) {
+    return this._http.get(this.baseUrl + path + params);
   }
 
   private post(path, body) {
@@ -71,6 +76,10 @@ export class DataService {
 
   public getTimeInterval(): Observable<any> {
     return this.get('/order/interval').pipe();
+  }
+
+  public getCompletedOrders(params): Observable<any> {
+    return this.getWithParams('/order/all/completed', params).pipe();
   }
 }
 

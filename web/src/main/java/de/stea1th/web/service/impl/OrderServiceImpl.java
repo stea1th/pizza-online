@@ -1,9 +1,7 @@
 package de.stea1th.web.service.impl;
 
 import de.stea1th.commonslibrary.component.KafkaProducer;
-import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
-import de.stea1th.commonslibrary.dto.OrderDto;
-import de.stea1th.commonslibrary.dto.TimeIntervalDto;
+import de.stea1th.commonslibrary.dto.*;
 import de.stea1th.commonslibrary.num.TimeInterval;
 import de.stea1th.web.kafka.OrderKafkaConsumer;
 import de.stea1th.web.service.OrderService;
@@ -30,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Value("${order.get.complete.year}")
     private String orderGetCompletedYear;
+
+    @Value("${order.get.completed.orders}")
+    private String orderGetCompletedOrders;
 
     @Value("#{new Integer('${kafka.service.attempt}')}")
     private Integer attempt;
@@ -77,5 +78,18 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return intervals;
+    }
+
+    @SneakyThrows
+    public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
+        log.info("get time interval for keycloak {}", completedOrdersRequestDto);
+        kafkaProducer.produce(orderGetCompletedOrders, completedOrdersRequestDto);
+        List<CompletedOrderDto> completedOrderDtoList = null;
+        for (int i = 0; i < attempt; i++) {
+            TimeUnit.MILLISECONDS.sleep(delay);
+            completedOrderDtoList = orderKafkaConsumer.getCompletedOrderDtoList();
+            if(completedOrderDtoList != null) break;
+        }
+        return completedOrderDtoList;
     }
 }

@@ -1,7 +1,9 @@
 package de.stea1th.persist.kafka;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
+import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
 import de.stea1th.persist.entity.Order;
 import de.stea1th.persist.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,6 @@ public class OrderKafkaConsumer {
 
     private KafkaProducer kafkaProducer;
     private OrderService orderService;
-
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${order.receive.complete}")
@@ -24,6 +25,9 @@ public class OrderKafkaConsumer {
 
     @Value("${order.receive.complete.year}")
     private String orderReceiveCompletedYears;
+
+    @Value("${order.receive.completed.orders}")
+    private String orderReceiveCompletedOrders;
 
     public OrderKafkaConsumer(KafkaProducer kafkaProducer, OrderService orderService) {
         this.kafkaProducer = kafkaProducer;
@@ -46,9 +50,17 @@ public class OrderKafkaConsumer {
         kafkaProducer.produce(orderReceiveCompletedYears, years);
     }
 
-//    @KafkaListener(topics = "", groupId = "pizza-online")
-//    public void processGetCompletedOrders(String message) {
-//        log.info("received keycloak = {}", message);
-//        var orders =
-//    }
+    @KafkaListener(topics = "${order.get.completed.orders}", groupId = "pizza-online")
+    public void processGetCompletedOrders(String message) {
+        log.info("received message = {}", message);
+        try {
+            var completedOrdersRequest = objectMapper.readValue(message, CompletedOrdersRequestDto.class);
+            var completedOrders = orderService.getCompletedOrders(completedOrdersRequest);
+            log.info("!!!!!!!!!!!!!!!! {}", completedOrders.isEmpty());
+            log.info("Completed orders sending: {}", completedOrders);
+            kafkaProducer.produce(orderReceiveCompletedOrders, completedOrders);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
+    }
 }

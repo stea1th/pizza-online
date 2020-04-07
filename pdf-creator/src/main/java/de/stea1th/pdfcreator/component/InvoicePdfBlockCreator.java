@@ -12,7 +12,7 @@ import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import de.stea1th.commonslibrary.dto.OrderDto;
-import de.stea1th.commonslibrary.dto.PdfCreatorDto;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
 import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
 import lombok.SneakyThrows;
@@ -38,7 +38,7 @@ public class InvoicePdfBlockCreator {
     }
 
     @SneakyThrows
-    public void createPdf(PdfCreatorDto pdfCreatorDto) {
+    public void createPdf(CompletedOrderDto completedOrderDto) {
         try (PdfDocument pdf = new PdfDocument(new PdfWriter(basePath + "\\test.pdf", new WriterProperties().addXmpMetadata()));
              Document document = new Document(pdf, PageSize.A4)) {
 
@@ -46,12 +46,12 @@ public class InvoicePdfBlockCreator {
             pdf.getCatalog().setViewerPreferences(new PdfViewerPreferences().setDisplayDocTitle(true));
 
             document.add(createHeaderCompanySignature());
-            document.add(createCustomerDetails(pdfCreatorDto.getOrderDto().getPerson()));
-            document.add(createInvoiceDetailTable(pdfCreatorDto.getOrderDto()));
-            document.add(createInvoiceNumber(pdfCreatorDto.getOrderDto()));
+            document.add(createCustomerDetails(completedOrderDto.getOrderDto().getPerson()));
+            document.add(createInvoiceDetailTable(completedOrderDto.getOrderDto()));
+            document.add(createInvoiceNumber(completedOrderDto.getOrderDto()));
             document.add(createForeword());
-            document.add(createInvoiceProductTable(pdfCreatorDto.getProductCostInCartDtoList()));
-            document.add(createInvoiceTotalTable(pdfCreatorDto.getProductCostInCartDtoList()));
+            document.add(createInvoiceProductTable(completedOrderDto.getProductCostInCartDtoList()));
+            document.add(createInvoiceTotalTable(completedOrderDto.getProductCostInCartDtoList()));
             document.add(createEpilogue());
             createFooter(pdf);
         }

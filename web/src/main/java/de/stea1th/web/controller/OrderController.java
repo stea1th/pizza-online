@@ -1,17 +1,15 @@
 package de.stea1th.web.controller;
 
 
+import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
 import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
+import de.stea1th.commonslibrary.dto.CompletedOrderDto;
 import de.stea1th.commonslibrary.dto.TimeIntervalDto;
-import de.stea1th.commonslibrary.num.TimeInterval;
 import de.stea1th.web.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -36,16 +34,15 @@ public class OrderController {
                 new ResponseEntity<>(complete, HttpStatus.OK);
     }
 
-    @GetMapping("/all/completed")
-    public ResponseEntity getAllByPrincipal(Principal principal) {
-
-        return null;
-    }
-
     @GetMapping("/interval")
     public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
-//        List<TimeIntervalDto> interval = orderService.getInterval();
         String keycloak = principal.getName();
         return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
+    }
+
+    @GetMapping("/all/completed")
+    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @RequestParam("value") String value) {
+        CompletedOrdersRequestDto completedOrdersRequestDto = new CompletedOrdersRequestDto(principal.getName(), value);
+        return new ResponseEntity<>(orderService.getCompletedOrders(completedOrdersRequestDto), HttpStatus.OK);
     }
 }

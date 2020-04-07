@@ -16,13 +16,19 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByPersonAndCompletedOrderByCreatedAsc(Person person, LocalDateTime completed);
 
-    List<Order> findByPersonAndCompletedBeforeOrderByCreatedAsc(Person person, LocalDateTime completed);
+    List<Order> findByPersonAndCompletedBeforeOrderByCompletedDesc(Person person, LocalDateTime completed);
 
     @Query("SELECT DISTINCT(SUBSTRING(CONCAT(o.completed, ''), 1, 4)) AS years " +
             "FROM Order o " +
             "WHERE o.person = :person AND o.completed <> null  " +
             "ORDER BY years DESC ")
     List<Integer> findCompletedYearsByPerson(@Param("person") Person person);
+
+    @Query("SELECT o " +
+            "FROM Order o " +
+            "WHERE o.person = :person AND SUBSTRING(CONCAT(o.completed, ''), 1, 4) = :year " +
+            "ORDER BY o.completed DESC")
+    List<Order> findByPersonAndCompletedYear(@Param("person") Person person, @Param("year") String year);
 
 
 }

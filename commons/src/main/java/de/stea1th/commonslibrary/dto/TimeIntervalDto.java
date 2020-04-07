@@ -11,6 +11,4 @@ public class TimeIntervalDto {
 
     public String name;
     public String description;
-//    public int value;
-
 }

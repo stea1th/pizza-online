@@ -2,7 +2,7 @@
 <!--  <div fxLayout="column">-->
     <mat-form-field>
       <mat-label>Orders</mat-label>
-      <mat-select [(value)]="selected">
+      <mat-select [formControl]="timeIntervalSelect" [(value)]="selected" (ngModelChange)="onChange()">
         <mat-option *ngFor="let item of years; let i = index"
                     [value]="item.name">{{item.description}}</mat-option>
       </mat-select>
