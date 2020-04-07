@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,29 +79,13 @@ public class OrderServiceImpl implements OrderService {
         return orders.isEmpty() ? createEmptyOrder(person) : getUncompletedOrder(orders);
     }
 
-//    @Override
-//    public List<CompletedOrderDto> getCompletedOrdersForTimeIntervalByPersonKeycloak(String keycloak, LocalDateTime interval) {
-//        Person person = personService.getByKeycloak(keycloak);
-//        var orders = orderRepository.findByPersonAndCompletedBeforeOrderByCompletedDesc(person, interval);
-//        return orders
-//                .stream()
-//                .map(this::createCompletedOrderDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public List<CompletedOrderDto> getCompletedOrdersForYearByPersonKeycloak(String keycloak, String year) {
-//
-//    }
-
     @Override
     public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
         Person person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
-
-        log.info("!!!!!!!!!!!!!!!!!!!!!! {}", person.getId());
         List<Order> orders;
         try {
             var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
-            orders = orderRepository.findByPersonAndCompletedBeforeOrderByCompletedDesc(person, timeInterval.getTime());
+            orders = orderRepository.findByPersonAndCompletedAfterOrderByCompletedDesc(person, timeInterval.getTime());
         } catch (IllegalArgumentException e) {
             orders = orderRepository.findByPersonAndCompletedYear(person, completedOrdersRequestDto.getValue());
         }
