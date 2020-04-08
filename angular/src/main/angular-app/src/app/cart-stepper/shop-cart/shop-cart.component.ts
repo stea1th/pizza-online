@@ -20,10 +20,6 @@ export class ShopCartComponent implements OnInit {
   constructor() {
   }
 
-  // createTransactionItem() {
-  //   this.createTransactionItems.emit();
-  // }
-
   ngOnInit(): void {
     this.refreshElements();
   }

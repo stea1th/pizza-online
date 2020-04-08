@@ -1,20 +1,42 @@
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{completedOrder.completed | date:'medium'}}
-          </mat-panel-title>
-          <mat-panel-description>
-            ORDER # 303-123123123-{{completedOrder.id}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{completedOrder.completed | date:'medium'}}
+    </mat-panel-title>
+    <mat-panel-description>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%" class="description-row">
+        <span>
+          ORDER # 303-123123123-{{completedOrder.id}}
+        </span>
+        <span>
+          Items: {{itemQuantity}}
+        </span>
+        <span>
+          Total: 99,99
+        </span>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-list>
+    <mat-list-item *ngFor="let item of completedOrder.products">
 
-<!--        <mat-form-field>-->
-<!--          <mat-label>First name</mat-label>-->
-<!--          <input matInput>-->
-<!--        </mat-form-field>-->
+      <p matLine fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%" class="description-row">
 
-<!--        <mat-form-field>-->
-<!--          <mat-label>Age</mat-label>-->
-<!--          <input matInput type="number" min="1">-->
-<!--        </mat-form-field>-->
-      </mat-expansion-panel>
+        <span>{{item.product.name}}, {{item.property}}</span>
+        <span>Quantity: {{item.quantity}}</span>
+        <span>Price: {{item.price}}</span>
+      </p>
+    </mat-list-item>
+  </mat-list>
+
+
+  <!--        <mat-form-field>-->
+  <!--          <mat-label>First name</mat-label>-->
+  <!--          <input matInput>-->
+  <!--        </mat-form-field>-->
+
+  <!--        <mat-form-field>-->
+  <!--          <mat-label>Age</mat-label>-->
+  <!--          <input matInput type="number" min="1">-->
+  <!--        </mat-form-field>-->
+</mat-expansion-panel>
