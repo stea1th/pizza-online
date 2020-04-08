@@ -12,9 +12,8 @@ export class OrderInfoComponent implements OnInit {
 
   years: TimeInterval[];
   selected: string;
-  // treeControl= new FlatTreeControl<ExampleFlatNode>(
-  // node => node.level, node => node.expandable);
   timeIntervalSelect = new FormControl('');
+  completedOrders = [];
 
 
   constructor(private _data: DataService) {
@@ -31,14 +30,29 @@ export class OrderInfoComponent implements OnInit {
 
   onChange() {
     const params = '?value=' + this.timeIntervalSelect.value;
+    this.completedOrders = [];
     this._data.getCompletedOrders(params).subscribe(data => {
-      console.log(data);
+      data.forEach(order => {
+        const completedOrder = new CompletedOrder();
+        completedOrder.id = order.orderDto.id;
+        const completed = order.orderDto.completed;
+        completedOrder.completed = new Date(completed.year, completed.monthValue - 1, completed.dayOfMonth, completed.hour, completed.minute, completed.second);
+        completedOrder.products = order.productCostInCartDtoList;
+        this.completedOrders.push(completedOrder);
+      });
+      console.log(this.completedOrders);
     })
-    // console.log();
   }
 }
 
-interface TimeInterval {
+export interface TimeInterval {
   name: string;
   description: string;
 }
+
+export class CompletedOrder {
+  id: number;
+  completed: Date;
+  products: [];
+}
+

@@ -48,6 +48,7 @@ import { OrderInfoComponent } from './person-tabs/order-info/order-info.componen
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTreeModule} from "@angular/material/tree";
+import { OrderPanelComponent } from './person-tabs/order-info/order-panel/order-panel.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -71,6 +72,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     PersonDetailsComponent,
     PaypalPaymentComponent,
     OrderInfoComponent,
+    OrderPanelComponent,
   ],
   imports: [
     BrowserModule,

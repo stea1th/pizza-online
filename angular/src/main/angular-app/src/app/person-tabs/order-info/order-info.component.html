@@ -1,48 +1,21 @@
 <!--<div fxLayout="row" class="order-box">-->
 <!--  <div fxLayout="column">-->
-    <mat-form-field>
-      <mat-label>Orders</mat-label>
-      <mat-select [formControl]="timeIntervalSelect" [(value)]="selected" (ngModelChange)="onChange()">
-        <mat-option *ngFor="let item of years; let i = index"
-                    [value]="item.name">{{item.description}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-<!--  </div>-->
-<!--  <div fxLayout="column">-->
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            April 03 2020
-          </mat-panel-title>
-          <mat-panel-description>
-            ORDER # 303-123123123-23324
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-<!--        <mat-form-field>-->
-<!--          <mat-label>First name</mat-label>-->
-<!--          <input matInput>-->
-<!--        </mat-form-field>-->
-
-<!--        <mat-form-field>-->
-<!--          <mat-label>Age</mat-label>-->
-<!--          <input matInput type="number" min="1">-->
-<!--        </mat-form-field>-->
-      </mat-expansion-panel>
-
-<!--      <mat-expansion-panel>-->
-<!--        <mat-expansion-panel-header>-->
-<!--          <mat-panel-title>-->
-<!--            Self aware panel-->
-<!--          </mat-panel-title>-->
-<!--          <mat-panel-description>-->
-<!--            Currently I am open-->
-<!--          </mat-panel-description>-->
-<!--        </mat-expansion-panel-header>-->
-<!--        <p>I'm visible because I am open</p>-->
-<!--      </mat-expansion-panel>-->
-    </mat-accordion>
+<!--<div class="order-box">-->
+  <mat-form-field>
+    <mat-label>Orders</mat-label>
+    <mat-select [formControl]="timeIntervalSelect" [(value)]="selected" (ngModelChange)="onChange()">
+      <mat-option *ngFor="let item of years; let i = index"
+                  [value]="item.name">{{item.description}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--  </div>-->
+  <!--  <div fxLayout="column">-->
+  <mat-accordion >
+    <ng-container *ngFor="let data of completedOrders">
+      <app-order-panel [completedOrder]="data"></app-order-panel>
+    </ng-container>
+  </mat-accordion>
+<!--</div>-->
 <!--  </div>-->
 <!--</div>-->
 
