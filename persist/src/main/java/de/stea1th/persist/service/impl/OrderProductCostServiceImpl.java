@@ -7,10 +7,13 @@ import de.stea1th.persist.entity.OrderProductCostPK;
 import de.stea1th.persist.repository.OrderProductCostRepository;
 import de.stea1th.persist.service.OrderProductCostService;
 import de.stea1th.persist.service.OrderService;
+import de.stea1th.persist.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @Slf4j
@@ -20,14 +23,19 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     private final OrderService orderService;
 
-    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, @Lazy OrderService orderService) {
+    private ProductCostService productCostService;
+
+    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, @Lazy OrderService orderService, @Lazy ProductCostService productCostService) {
         this.orderProductCostRepository = orderProductCostRepository;
         this.orderService = orderService;
+        this.productCostService = productCostService;
     }
 
     @Override
+    @Transactional
     public OrderProductCost save(OrderProductCostDto orderProductCostDto, Order order) {
         OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
+        var productCost = productCostService.get(orderProductCostDto.getProductCostId());
         if (orderProductCost == null) {
             log.info("new order-product-cost created");
             orderProductCost = new OrderProductCost();
@@ -37,6 +45,8 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
             log.info("existing order-product-cost updated");
             orderProductCost.setQuantity(orderProductCost.getQuantity() + orderProductCostDto.getQuantity());
         }
+        orderProductCost.setPrice(productCost.getPrice());
+        orderProductCost.setDiscount(productCost.getDiscount());
         log.info("order-product-cost: {} saved", orderProductCost);
         return orderProductCostRepository.save(orderProductCost);
     }
@@ -47,13 +57,16 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     @Override
-    public Integer updateQuantity(OrderProductCostDto orderProductCostDto) {
+    public Integer updateQuantityAndPriceWithDiscount(OrderProductCostDto orderProductCostDto) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak(orderProductCostDto.getKeycloak());
         OrderProductCost orderProductCost = get(order.getId(), orderProductCostDto.getProductCostId());
+        var productCost = productCostService.get(orderProductCostDto.getProductCostId());
 
         if (orderProductCost != null) {
             log.info("in order-product-cost product quantity updated");
             orderProductCost.setQuantity(orderProductCostDto.getQuantity());
+            orderProductCost.setPrice(productCost.getPrice());
+            orderProductCost.setDiscount(productCost.getDiscount());
             orderProductCostRepository.save(orderProductCost);
         }
         return getSumQuantitiesByOrderId(order.getId());
@@ -85,7 +98,8 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         return sum == null ? 0 : sum;
     }
 
-    private OrderProductCost get(int orderId, int productCostId) {
+    @Transactional
+    public OrderProductCost get(int orderId, int productCostId) {
         OrderProductCostPK orderProductCostPK = createPK(orderId, productCostId);
         return orderProductCostRepository.findById(orderProductCostPK).orElse(null);
     }

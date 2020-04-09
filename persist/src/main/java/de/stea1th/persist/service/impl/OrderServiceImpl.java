@@ -114,8 +114,8 @@ public class OrderServiceImpl implements OrderService {
         List<ProductCostInCartDto> dtoList = productCostList
                 .stream()
                 .map(productCost -> {
-                    int quantity = orderProductCostService.getQuantityByOrderProductCostId(order.getId(), productCost.getId());
-                    return productCostConverter.convertToDtoInCart(productCost, quantity);
+                    var orderProductCost = orderProductCostService.get(order.getId(), productCost.getId());
+                    return productCostConverter.convertToDtoInCart(productCost, orderProductCost);
                 }).collect(Collectors.toList());
         OrderDto orderDto = orderConverter.convertToDtoWithoutOPC(order);
         var pdfCreatorDto = new CompletedOrderDto();

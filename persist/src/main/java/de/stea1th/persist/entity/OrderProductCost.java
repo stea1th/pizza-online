@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -18,6 +20,12 @@ public class OrderProductCost {
 
     @NotNull
     private Integer quantity;
+
+    @NotBlank
+    private BigDecimal price;
+
+    @NotNull
+    private Integer discount;
 
     @JsonBackReference
     @ManyToOne

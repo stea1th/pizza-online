@@ -57,7 +57,7 @@ public class OrderProductCostKafkaConsumer {
         try {
             OrderProductCostDto orderProductCostDto = objectMapper.readValue(message, OrderProductCostDto.class);
             log.info("order-product-cost dto: {} prepared to update", objectMapper.writeValueAsString(orderProductCostDto));
-            Integer sum = orderProductCostService.updateQuantity(orderProductCostDto);
+            Integer sum = orderProductCostService.updateQuantityAndPriceWithDiscount(orderProductCostDto);
             sendSum(sum);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());

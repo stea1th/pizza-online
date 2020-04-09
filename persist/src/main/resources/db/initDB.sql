@@ -68,6 +68,8 @@ CREATE TABLE ORDER_PRODUCT_COST
     order_id        INTEGER NOT NULL,
     product_cost_id INTEGER NOT NULL,
     quantity        INTEGER NOT NULL,
+    price      NUMERIC(5, 2)       DEFAULT 0,
+    discount   INTEGER             DEFAULT 0,
     FOREIGN KEY (order_id) REFERENCES ORDERS (id) ON DELETE CASCADE,
     FOREIGN KEY (product_cost_id) REFERENCES PRODUCT_COST (id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_cost_id)

@@ -10,8 +10,11 @@ import de.stea1th.persist.service.OrderProductCostService;
 import de.stea1th.persist.service.OrderService;
 import de.stea1th.persist.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +30,7 @@ public class ProductCostServiceImpl implements ProductCostService {
 
     private ProductCostConverter productCostConverter;
 
-    public ProductCostServiceImpl(OrderService orderService, OrderProductCostService orderProductCostService, ProductCostRepository productCostRepository, ProductCostConverter productCostConverter) {
+    public ProductCostServiceImpl(OrderService orderService, @Lazy OrderProductCostService orderProductCostService, ProductCostRepository productCostRepository, ProductCostConverter productCostConverter) {
         this.orderService = orderService;
         this.orderProductCostService = orderProductCostService;
         this.productCostRepository = productCostRepository;
@@ -41,8 +44,15 @@ public class ProductCostServiceImpl implements ProductCostService {
         int orderId = order.getId();
         List<ProductCost> allByOrderId = productCostRepository.getAllByOrderId(orderId);
         return allByOrderId.stream().map(productCost -> {
-            int quantity = orderProductCostService.getQuantityByOrderProductCostId(orderId, productCost.getId());
-            return productCostConverter.convertToDtoInCart(productCost, quantity);
+//            int quantity = orderProductCostService.getQuantityByOrderProductCostId(orderId, productCost.getId());
+            var orderProductCost = orderProductCostService.get(order.getId(), productCost.getId());
+            return productCostConverter.convertToDtoInCart(productCost, orderProductCost);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public ProductCost get(int productCostId) {
+        return productCostRepository.findById(productCostId).get();
     }
 }
