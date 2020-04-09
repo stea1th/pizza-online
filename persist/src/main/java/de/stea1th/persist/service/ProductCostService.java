@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductCostService {
 
-    List<ProductCostInCartDto> getAllProductCostsByKeycloak(String keycloak);
+    List<ProductCostInCartDto> getAllProductCostsInCartByKeycloak(String keycloak);
 
     ProductCost get(int productCostId);
 }

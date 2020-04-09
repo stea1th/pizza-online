@@ -48,8 +48,6 @@ export class ProductCardComponent implements OnInit {
       this._data.updateProductQuantityInCart(body).subscribe((d) => {
         const message = this.quantitySelect.value + " x " + this.productCostElement.product.name + ", " + this.productCostElement.property + " was updated  in cart";
         this._snackBar.open(message);
-
-        // this._sideNav.cart = d;
         this.refreshElements.emit();
       });
     }
@@ -57,7 +55,6 @@ export class ProductCardComponent implements OnInit {
 
   removeFromCart() {
     this._data.deleteProductFromCart(this.productCostElement.id).subscribe((d) => {
-      // this._sideNav.cart = d;
       const message = this.quantitySelect.value + " x " + this.productCostElement.product.name + ", " + this.productCostElement.property + " was removed from cart";
       this._snackBar.open(message);
       this.refreshElements.emit();

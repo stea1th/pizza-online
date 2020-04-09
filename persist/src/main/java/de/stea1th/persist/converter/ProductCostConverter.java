@@ -4,11 +4,13 @@ import de.stea1th.commonslibrary.dto.ProductCostDto;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
 import de.stea1th.persist.entity.OrderProductCost;
 import de.stea1th.persist.entity.ProductCost;
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ProductCostConverter {
 
     private final ProductConverter productConverter;
@@ -17,11 +19,6 @@ public class ProductCostConverter {
         this.productConverter = productConverter;
     }
 
-//    public ProductCostInCartDto convertToDtoInCart(ProductCost productCost, int quantity) {
-//
-//        return productCostDto;
-//    }
-
     public ProductCostInCartDto convertToDtoInCart(ProductCost productCost, OrderProductCost orderProductCost) {
         var productCostDto = new ProductCostInCartDto();
         var productDto = productConverter.convertToDtoWithoutProductCostList(productCost.getProduct());
@@ -29,6 +26,7 @@ public class ProductCostConverter {
         productCostDto.setId(productCost.getId());
         productCostDto.setProperty(productCost.getProperty());
         productCostDto.setDiscount(orderProductCost.getDiscount());
+        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{}", orderProductCost.getPrice());
         productCostDto.setPrice(orderProductCost.getPrice());
         productCostDto.setQuantity(orderProductCost.getQuantity());
         return productCostDto;

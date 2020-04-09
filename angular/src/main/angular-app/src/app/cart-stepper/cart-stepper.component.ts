@@ -50,6 +50,7 @@ export class CartStepperComponent implements OnInit {
   getProductsInCart() {
     this._spinner.showSpinner();
     this._data.getCartProductCosts().subscribe(data => {
+      console.log(data);
       this.productCostList = data;
       this._sideNav.cart = this.sumAllQuantitiesInCart(data);
       this.createTotal(this.productCostList);

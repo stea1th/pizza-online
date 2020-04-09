@@ -1,7 +1,5 @@
 package de.stea1th.persist.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.commonslibrary.component.KafkaProducer;
 import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
 import de.stea1th.persist.service.ProductCostService;
@@ -32,7 +30,7 @@ public class ProductCostKafkaConsumer {
     @KafkaListener(topics = "${product-cost.get.cart}", groupId = "pizza-online")
     public void processGetAllProductCosts(String message) {
 //        ObjectMapper objectMapper = new ObjectMapper();
-        List<ProductCostInCartDto> allProductCostsByKeycloak = productCostService.getAllProductCostsByKeycloak(message);
+        List<ProductCostInCartDto> allProductCostsByKeycloak = productCostService.getAllProductCostsInCartByKeycloak(message);
         kafkaProducer.produce(receiveCartProductCostsTopic, "pizza-online", allProductCostsByKeycloak);
 //        try {
 //            log.info("product-costs data: {} sent to topic {}", objectMapper.writeValueAsString(allProductCostsByKeycloak), receiveCartProductCostsTopic);

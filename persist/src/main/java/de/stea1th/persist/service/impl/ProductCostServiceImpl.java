@@ -38,13 +38,11 @@ public class ProductCostServiceImpl implements ProductCostService {
     }
 
     @Override
-    public List<ProductCostInCartDto> getAllProductCostsByKeycloak(String keycloak) {
+    public List<ProductCostInCartDto> getAllProductCostsInCartByKeycloak(String keycloak) {
         Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);
         log.info("get product-costs for keycloak: {}", keycloak);
-        int orderId = order.getId();
-        List<ProductCost> allByOrderId = productCostRepository.getAllByOrderId(orderId);
+        List<ProductCost> allByOrderId = productCostRepository.getAllByOrderId(order.getId());
         return allByOrderId.stream().map(productCost -> {
-//            int quantity = orderProductCostService.getQuantityByOrderProductCostId(orderId, productCost.getId());
             var orderProductCost = orderProductCostService.get(order.getId(), productCost.getId());
             return productCostConverter.convertToDtoInCart(productCost, orderProductCost);
         }).collect(Collectors.toList());
