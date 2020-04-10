@@ -22,21 +22,10 @@
 
       <p matLine fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%" class="description-row">
 
-        <span>{{item.product.name}}, {{item.property}}</span>
-        <span>Quantity: {{item.quantity}}</span>
-        <span>Price: {{item.price}}</span>
+        <span fxFlex="50%">{{item.product.name}}, {{item.property}}</span>
+        <span fxFlex="27%" fxLayoutAlign="end center">Quantity: {{item.quantity}}</span>
+        <span fxFlex="23%" fxLayoutAlign="end center">Price: {{item.price}}</span>
       </p>
     </mat-list-item>
   </mat-list>
-
-
-  <!--        <mat-form-field>-->
-  <!--          <mat-label>First name</mat-label>-->
-  <!--          <input matInput>-->
-  <!--        </mat-form-field>-->
-
-  <!--        <mat-form-field>-->
-  <!--          <mat-label>Age</mat-label>-->
-  <!--          <input matInput type="number" min="1">-->
-  <!--        </mat-form-field>-->
 </mat-expansion-panel>

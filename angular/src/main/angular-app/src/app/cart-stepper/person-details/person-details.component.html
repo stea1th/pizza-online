@@ -1,15 +1,17 @@
 <div class="large-box mat-elevation-z4">
-  <mat-card class="mat-elevation-z8">
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="6%">
-      <div fxFlex="20%">
-        <div class="delivery-address">
-          Delivery address
-        </div>
-      </div>
-      <div fxFlex="90%" fxLayoutAlign="end end">
-      </div>
-    </div>
-  </mat-card>
+<!--  <mat-card class="mat-elevation-z8">-->
+<!--&lt;!&ndash;    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="6%">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div fxFlex="20%">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="delivery-address">&ndash;&gt;-->
+<!--&lt;!&ndash;          Delivery address&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div fxFlex="90%" fxLayoutAlign="end end">&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    -->
+<!--  </mat-card>-->
+  <app-header-card></app-header-card>
   <mat-card class="mat-elevation-z8">
     <mat-vertical-stepper [linear]="isLinear" #stepper class="vertical-stepper">
       <mat-step [stepControl]="firstFormGroup">
