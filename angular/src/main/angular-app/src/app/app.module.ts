@@ -49,6 +49,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTreeModule} from "@angular/material/tree";
 import { OrderPanelComponent } from './person-tabs/order-info/order-panel/order-panel.component';
+import {CookieService} from 'ngx-cookie-service';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -127,7 +128,8 @@ export function kcFactory(keycloakService: KeycloakService) {
         {
           duration: 2500
         }
-    }
+    },
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })

@@ -44,9 +44,9 @@ export class DataService {
     return this.get('/product').pipe();
   }
 
-  public getCartProducts(): Observable<any> {
-    return this.get('/product/cart').pipe();
-  }
+  // public getCartProducts(): Observable<any> {
+  //   return this.get('/product/cart').pipe();
+  // }
 
   public getQuantitiesSumInCart() {
     return this.get('/order_product_cost/sum');

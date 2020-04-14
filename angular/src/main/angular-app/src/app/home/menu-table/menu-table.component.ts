@@ -2,14 +2,14 @@ import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatSort} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
-import {Router} from "@angular/router";
 import {SpinnerService} from "../../service/spinner.service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-menu-table',
@@ -24,6 +24,13 @@ import {SpinnerService} from "../../service/spinner.service";
   ],
 })
 export class MenuTableComponent implements OnInit, AfterContentInit {
+
+  pageSizeOptions = [5, 10, 20];
+  pageSize = 5;
+  currentPage = 0;
+  totalSize = 0;
+  array: any;
+
 
   myDataSource = new MatTableDataSource<ProductElement>();
   testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -42,12 +49,15 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
               private _sanitizer: DomSanitizer,
               private _snackBar: MatSnackBar,
               private _search: SearchService,
-              private _spinner: SpinnerService
-              ) {
+              private _spinner: SpinnerService,
+              private _cookieService: CookieService,) {
   }
 
   ngOnInit() {
     this.fillTable();
+    console.log(this._cookieService.get('test-cookie-active'));
+    console.log(this._cookieService.get('test-cookie-direction'));
+    // console.log(this._cookieService.get('test-cookie-direction'));
   }
 
   ngAfterContentInit() {
@@ -62,7 +72,6 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
     this._spinner.showSpinner();
     this._data.getAllProducts().subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
-      this.myDataSource.paginator = this.paginator;
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
         this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
           .changingThisBreaksApplicationSecurity;
@@ -92,6 +101,17 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
     this._snackBar.open(message);
   }
 
+  handlePage(event: PageEvent) {
+    console.log(event);
+  }
+
+  changeSort() {
+    console.log(this.myDataSource.sort.direction);
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 2);
+    this._cookieService.set('test-cookie-active', this.myDataSource.sort.active, now);
+    this._cookieService.set('test-cookie-direction', this.myDataSource.sort.direction);
+  }
 }
 
 export class ProductElement {
