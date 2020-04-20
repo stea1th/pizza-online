@@ -1,6 +1,4 @@
-<!--<div fxLayout="row" class="order-box">-->
-<!--  <div fxLayout="column">-->
-<!--<div class="order-box">-->
+
   <mat-form-field>
     <mat-label>Orders</mat-label>
     <mat-select [formControl]="timeIntervalSelect" [(value)]="selected" (ngModelChange)="onChange()">
@@ -8,19 +6,11 @@
                   [value]="item.name">{{item.description}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <!--  </div>-->
-  <!--  <div fxLayout="column">-->
+
   <mat-accordion >
     <ng-container *ngFor="let data of completedOrders">
       <app-order-panel [completedOrder]="data"></app-order-panel>
     </ng-container>
   </mat-accordion>
-<!--</div>-->
-<!--  </div>-->
-<!--</div>-->
 
-
-<!--<div fxLayout="row" >-->
-
-<!--</div>-->
 

@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
 import {Creator} from "../../helper/creator";
@@ -6,10 +6,10 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
 import {SpinnerService} from "../../service/spinner.service";
-import { CookieService } from 'ngx-cookie-service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-menu-table',
@@ -23,7 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
     ]),
   ],
 })
-export class MenuTableComponent implements OnInit, AfterContentInit {
+export class MenuTableComponent implements OnInit, AfterViewInit {
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 5;
@@ -45,6 +45,9 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  // @ViewChild(MatSortHeader, {static: true}) sortHeader: MatSortHeader;
+
+
   constructor(private _data: DataService,
               private _sanitizer: DomSanitizer,
               private _snackBar: MatSnackBar,
@@ -55,12 +58,9 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.fillTable();
-    console.log(this._cookieService.get('test-cookie-active'));
-    console.log(this._cookieService.get('test-cookie-direction'));
-    // console.log(this._cookieService.get('test-cookie-direction'));
   }
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     this._search.find.subscribe(data => {
       this.myDataSource.filter = data;
       return false;
@@ -77,9 +77,9 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
           .changingThisBreaksApplicationSecurity;
         this.myDataSource.filteredData[i].price = this.createPrice(data[i].productCostList);
         this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
-        this.myDataSource.sort = this.sort;
-        this.myDataSource.paginator = this.paginator;
       }
+      this.setSort();
+      this.myDataSource.paginator = this.paginator;
       this._spinner.stopSpinner();
     });
   }
@@ -106,11 +106,27 @@ export class MenuTableComponent implements OnInit, AfterContentInit {
   }
 
   changeSort() {
-    console.log(this.myDataSource.sort.direction);
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 2);
-    this._cookieService.set('test-cookie-active', this.myDataSource.sort.active, now);
-    this._cookieService.set('test-cookie-direction', this.myDataSource.sort.direction);
+    // const now = new Date();
+    // now.setMinutes(now.getMinutes() + 2);
+    this._cookieService.set('test-cookie-active', this.sort.active);
+    this._cookieService.set('test-cookie-direction', this.sort.direction);
+  }
+
+  setSort() {
+    console.log(this._cookieService.get('test-cookie-active'));
+    console.log(this._cookieService.get('test-cookie-direction'));
+    this.sort.sort(<MatSortable>{
+      id: this._cookieService.get('test-cookie-active'),
+      start: this._cookieService.get('test-cookie-direction'),
+      disableClear: true,
+    });
+
+    this.myDataSource.sort = this.sort;
+    // this._cookieService.deleteAll();
+    // if(this._cookieService.get('test-cookie-active') != '') {
+    //   this.myDataSource.sort.active = this._cookieService.get('test-cookie-active');
+    //   this.myDataSource.sort.direction =  this._cookieService.get('test-cookie-direction');
+    // }
   }
 }
 
