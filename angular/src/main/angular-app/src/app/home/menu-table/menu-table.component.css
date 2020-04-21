@@ -69,8 +69,8 @@ img {
   margin: 8px 0;
 }
 
-::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
-  opacity: 0.54 !important;
-  transform: translateY(0px) !important;
-}
+/*::ng-deep .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {*/
+/*  opacity: 0.54 !important;*/
+/*  transform: translateY(0px) !important;*/
+/*}*/
 

@@ -6,7 +6,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatSort, MatSortable} from "@angular/material/sort";
+import {MatSort} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
 import {SpinnerService} from "../../service/spinner.service";
 import {CookieService} from 'ngx-cookie-service';
@@ -25,10 +25,7 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class MenuTableComponent implements OnInit, AfterViewInit {
 
-  pageSizeOptions = [5, 10, 20];
-  pageSize = 5;
-  currentPage = 0;
-  totalSize = 0;
+  pageSizeOptions = [2, 10, 20];
   array: any;
 
 
@@ -44,8 +41,6 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-
-  // @ViewChild(MatSortHeader, {static: true}) sortHeader: MatSortHeader;
 
 
   constructor(private _data: DataService,
@@ -79,7 +74,7 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
         this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
       }
       this.setSort();
-      this.myDataSource.paginator = this.paginator;
+      this.setPaginator(this.paginator);
       this._spinner.stopSpinner();
     });
   }
@@ -102,31 +97,43 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
   }
 
   handlePage(event: PageEvent) {
-    console.log(event);
+    this._cookieService.set('cookie-pageIndex', event.pageIndex.toString());
+    this._cookieService.set('cookie-pageSize', event.pageSize.toString());
+    this._cookieService.set('cookie-length', event.length.toString());
   }
 
   changeSort() {
     // const now = new Date();
     // now.setMinutes(now.getMinutes() + 2);
-    this._cookieService.set('test-cookie-active', this.sort.active);
-    this._cookieService.set('test-cookie-direction', this.sort.direction);
+    this._cookieService.set('cookie-active', this.sort.active);
+    this._cookieService.set('cookie-direction', this.sort.direction);
   }
 
   setSort() {
-    console.log(this._cookieService.get('test-cookie-active'));
-    console.log(this._cookieService.get('test-cookie-direction'));
-    this.sort.sort(<MatSortable>{
-      id: this._cookieService.get('test-cookie-active'),
-      start: this._cookieService.get('test-cookie-direction'),
-      disableClear: true,
-    });
+    // this.sort.sort(<MatSortable>{
+    //   id: this._cookieService.get('cookie-active'),
+    //   start: this._cookieService.get('cookie-direction'),
+    //   disableClear: true,
+    // });
+    this.sort.active = this._cookieService.get('cookie-active');
+    this.sort.direction = this._cookieService.get('cookie-direction');
 
     this.myDataSource.sort = this.sort;
-    // this._cookieService.deleteAll();
-    // if(this._cookieService.get('test-cookie-active') != '') {
-    //   this.myDataSource.sort.active = this._cookieService.get('test-cookie-active');
-    //   this.myDataSource.sort.direction =  this._cookieService.get('test-cookie-direction');
-    // }
+  }
+
+  setPaginator(paginator: MatPaginator) {
+    const length =  this._cookieService.get('cookie-length');
+    console.log(length);
+    if(this.myDataSource.filteredData.length < Number(length)) {
+      this._cookieService.delete('cookie-pageIndex');
+      // this._cookieService.delete('cookie-pageSize');
+      this._cookieService.delete('cookie-length');
+    } else {
+      paginator.length = Number(length);
+      paginator.pageIndex = Number(this._cookieService.get('cookie-pageIndex'));
+    }
+    paginator.pageSize = Number(this._cookieService.get('cookie-pageSize'));
+    this.myDataSource.paginator = paginator;
   }
 }
 
