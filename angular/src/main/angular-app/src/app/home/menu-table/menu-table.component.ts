@@ -25,7 +25,7 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class MenuTableComponent implements OnInit, AfterViewInit {
 
-  pageSizeOptions = [2, 10, 20];
+  pageSizeOptions = [5, 10, 20];
   array: any;
 
 
@@ -74,7 +74,7 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
         this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
       }
       this.setSort();
-      this.setPaginator(this.paginator);
+      this.setPaginator();
       this._spinner.stopSpinner();
     });
   }
@@ -121,19 +121,17 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
     this.myDataSource.sort = this.sort;
   }
 
-  setPaginator(paginator: MatPaginator) {
+  setPaginator() {
     const length =  this._cookieService.get('cookie-length');
-    console.log(length);
     if(this.myDataSource.filteredData.length < Number(length)) {
       this._cookieService.delete('cookie-pageIndex');
-      // this._cookieService.delete('cookie-pageSize');
       this._cookieService.delete('cookie-length');
     } else {
-      paginator.length = Number(length);
-      paginator.pageIndex = Number(this._cookieService.get('cookie-pageIndex'));
+      this.paginator.length = Number(length);
+      this.paginator.pageIndex = Number(this._cookieService.get('cookie-pageIndex'));
     }
-    paginator.pageSize = Number(this._cookieService.get('cookie-pageSize'));
-    this.myDataSource.paginator = paginator;
+    this.paginator.pageSize = Number(this._cookieService.get('cookie-pageSize'));
+    this.myDataSource.paginator = this.paginator;
   }
 }
 
