@@ -10,6 +10,7 @@ import {MatSort} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
 import {SpinnerService} from "../../service/spinner.service";
 import {CookieService} from 'ngx-cookie-service';
+import {KeycloakService} from "../../service/keycloak.service";
 
 @Component({
   selector: 'app-menu-table',
@@ -48,11 +49,13 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
               private _snackBar: MatSnackBar,
               private _search: SearchService,
               private _spinner: SpinnerService,
-              private _cookieService: CookieService,) {
+              private _cookieService: CookieService,
+              private _keycloak: KeycloakService) {
   }
 
   ngOnInit() {
     this.fillTable();
+    console.log(this._keycloak.getParsedToken());
   }
 
   ngAfterViewInit() {

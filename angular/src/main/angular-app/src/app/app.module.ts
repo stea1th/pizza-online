@@ -50,6 +50,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTreeModule} from "@angular/material/tree";
 import { OrderPanelComponent } from './person-tabs/order-info/order-panel/order-panel.component';
 import {CookieService} from 'ngx-cookie-service';
+import { SellerTabsComponent } from './seller-tabs/seller-tabs.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -74,6 +75,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     PaypalPaymentComponent,
     OrderInfoComponent,
     OrderPanelComponent,
+    SellerTabsComponent,
   ],
   imports: [
     BrowserModule,
