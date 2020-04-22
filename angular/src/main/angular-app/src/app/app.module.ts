@@ -52,6 +52,7 @@ import { OrderPanelComponent } from './person-tabs/order-info/order-panel/order-
 import {CookieService} from 'ngx-cookie-service';
 import { SellerTabsComponent } from './seller-tabs/seller-tabs.component';
 import { AllProductsComponent } from './seller-tabs/all-products/all-products.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -112,6 +113,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatTreeModule,
+    MatCheckboxModule,
   ],
   providers: [
     KeycloakService,

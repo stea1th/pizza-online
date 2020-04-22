@@ -1,0 +1,8 @@
+.my-large-box {
+  height: 100%;
+  width:95%;
+  position: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
