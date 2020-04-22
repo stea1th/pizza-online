@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
-import {Creator} from "../../../helper/creator";
+import {PriceService} from "../../../service/price.service";
 
 
 @Component({
@@ -37,7 +37,9 @@ export class AddToCartFormComponent implements OnInit {
     quantity: new FormControl('', Validators.required),
   });
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent) {
+  constructor(private _data: DataService,
+              private _sideNav: SidenavResponsiveComponent,
+              private _price: PriceService) {
   }
 
   createRange(n: number) {
@@ -62,12 +64,12 @@ export class AddToCartFormComponent implements OnInit {
     this.discount = val?.discount;
     if (this.discount != undefined) {
       if (this.discount == 0) {
-        this.formDiscountPrice = Creator.createPrice(val.price);
+        this.formDiscountPrice = this._price.convertToEuroPrice(val.price);
         this.isNormalPriceHidden = true;
       } else {
         const price = val?.price;
-        this.formDiscountPrice = Creator.createPrice(price - price * this.discount / 100);
-        this.formNormalPrice = Creator.createPrice(price);
+        this.formDiscountPrice = this._price.convertToEuroPrice(price - price * this.discount / 100);
+        this.formNormalPrice = this._price.convertToEuroPrice(price);
         this.isNormalPriceHidden = false;
       }
     } else {

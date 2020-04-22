@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
-import {Creator} from "../../helper/creator";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -11,6 +10,7 @@ import {SearchService} from "../../service/search.service";
 import {SpinnerService} from "../../service/spinner.service";
 import {CookieService} from 'ngx-cookie-service';
 import {KeycloakService} from "../../service/keycloak.service";
+import {PriceService} from "../../service/price.service";
 
 @Component({
   selector: 'app-menu-table',
@@ -50,7 +50,8 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
               private _search: SearchService,
               private _spinner: SpinnerService,
               private _cookieService: CookieService,
-              private _keycloak: KeycloakService) {
+              private _keycloak: KeycloakService,
+              private _price: PriceService) {
   }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
         this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
           .changingThisBreaksApplicationSecurity;
-        this.myDataSource.filteredData[i].price = this.createPrice(data[i].productCostList);
+        this.myDataSource.filteredData[i].price = this._price.createPrice(data[i].productCostList);
         this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
       }
       this.setSort();
@@ -84,15 +85,6 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
 
   closeRow() {
     this.expandedElement = null;
-  }
-
-  createPrice(arr: any[]): string {
-    let resultArr = arr.map(function (x) {
-      return x.price;
-    });
-    let min = Math.min(...resultArr);
-    let max = Math.max(...resultArr);
-    return Creator.createPrice(min) + " - " + Creator.createPrice(max);
   }
 
   openSnackBar(message: string) {

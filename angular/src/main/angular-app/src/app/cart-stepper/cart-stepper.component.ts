@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DataService} from "../service/data.service";
 import {ProductCostElement} from "./shop-cart/shop-cart.component";
-import {Creator} from "../helper/creator";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
 import {MatStepper} from "@angular/material/stepper";
 import {
@@ -11,6 +10,7 @@ import {
 } from "./person-details/paypal-payment/paypal-payment.component";
 import {PersonDetailsComponent} from "./person-details/person-details.component";
 import {SpinnerService} from "../service/spinner.service";
+import {PriceService} from "../service/price.service";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -33,7 +33,8 @@ export class CartStepperComponent implements OnInit {
 
   constructor(private _data: DataService,
               private _sideNav: SidenavResponsiveComponent,
-              private _spinner: SpinnerService) {
+              private _spinner: SpinnerService,
+              private _price: PriceService) {
   }
 
   ngOnInit(): void {
@@ -68,7 +69,7 @@ export class CartStepperComponent implements OnInit {
       totalPrice += (price - price * array[i].discount / 100) * quantity;
       this.totalQuantity += quantity;
     }
-    this.totalPay = Creator.createPrice(totalPrice);
+    this.totalPay = this._price.convertToEuroPrice(totalPrice);
   }
 
   sumAllQuantitiesInCart(array: ProductCostElement[]) {

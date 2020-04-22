@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
-import {Creator} from "../../../helper/creator";
 import {DataService} from "../../../service/data.service";
 import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-responsive.component";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {PriceService} from "../../../service/price.service";
 
 
 @Component({
@@ -26,12 +26,16 @@ export class ProductCardComponent implements OnInit {
   faEuro = faEuroSign;
   image: string;
 
-  constructor(private _data: DataService, private _sideNav: SidenavResponsiveComponent, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
+  constructor(private _data: DataService,
+              private _sideNav: SidenavResponsiveComponent,
+              private _sanitizer: DomSanitizer,
+              private _snackBar: MatSnackBar,
+              private _price: PriceService) {
   }
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
-    this.formNormalPrice = Creator.createPrice(this.productCostElement.price);
+    this.formNormalPrice = this._price.convertToEuroPrice(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
     this.quantitySelect.markAsPristine();
     this.image = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(this.productCostElement.product.picture) as any).changingThisBreaksApplicationSecurity;
