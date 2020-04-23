@@ -7,11 +7,19 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {SpinnerService} from "../../service/spinner.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {PriceService} from "../../service/price.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
-  styleUrls: ['./all-products.component.css']
+  styleUrls: ['./all-products.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AllProductsComponent implements OnInit {
 
@@ -25,6 +33,7 @@ export class AllProductsComponent implements OnInit {
        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+  expandedElement: ProductElement | null;
 
   constructor(private _data: DataService,
               private _sanitizer: DomSanitizer,
