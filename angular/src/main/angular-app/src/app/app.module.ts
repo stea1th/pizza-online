@@ -53,6 +53,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { SellerTabsComponent } from './seller-tabs/seller-tabs.component';
 import { AllProductsComponent } from './seller-tabs/all-products/all-products.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ProductDetailsComponent } from './seller-tabs/all-products/product-details/product-details.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -79,6 +80,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     OrderPanelComponent,
     SellerTabsComponent,
     AllProductsComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,

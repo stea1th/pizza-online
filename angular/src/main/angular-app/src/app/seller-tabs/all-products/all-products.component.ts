@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {ProductElement} from "../../home/menu-table/menu-table.component";
@@ -8,6 +8,7 @@ import {SpinnerService} from "../../service/spinner.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {PriceService} from "../../service/price.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ProductDetailsComponent} from "./product-details/product-details.component";
 
 @Component({
   selector: 'app-all-products',
@@ -28,11 +29,8 @@ export class AllProductsComponent implements OnInit {
   myDataSource = new MatTableDataSource<ProductElement>();
   selection = new SelectionModel<ProductElement>(true, []);
 
-  testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+  @ViewChild('productDetails') productDetails: ProductDetailsComponent;
+
   expandedElement: ProductElement | null;
 
   constructor(private _data: DataService,
@@ -71,6 +69,14 @@ export class AllProductsComponent implements OnInit {
       this.selection.clear() :
       this.myDataSource.data.forEach(row => this.selection.select(row));
   }
+
+  checkIfSelected(row?: ProductElement) {
+    const isSelected = this.selection.isSelected(row);
+    if (isSelected) this.productDetails.toggleAll();
+    return isSelected;
+  }
+
+
 
   checkboxLabel(row?: ProductElement): string {
     if (!row) {

@@ -1,0 +1,42 @@
+<div class="product-detail">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <h5 fxFlex="20%">Description:</h5>
+    <p fxFlex="80%">{{testData}}</p>
+  </div>
+
+  <hr/>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <h5 fxFlex="20%">Ingredients:</h5>
+    <p fxFlex="80%">{{productElement.description}}</p>
+  </div>
+  <hr/>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <h5 fxFlex="20%">Conditions:</h5>
+    <div fxFlex="80%">
+      <mat-selection-list #selection (click)="changeSelection()" color="primary">
+        <mat-list-option *ngFor="let element of productElement.productCostList">
+          <div fxLayout="row">
+            <div fxFlex="40%">
+              {{element.property}}
+            </div>
+            <div fxFlex="30%">
+              {{element.price}}
+            </div>
+            <div fxFlex="30%">
+              {{element.discount}}
+            </div>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+      <br/>
+      <p>
+        Options selected: {{selection.selectedOptions.selected.length}}
+      </p>
+      <div class="control-buttons">
+        <button type="button" (click)="toggleAll()">Select All</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
