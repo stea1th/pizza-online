@@ -11,6 +11,7 @@ import {SpinnerService} from "../../service/spinner.service";
 import {CookieService} from 'ngx-cookie-service';
 import {KeycloakService} from "../../service/keycloak.service";
 import {PriceService} from "../../service/price.service";
+import {ProductElement} from "../../model/product-element.model";
 
 @Component({
   selector: 'app-menu-table',
@@ -130,12 +131,3 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
   }
 }
 
-export class ProductElement {
-  id: number;
-  name: string;
-  productCostList: [];
-  price: any;
-  description: string;
-  picture: string;
-  discount: string;
-}

@@ -16,7 +16,7 @@ import {PriceService} from "../../../service/price.service";
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input("product-element") productCostElement: ProductCostElement;
+  @Input("product-cost-element") productCostElement: ProductCostElement;
 
   @Output() refreshElements = new EventEmitter();
 

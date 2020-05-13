@@ -1,7 +1,7 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {ProductElement} from "../../home/menu-table/menu-table.component";
+
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SpinnerService} from "../../service/spinner.service";
@@ -9,6 +9,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {PriceService} from "../../service/price.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
+import {ProductElement} from "../../model/product-element.model";
 
 @Component({
   selector: 'app-all-products',
@@ -37,7 +38,8 @@ export class AllProductsComponent implements OnInit {
               private _sanitizer: DomSanitizer,
               private _snackBar: MatSnackBar,
               private _spinner: SpinnerService,
-              private _price: PriceService) { }
+              private _price: PriceService) {
+  }
 
   ngOnInit(): void {
     this.fillTable();
@@ -45,7 +47,7 @@ export class AllProductsComponent implements OnInit {
 
   fillTable() {
     this._spinner.showSpinner();
-    this._data.getAllProducts().subscribe(data=> {
+    this._data.getAllProducts().subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
         this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
@@ -79,17 +81,13 @@ export class AllProductsComponent implements OnInit {
   }
 
   private getProductDetailsComponentById(id: number): ProductDetailsComponent {
-    return this.productDetails.find(el=> el.productElement.id == id);
+    return this.productDetails.find(el => el.productElement.id == id);
   }
 
   toggleCheckBox(event: any) {
     const element = this.getProductDetailsComponentById(event.id).productElement;
-    if(event.isChecked) {
-      this.selection.select(element);
-    } else {
-      this.selection.deselect(element)
-    }
-
+    event.isChecked ?
+      this.selection.select(element) : this.selection.deselect(element);
   }
 
   checkIfSelected(row?: ProductElement) {

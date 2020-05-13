@@ -1,6 +1,6 @@
 <app-header-card></app-header-card>
 <div *ngFor="let element of productCostList">
-    <app-product-card [product-element]="element" (refreshElements)="refreshElements()"></app-product-card>
+    <app-product-card [product-cost-element]="element" (refreshElements)="refreshElements()"></app-product-card>
 </div>
 <app-footer-total [totalQuantity]="totalQuantity" [totalPay]="totalPay" [createTransactionItems]="createTransactionItems"></app-footer-total>
 

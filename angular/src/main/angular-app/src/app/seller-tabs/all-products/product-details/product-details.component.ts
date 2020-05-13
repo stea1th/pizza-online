@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ProductElement} from "../../../home/menu-table/menu-table.component";
+
 import {PriceService} from "../../../service/price.service";
 import {MatSelectionList, MatSelectionListChange} from "@angular/material/list";
+import {ProductElement} from "../../../model/product-element.model";
 
 @Component({
   selector: 'app-product-details',
