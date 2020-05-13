@@ -90,4 +90,7 @@ export class SidenavResponsiveComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.countProductsInCart();
   }
+
+
+
 }

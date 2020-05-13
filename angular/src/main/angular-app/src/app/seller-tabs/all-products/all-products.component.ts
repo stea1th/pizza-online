@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {ProductElement} from "../../home/menu-table/menu-table.component";
@@ -29,7 +29,7 @@ export class AllProductsComponent implements OnInit {
   myDataSource = new MatTableDataSource<ProductElement>();
   selection = new SelectionModel<ProductElement>(true, []);
 
-  @ViewChild('productDetails') productDetails: ProductDetailsComponent;
+  @ViewChildren('productDetails') productDetails: QueryList<ProductDetailsComponent>;
 
   expandedElement: ProductElement | null;
 
@@ -41,7 +41,6 @@ export class AllProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.fillTable();
-
   }
 
   fillTable() {
@@ -70,13 +69,32 @@ export class AllProductsComponent implements OnInit {
       this.myDataSource.data.forEach(row => this.selection.select(row));
   }
 
-  checkIfSelected(row?: ProductElement) {
-    const isSelected = this.selection.isSelected(row);
-    if (isSelected) this.productDetails.toggleAll();
-    return isSelected;
+  toggleAllChildrenCheckboxes(row?: ProductElement) {
+    const child = this.getProductDetailsComponent(row);
+    child.toggleAll(this.selection.isSelected(row));
   }
 
+  private getProductDetailsComponent(row: ProductElement): ProductDetailsComponent {
+    return this.getProductDetailsComponentById(row.id);
+  }
 
+  private getProductDetailsComponentById(id: number): ProductDetailsComponent {
+    return this.productDetails.find(el=> el.productElement.id == id);
+  }
+
+  toggleCheckBox(event: any) {
+    const element = this.getProductDetailsComponentById(event.id).productElement;
+    if(event.isChecked) {
+      this.selection.select(element);
+    } else {
+      this.selection.deselect(element)
+    }
+
+  }
+
+  checkIfSelected(row?: ProductElement) {
+    return this.selection.isSelected(row);
+  }
 
   checkboxLabel(row?: ProductElement): string {
     if (!row) {

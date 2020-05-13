@@ -13,8 +13,8 @@
   <div fxLayout="row" fxLayoutAlign="center center">
     <h5 fxFlex="20%">Conditions:</h5>
     <div fxFlex="80%">
-      <mat-selection-list #selection (click)="changeSelection()" color="primary">
-        <mat-list-option *ngFor="let element of productElement.productCostList">
+      <mat-selection-list #selection color="primary" (selectionChange)="onChange($event)">
+        <mat-list-option *ngFor="let element of productElement.productCostList" >
           <div fxLayout="row">
             <div fxFlex="40%">
               {{element.property}}
@@ -32,9 +32,9 @@
       <p>
         Options selected: {{selection.selectedOptions.selected.length}}
       </p>
-      <div class="control-buttons">
-        <button type="button" (click)="toggleAll()">Select All</button>
-      </div>
+<!--      <div class="control-buttons">-->
+<!--        <button type="button" (click)="toggleAll()">Select All</button>-->
+<!--      </div>-->
     </div>
   </div>
 
