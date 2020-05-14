@@ -4,8 +4,7 @@
       <h5>Description:</h5>
     </div>
 
-    <!--    <ng-template #inactiveDescriptionBlock>-->
-    <div fxFlex="70%" fxLayoutAlign="start center" >
+    <div fxFlex="70%" fxLayoutAlign="start center">
       <div *ngIf="!editDescription; else activeDescriptionBlock"></div>
       <p [hidden]="editDescription">{{testData}}</p>
       <ng-template #activeDescriptionBlock class="description-form">
@@ -26,21 +25,6 @@
       <button type="button"
               (click)="editDescription = !editDescription;">{{!editDescription ? 'Edit' : 'Cancel'}}</button>
     </div>
-    <!--    </ng-template>-->
-    <!--    <ng-template #activeDescriptionBlock>-->
-    <!--      <form (ngSubmit)="test()" [formGroup]="descriptionFormGroup" class="description-form">-->
-    <!--        <mat-form-field fxFlex="70%" fxLayoutAlign="start center" fxLayoutGap="1%">-->
-    <!--          <mat-label>Edit description</mat-label>-->
-    <!--          <textarea matInput value="{{testData}}" cdkTextareaAutosize type="text" formControlName="descriptionForm"-->
-    <!--                    class="textarea-description"></textarea>-->
-    <!--        </mat-form-field>-->
-    <!--        <div fxFlex="10%" fxLayoutAlign="end center">-->
-    <!--          <button type="submit">Save</button>-->
-    <!--          <button type="button" (click)="editDescription = false;">Cancel</button>-->
-    <!--        </div>-->
-    <!--      </form>-->
-    <!--    </ng-template>-->
-
   </div>
 
   <hr/>

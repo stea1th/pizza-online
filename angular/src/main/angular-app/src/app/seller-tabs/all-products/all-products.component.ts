@@ -88,6 +88,8 @@ export class AllProductsComponent implements OnInit {
     const element = this.getProductDetailsComponentById(event.id).productElement;
     event.isChecked ?
       this.selection.select(element) : this.selection.deselect(element);
+    console.log(event.isChecked);
+    console.log(this.selection.selected.length);
   }
 
   checkIfSelected(row?: ProductElement) {

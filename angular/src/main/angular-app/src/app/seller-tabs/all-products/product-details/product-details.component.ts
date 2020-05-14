@@ -36,25 +36,16 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   toggleAll(isParentSelected: boolean) {
-    if(!isParentSelected) {
-      this.productElement.productCostList.forEach(el=> this.selection.selectedOptions.select(el));
-      this.selection.selectAll();
-    } else {
-      this.selection.selectedOptions.clear();
-    }
+    !isParentSelected ? this.selection.selectAll() : this.selection.selectedOptions.clear();
   }
 
   onChange() {
     const isChecked = this.selection.selectedOptions.selected.length != 0;
     this.checkParentCheckbox.emit({isChecked: isChecked, id: this.productElement.id});
-
   }
 
   onSubmit() {
-    console.log(this.descriptionFormGroup.value);
-
     this.testData = this.descriptionFormGroup.value.descriptionForm;
     this.editDescription = false;
-
   }
 }
