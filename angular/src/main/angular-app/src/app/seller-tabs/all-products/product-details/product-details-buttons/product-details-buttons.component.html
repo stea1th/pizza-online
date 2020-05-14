@@ -1,0 +1,13 @@
+<div fxLayout="row" fxLayoutAlign="space-between center"  class="button-line">
+  <p class="options-selected">
+    Options selected: {{selection.selectedOptions.selected.length}}
+  </p>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button type="button" >Add New</button>
+    <button type="button" [disabled]="oneSelected()" >Edit</button>
+    <button type="button" [disabled]="!hasValue()" >Delete</button>
+    <button type="button" [disabled]="!hasValue()">Freeze</button>
+    <button type="button" [disabled]="!hasValue()">Unfreeze</button>
+  </div>
+</div>
+<br/>

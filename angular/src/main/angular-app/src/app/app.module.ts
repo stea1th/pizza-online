@@ -54,6 +54,7 @@ import { SellerTabsComponent } from './seller-tabs/seller-tabs.component';
 import { AllProductsComponent } from './seller-tabs/all-products/all-products.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ProductDetailsComponent } from './seller-tabs/all-products/product-details/product-details.component';
+import { ProductDetailsButtonsComponent } from './seller-tabs/all-products/product-details/product-details-buttons/product-details-buttons.component';
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -81,6 +82,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     SellerTabsComponent,
     AllProductsComponent,
     ProductDetailsComponent,
+    ProductDetailsButtonsComponent,
   ],
   imports: [
     BrowserModule,

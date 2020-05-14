@@ -1,7 +1,29 @@
-.product-detail {
-  width: 100%;
+.product-details {
+  width: 1492px;
+  /*width: 100%;*/
+  /*min-width: 100vh;*/
+}
+
+.textarea-description {
+  width: 1014px;
+  overflow: hidden;
 }
 
 .control-buttons {
   padding-bottom: 10px;
 }
+
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: auto !important;
+}
+
+.description-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+

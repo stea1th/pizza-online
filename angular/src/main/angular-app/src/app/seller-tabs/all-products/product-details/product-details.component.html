@@ -1,20 +1,62 @@
-<div class="product-detail">
-  <div fxLayout="row" fxLayoutAlign="center center">
-    <h5 fxFlex="20%">Description:</h5>
-    <p fxFlex="80%">{{testData}}</p>
+<div class="product-details">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1%" class="product-details">
+    <div fxFlex="20%">
+      <h5>Description:</h5>
+    </div>
+
+    <!--    <ng-template #inactiveDescriptionBlock>-->
+    <div fxFlex="70%" fxLayoutAlign="start center" >
+      <div *ngIf="!editDescription; else activeDescriptionBlock"></div>
+      <p [hidden]="editDescription">{{testData}}</p>
+      <ng-template #activeDescriptionBlock class="description-form">
+        <form (ngSubmit)="onSubmit()" id="descriptionForm" [formGroup]="descriptionFormGroup">
+          <mat-form-field>
+            <mat-label>Edit description</mat-label>
+            <textarea matInput value="{{testData}}" cdkTextareaAutosize formControlName="descriptionForm"
+                      class="textarea-description"></textarea>
+            <!--                      <input matInput #message maxlength="256" formControlName="descriptionForm">-->
+            <!--                      <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>-->
+            <!--                      <mat-hint align="end">{{message.value.length}} / 256</mat-hint>-->
+          </mat-form-field>
+        </form>
+      </ng-template>
+    </div>
+    <div fxFlex="10%" fxLayoutAlign="end center">
+      <button type="submit" [hidden]="!editDescription" form="descriptionForm">Save</button>
+      <button type="button"
+              (click)="editDescription = !editDescription;">{{!editDescription ? 'Edit' : 'Cancel'}}</button>
+    </div>
+    <!--    </ng-template>-->
+    <!--    <ng-template #activeDescriptionBlock>-->
+    <!--      <form (ngSubmit)="test()" [formGroup]="descriptionFormGroup" class="description-form">-->
+    <!--        <mat-form-field fxFlex="70%" fxLayoutAlign="start center" fxLayoutGap="1%">-->
+    <!--          <mat-label>Edit description</mat-label>-->
+    <!--          <textarea matInput value="{{testData}}" cdkTextareaAutosize type="text" formControlName="descriptionForm"-->
+    <!--                    class="textarea-description"></textarea>-->
+    <!--        </mat-form-field>-->
+    <!--        <div fxFlex="10%" fxLayoutAlign="end center">-->
+    <!--          <button type="submit">Save</button>-->
+    <!--          <button type="button" (click)="editDescription = false;">Cancel</button>-->
+    <!--        </div>-->
+    <!--      </form>-->
+    <!--    </ng-template>-->
+
   </div>
 
   <hr/>
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1%">
     <h5 fxFlex="20%">Ingredients:</h5>
-    <p fxFlex="80%">{{productElement.description}}</p>
+    <p fxFlex="70%">{{productElement.description}}</p>
+    <div fxFlex="10%" fxLayoutAlign="end center">
+      <button type="button">Edit</button>
+    </div>
   </div>
   <hr/>
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1%">
     <h5 fxFlex="20%">Conditions:</h5>
     <div fxFlex="80%">
-      <mat-selection-list #selection color="primary" (selectionChange)="onChange($event)">
-        <mat-list-option *ngFor="let element of productElement.productCostList" >
+      <mat-selection-list #selection color="primary" (selectionChange)="onChange()">
+        <mat-list-option *ngFor="let element of productElement.productCostList">
           <div fxLayout="row">
             <div fxFlex="40%">
               {{element.property}}
@@ -29,12 +71,12 @@
         </mat-list-option>
       </mat-selection-list>
       <br/>
-      <p>
-        Options selected: {{selection.selectedOptions.selected.length}}
-      </p>
-<!--      <div class="control-buttons">-->
-<!--        <button type="button" (click)="toggleAll()">Select All</button>-->
-<!--      </div>-->
+      <app-product-details-buttons
+        [selection]="selection"></app-product-details-buttons>
+
+      <!--      <div class="control-buttons">-->
+      <!--        <button type="button" (click)="toggleAll()">Select All</button>-->
+      <!--      </div>-->
     </div>
   </div>
 

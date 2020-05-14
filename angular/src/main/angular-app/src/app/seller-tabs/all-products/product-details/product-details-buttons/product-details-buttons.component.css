@@ -1,0 +1,10 @@
+.options-selected {
+  text-align: center;
+  vertical-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.button-line {
+  width: 100%;
+}
