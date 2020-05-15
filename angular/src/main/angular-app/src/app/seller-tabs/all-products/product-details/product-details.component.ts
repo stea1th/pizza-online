@@ -36,7 +36,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   toggleAll(isParentSelected: boolean) {
-    !isParentSelected ? this.selection.selectAll() : this.selection.selectedOptions.clear();
+    isParentSelected ? this.selection.selectAll() : this.selection.selectedOptions.clear();
   }
 
   onChange() {

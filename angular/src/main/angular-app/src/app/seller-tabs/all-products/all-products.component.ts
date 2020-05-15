@@ -65,15 +65,27 @@ export class AllProductsComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  toggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.myDataSource.data.forEach(row => this.selection.select(row));
+  toggleAll() {
+    if(this.isAllSelected()) {
+      this.selection.clear();
+      this.myDataSource.data.forEach(row=> this.toggleAllChildrenCheckboxes(row));
+    } else {
+      this.myDataSource.data.forEach(row => {
+        this.selection.select(row);
+        this.toggleAllChildrenCheckboxes(row);
+      });
+    }
+  }
+
+  toggle(row: ProductElement) {
+    this.selection.toggle(row);
+    this.toggleAllChildrenCheckboxes(row);
   }
 
   toggleAllChildrenCheckboxes(row?: ProductElement) {
     const child = this.getProductDetailsComponent(row);
-    child.toggleAll(this.selection.isSelected(row));
+    this.selection.selected.forEach(el => console.log(el));
+    child.toggleAll(this.checkIfSelected(row));
   }
 
   private getProductDetailsComponent(row: ProductElement): ProductDetailsComponent {
@@ -88,8 +100,6 @@ export class AllProductsComponent implements OnInit {
     const element = this.getProductDetailsComponentById(event.id).productElement;
     event.isChecked ?
       this.selection.select(element) : this.selection.deselect(element);
-    console.log(event.isChecked);
-    console.log(this.selection.selected.length);
   }
 
   checkIfSelected(row?: ProductElement) {
