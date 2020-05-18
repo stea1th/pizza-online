@@ -27,6 +27,8 @@ public class Product extends AbstractBaseEntity {
     @NotBlank
     private String picture;
 
+    private boolean frozen;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductCost> productCostList;

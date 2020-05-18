@@ -39,8 +39,8 @@ public class ProductServiceImpl implements ProductService {
 
     @SneakyThrows
     @Override
-    public List<ProductDto> getAll() {
-        kafkaProducer.produce(productsGetAllTopic, "pizza-online", "");
+    public List<ProductDto> getAll(boolean withFrozen) {
+        kafkaProducer.produce(productsGetAllTopic, "pizza-online", withFrozen);
         List<ProductDto> productDtoList = null;
         for (int i = 0; i < attempt; i++) {
             TimeUnit.MILLISECONDS.sleep(delay);

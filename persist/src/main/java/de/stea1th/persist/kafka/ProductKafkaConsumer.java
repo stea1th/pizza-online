@@ -17,11 +17,11 @@ import java.util.List;
 @Slf4j
 public class ProductKafkaConsumer {
 
-    private KafkaProducer kafkaProducer;
+    private final KafkaProducer kafkaProducer;
 
-    private ProductService productService;
+    private final ProductService productService;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Value("${product.receive.product.all}")
     private String receiveAllProductsTopic;
@@ -33,12 +33,13 @@ public class ProductKafkaConsumer {
     public ProductKafkaConsumer(KafkaProducer kafkaProducer, ProductService productService) {
         this.kafkaProducer = kafkaProducer;
         this.productService = productService;
-        objectMapper = new ObjectMapper();
+        this.objectMapper = new ObjectMapper();
     }
 
     @KafkaListener(topics = "${product.get.all}", groupId = "pizza-online")
-    public void processGetAllProducts() {
-        List<ProductDto> products = productService.getAll();
+    public void processGetAllProducts(String withFrozen) {
+        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! {}", withFrozen);
+        List<ProductDto> products = productService.getAll(Boolean.parseBoolean(withFrozen));
         kafkaProducer.produce(receiveAllProductsTopic, "pizza-online", products);
         try {
             log.info("products data: {} sent to topic {}", objectMapper.writeValueAsString(products), receiveAllProductsTopic);
@@ -48,7 +49,7 @@ public class ProductKafkaConsumer {
     }
 
     @KafkaListener(topics = "${product.get.cart}", groupId = "pizza-online")
-    public void processGetAllProducts(String message) {
+    public void processGetAllProductsInCart(String message) {
         List<ProductDto> products = productService.getAllProductsByKeycloak(message);
         kafkaProducer.produce(receiveCartProductsTopic, "pizza-online", products);
         try {

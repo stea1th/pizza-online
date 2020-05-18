@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDto> getAll();
+    List<ProductDto> getAll(boolean withFrozen);
 
     ProductDto get(int productId);
 

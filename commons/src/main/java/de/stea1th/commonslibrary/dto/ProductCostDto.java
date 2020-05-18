@@ -18,4 +18,6 @@ public class ProductCostDto extends AbstractBaseDto {
 
     private Integer discount;
 
+    private boolean frozen;
+
 }

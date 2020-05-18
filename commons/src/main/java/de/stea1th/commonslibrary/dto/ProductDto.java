@@ -20,5 +20,7 @@ public class ProductDto extends AbstractBaseDto {
 
     private String picture;
 
+    private boolean frozen;
+
     private List<ProductCostDto> productCostList;
 }

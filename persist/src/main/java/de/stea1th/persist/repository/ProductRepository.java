@@ -21,4 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "LEFT JOIN OrderProductCost opc ON pc = opc.productCost " +
             "LEFT JOIN Order o ON o = opc.order WHERE o.id = :orderId ")
     List<Product> getAllByOrderId(@Param("orderId") int orderId);
+
+
+    @Query("SELECT p FROM Product p WHERE p.frozen = FALSE ")
+    List<Product> getAllWithoutFrozen();
 }

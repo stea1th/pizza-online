@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    private ProductConverter productConverter;
+    private final ProductConverter productConverter;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, OrderService orderService, ProductConverter productConverter) {
@@ -31,14 +31,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAll() {
-        log.info("get all products");
-        return productRepository
-                .findAll()
-                .stream()
-                .map(x -> productConverter.convertToDto(x))
-                .collect(Collectors.toList());
+    public List<ProductDto> getAll(boolean withFrozen) {
+        log.info("???????????????? {}", withFrozen);
+        log.info(withFrozen? "get all products" : "get all products without frozen");
+        return productConverter.convertListToDto(withFrozen? productRepository.findAll() : productRepository.getAllWithoutFrozen(), withFrozen);
     }
+
 
     @Override
     public List<ProductDto> getAllProductsByKeycloak(String keycloak) {
@@ -47,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository
                 .getAllByOrderId(order.getId())
                 .stream()
-                .map(x -> productConverter.convertToDto(x))
+                .map(x -> productConverter.convertToDto(x, false))
                 .collect(Collectors.toList());
     }
 }

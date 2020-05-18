@@ -44,6 +44,10 @@ export class DataService {
     return this.get('/product').pipe();
   }
 
+  public getAllProductsWithoutFrozen(): Observable<any> {
+    return this.get('/product/no-frozen').pipe();
+  }
+
   // public getCartProducts(): Observable<any> {
   //   return this.get('/product/cart').pipe();
   // }

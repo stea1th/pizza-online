@@ -9,6 +9,9 @@ import lombok.var;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @Slf4j
 public class ProductCostConverter {
@@ -26,7 +29,6 @@ public class ProductCostConverter {
         productCostDto.setId(productCost.getId());
         productCostDto.setProperty(productCost.getProperty());
         productCostDto.setDiscount(orderProductCost.getDiscount());
-        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{}", orderProductCost.getPrice());
         productCostDto.setPrice(orderProductCost.getPrice());
         productCostDto.setQuantity(orderProductCost.getQuantity());
         return productCostDto;
@@ -38,6 +40,18 @@ public class ProductCostConverter {
         productCostDto.setPrice(productCost.getPrice());
         productCostDto.setDiscount(productCost.getDiscount());
         productCostDto.setProperty(productCost.getProperty());
+        productCostDto.setFrozen(productCost.isFrozen());
         return productCostDto;
+    }
+
+    public List<ProductCostDto> convertListToDto(List<ProductCost> list, boolean withFrozen) {
+        return withFrozen ?
+                list.stream()
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList()) :
+                list.stream()
+                        .filter(el -> !el.isFrozen())
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,6 @@
 package de.stea1th.persist.converter;
 
 import de.stea1th.commonslibrary.component.ImageConverter;
-import de.stea1th.commonslibrary.dto.ProductCostDto;
 import de.stea1th.commonslibrary.dto.ProductDto;
 import de.stea1th.persist.entity.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,7 @@ public class ProductConverter {
 
     private final ProductCostConverter productCostConverter;
 
-    private ImageConverter imageConverter;
+    private final ImageConverter imageConverter;
 
     public ProductConverter(@Lazy ProductCostConverter productCostConverter, ImageConverter imageConverter) {
         this.productCostConverter = productCostConverter;
@@ -31,6 +30,7 @@ public class ProductConverter {
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
+        productDto.setFrozen(product.isFrozen());
         try {
             String base64 = imageConverter.encodeFileFromResourcesToBase64(product.getPicture());
             productDto.setPicture(base64);
@@ -40,14 +40,17 @@ public class ProductConverter {
         return productDto;
     }
 
-    public ProductDto convertToDto(Product product) {
+    public ProductDto convertToDto(Product product, boolean withFrozen) {
         var productDto = convertToDtoWithoutProductCostList(product);
-        List<ProductCostDto> productCostDtoList = product.getProductCostList()
-                .stream()
-                .map(productCostConverter::convertToDto)
-                .collect(Collectors.toList());
-        productDto.setProductCostList(productCostDtoList);
+        productDto.setProductCostList(productCostConverter.convertListToDto(product.getProductCostList(), withFrozen));
         return productDto;
+    }
+
+    public List<ProductDto> convertListToDto(List<Product> products, boolean withFrozen) {
+        return products
+                .stream()
+                .map(el-> this.convertToDto(el, withFrozen))
+                .collect(Collectors.toList());
     }
 
 }

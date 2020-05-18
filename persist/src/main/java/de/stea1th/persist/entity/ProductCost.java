@@ -28,6 +28,8 @@ public class ProductCost extends AbstractBaseEntity {
     @NotNull
     private Integer discount;
 
+    private boolean frozen;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)

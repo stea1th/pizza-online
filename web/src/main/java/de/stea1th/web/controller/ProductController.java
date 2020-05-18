@@ -20,7 +20,7 @@ import java.util.List;
 //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -29,7 +29,15 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAll() {
         log.info("get all products");
-        List<ProductDto> productDtoList = productService.getAll();
+        List<ProductDto> productDtoList = productService.getAll(true);
+        log.info("received list of products: {}", productDtoList);
+        return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/no-frozen")
+    public ResponseEntity<List<ProductDto>> getAllWithoutFrozen() {
+        log.info("get all products without frozen");
+        List<ProductDto> productDtoList = productService.getAll(false);
         log.info("received list of products: {}", productDtoList);
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
