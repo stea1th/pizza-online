@@ -13,9 +13,6 @@
             <mat-label>Edit description</mat-label>
             <textarea matInput value="{{testData}}" cdkTextareaAutosize formControlName="descriptionForm"
                       class="textarea-description"></textarea>
-            <!--                      <input matInput #message maxlength="256" formControlName="descriptionForm">-->
-            <!--                      <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>-->
-            <!--                      <mat-hint align="end">{{message.value.length}} / 256</mat-hint>-->
           </mat-form-field>
         </form>
       </ng-template>
@@ -40,8 +37,8 @@
     <h5 fxFlex="20%">Conditions:</h5>
     <div fxFlex="80%">
       <mat-selection-list #selection color="primary" (selectionChange)="onChange()">
-        <mat-list-option *ngFor="let element of productElement.productCostList">
-          <div fxLayout="row">
+        <mat-list-option *ngFor="let element of productElement.productCostList" class="{{element.frozen == true? 'frozen-element' : ''}}">
+          <div fxLayout="row" >
             <div fxFlex="40%">
               {{element.property}}
             </div>
