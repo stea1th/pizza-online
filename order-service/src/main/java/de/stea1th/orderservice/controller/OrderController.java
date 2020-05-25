@@ -26,23 +26,29 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/complete")
-    public ResponseEntity<LocalDateTimeDto> completeOrder(Principal principal) {
-        String keycloak = principal.getName();
-        LocalDateTimeDto complete = orderService.complete(keycloak);
-        return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
-                new ResponseEntity<>(complete, HttpStatus.OK);
-    }
-
-    @GetMapping("/interval")
-    public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
-        String keycloak = principal.getName();
-        return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
-    }
+//    @GetMapping("/complete")
+//    public ResponseEntity<LocalDateTimeDto> completeOrder(Principal principal) {
+//        String keycloak = principal.getName();
+//        LocalDateTimeDto complete = orderService.complete(keycloak);
+//        return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
+//                new ResponseEntity<>(complete, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/interval")
+//    public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
+//        String keycloak = principal.getName();
+//        return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
+//    }
 
     @GetMapping("/all/completed")
     public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @RequestParam("value") String value) {
         CompletedOrdersRequestDto completedOrdersRequestDto = new CompletedOrdersRequestDto(principal.getName(), value);
         return new ResponseEntity<>(orderService.getCompletedOrders(completedOrdersRequestDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public void test() {
+        String keycloak = "Ja est Keycloak :)))";
+        orderService.getUncompletedOrderByPersonKeycloak(keycloak);
     }
 }

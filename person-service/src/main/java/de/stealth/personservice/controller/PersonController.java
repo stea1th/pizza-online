@@ -31,17 +31,17 @@ public class PersonController {
         return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/details")
-    public ResponseEntity<PersonDto> getDetails(Principal principal) {
-        log.info("get person with keycloak: {}", principal.getName());
-        PersonDto personDto = personService.getByPrincipal(principal);
-        log.info("received person with keycloak: {} {}", principal.getName(), personDto == null ? "not exists" : personDto);
-        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/details")
+//    public ResponseEntity<PersonDto> getDetails(Principal principal) {
+//        log.info("get person with keycloak: {}", principal.getName());
+//        PersonDto personDto = personService.getByPrincipal(principal);
+//        log.info("received person with keycloak: {} {}", principal.getName(), personDto == null ? "not exists" : personDto);
+//        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
+//    }
 
-    @PostMapping(value = "/save")
-    public ResponseEntity save(@RequestBody PersonDto personDto) {
-        personService.save(personDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping(value = "/save")
+//    public ResponseEntity save(@RequestBody PersonDto personDto) {
+//        personService.save(personDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

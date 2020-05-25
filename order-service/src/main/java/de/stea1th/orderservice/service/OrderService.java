@@ -10,7 +10,7 @@ public interface OrderService {
 
     Order getUncompletedOrderByPersonKeycloak(String keycloak);
 
-    Order getUncompletedOrderByPerson(Person person);
+//    Order getUncompletedOrderByPerson(Person person);
 
     Order completeOrder(String keycloak);
 
