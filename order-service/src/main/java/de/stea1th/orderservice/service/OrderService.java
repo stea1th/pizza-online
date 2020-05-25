@@ -12,10 +12,10 @@ public interface OrderService {
 
 //    Order getUncompletedOrderByPerson(Person person);
 
-    Order completeOrder(String keycloak);
-
-    List<Integer> getCompletedYearsByPerson(String keycloak);
-
-    List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto);
+//    Order completeOrder(String keycloak);
+//
+//    List<Integer> getCompletedYearsByPerson(String keycloak);
+//
+//    List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto);
 
 }

@@ -24,12 +24,14 @@ public class KafkaProducer {
     }
 
     @SneakyThrows
-    public String produceWithReply(String topic, Object object) {
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, objectMapper.writeValueAsString(object));
+    public String produce(String topic, Object object) {
+        String json = objectMapper.writeValueAsString(object);
+        log.info("Sending to {} topic: {}", topic, json);
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, json);
         RequestReplyFuture<String, String, String> requestReplyFuture = replyingKafkaTemplate.sendAndReceive(record);
         ConsumerRecord<String, String> consumerRecord = requestReplyFuture.get(10, TimeUnit.SECONDS);
-        log.info("Return value: " + consumerRecord.value());
-        return "null";
+        log.info("Received value: " + consumerRecord.value());
+        return consumerRecord.value();
     }
 
 
