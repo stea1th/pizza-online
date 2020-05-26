@@ -5,6 +5,7 @@ import de.stea1th.commonslibrary.dto.CompletedOrderDto;
 import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
 import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
 import de.stea1th.commonslibrary.dto.TimeIntervalDto;
+import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -47,8 +48,9 @@ public class OrderController {
 //    }
 
     @GetMapping("/test")
-    public void test() {
-        String keycloak = "Ja est Keycloak :)))";
-        orderService.getUncompletedOrderByPersonKeycloak(keycloak);
+    public ResponseEntity<Order> test() {
+        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+        System.out.println(orderService.getUncompletedOrderByPersonKeycloak(keycloak));
+        return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
     }
 }

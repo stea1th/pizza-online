@@ -1,7 +1,6 @@
 package de.stea1th.orderservice.dto;
 
-import de.stea1th.commonslibrary.dto.AbstractBaseDto;
-import de.stea1th.commonslibrary.dto.AddressDto;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

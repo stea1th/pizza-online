@@ -6,11 +6,9 @@ import de.stealth.personservice.entity.Person;
 
 public interface PersonService {
 
-    PersonDto get(int personId);
+    Person get(int personId);
 
     Person getByKeycloak(String keycloak);
-
-    PersonDto getDtoByKeycloak(String keycloak);
 
     Person save(Person person);
 }

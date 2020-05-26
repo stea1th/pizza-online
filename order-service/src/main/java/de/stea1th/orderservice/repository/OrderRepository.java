@@ -12,19 +12,23 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-//    List<Order> findByPersonAndCompletedOrderByCreatedAsc(Person person, LocalDateTime completed);
-//
-//    List<Order> findByPersonAndCompletedAfterOrderByCompletedDesc(Person person, LocalDateTime completed);
-//
-//    @Query("SELECT DISTINCT(SUBSTRING(CONCAT(o.completed, ''), 1, 4)) AS years " +
-//            "FROM Order o " +
-//            "WHERE o.person = :person AND o.completed <> null  " +
-//            "ORDER BY years DESC ")
-//    List<Integer> findCompletedYearsByPerson(@Param("person") Person person);
-//
-//    @Query("SELECT o " +
-//            "FROM Order o " +
-//            "WHERE o.person = :person AND SUBSTRING(CONCAT(o.completed, ''), 1, 4) = :year " +
-//            "ORDER BY o.completed DESC")
-//    List<Order> findByPersonAndCompletedYear(@Param("person") Person person, @Param("year") String year);
+    List<Order> findByPersonIdAndCompletedOrderByCreatedAsc(int personId, LocalDateTime completed);
+
+//    List<Order> findByPersonIdAndCompletedAfterOrderByCompletedDesc(int personId, LocalDateTime completed);
+
+    @Query("SELECT o FROM Order o WHERE o.personId = :personId AND o.completed IS NULL ")
+    List<Order> findByPersonIdAndCompletedIsNull(@Param("personId")int personId);
+
+
+    @Query("SELECT DISTINCT(SUBSTRING(CONCAT(o.completed, ''), 1, 4)) AS years " +
+            "FROM Order o " +
+            "WHERE o.personId = :personId AND o.completed <> null  " +
+            "ORDER BY years DESC ")
+    List<Integer> findCompletedYearsByPersonId(@Param("personId") int personId);
+
+    @Query("SELECT o " +
+            "FROM Order o " +
+            "WHERE o.personId = :personId AND SUBSTRING(CONCAT(o.completed, ''), 1, 4) = :year " +
+            "ORDER BY o.completed DESC")
+    List<Order> findByPersonAndCompletedYear(@Param("personId") int personId, @Param("year") String year);
 }

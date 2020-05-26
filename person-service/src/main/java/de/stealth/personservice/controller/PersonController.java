@@ -23,13 +23,13 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<PersonDto> get(@PathVariable("id") int id) {
-        log.info("get person with id: {}", id);
-        PersonDto personDto = personService.get(id);
-        log.info("received person with id: {} {}", id, personDto == null ? "not exists" : personDto);
-        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}")
+//    public ResponseEntity<PersonDto> get(@PathVariable("id") int id) {
+//        log.info("get person with id: {}", id);
+//        PersonDto personDto = personService.get(id);
+//        log.info("received person with id: {} {}", id, personDto == null ? "not exists" : personDto);
+//        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
+//    }
 
 //    @GetMapping(value = "/details")
 //    public ResponseEntity<PersonDto> getDetails(Principal principal) {

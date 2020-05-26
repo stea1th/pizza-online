@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class KafkaProducer {
 
-    private final ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate;
-    private final ObjectMapper objectMapper;
+    final ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate;
+    final ObjectMapper objectMapper;
 
     public KafkaProducer(ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate, ObjectMapper objectMapper) {
         this.replyingKafkaTemplate = replyingKafkaTemplate;
@@ -30,7 +30,7 @@ public class KafkaProducer {
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, json);
         RequestReplyFuture<String, String, String> requestReplyFuture = replyingKafkaTemplate.sendAndReceive(record);
         ConsumerRecord<String, String> consumerRecord = requestReplyFuture.get(10, TimeUnit.SECONDS);
-        log.info("Received value: " + consumerRecord.value());
+        log.info("Receiving value: " + consumerRecord.value());
         return consumerRecord.value();
     }
 
