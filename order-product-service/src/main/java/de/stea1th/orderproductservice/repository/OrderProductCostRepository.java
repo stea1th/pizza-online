@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Transactional(readOnly = true)
 public interface OrderProductCostRepository extends JpaRepository<OrderProductCost, OrderProductCostPK> {
@@ -14,7 +16,10 @@ public interface OrderProductCostRepository extends JpaRepository<OrderProductCo
     @Query("SELECT opc.quantity FROM OrderProductCost opc WHERE opc.id = :orderProductCostId ")
     Integer findQuantityById(@Param("orderProductCostId") OrderProductCostPK id);
 
-    @Query("SELECT SUM(opc.quantity) FROM OrderProductCost opc WHERE opc.order.id = :orderId ")
+    @Query("SELECT SUM(opc.quantity) FROM OrderProductCost opc WHERE opc.id.orderId = :orderId ")
     Integer findSumQuantitiesByOrderId(@Param("orderId") int orderId);
+
+    @Query("SELECT opc FROM OrderProductCost opc WHERE opc.id.orderId = :orderId ")
+    List<OrderProductCost> findAllByOrderId(@Param("orderId") int orderId);
 
 }

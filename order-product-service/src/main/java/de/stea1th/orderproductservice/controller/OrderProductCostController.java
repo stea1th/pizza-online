@@ -32,21 +32,21 @@ public class OrderProductCostController {
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/sum")
-    public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
-        String keycloak = principal.getName();
-        log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);
-        Integer sum = orderProductCostService.getQuantitiesSumInCart(keycloak);
-        return new ResponseEntity<>(sum, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> updateInCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
-        orderProductCostDto.setKeycloak(principal.getName());
-        log.info("update in cart: {}", orderProductCostDto);
-        Integer sum = orderProductCostService.updateInCart(orderProductCostDto);
-        return new ResponseEntity<>(sum, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/sum")
+//    public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
+//        String keycloak = principal.getName();
+//        log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);
+//        Integer sum = orderProductCostService.getQuantitiesSumInCart(keycloak);
+//        return new ResponseEntity<>(sum, HttpStatus.OK);
+//    }
+//
+//    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Integer> updateInCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
+//        orderProductCostDto.setKeycloak(principal.getName());
+//        log.info("update in cart: {}", orderProductCostDto);
+//        Integer sum = orderProductCostService.updateInCart(orderProductCostDto);
+//        return new ResponseEntity<>(sum, HttpStatus.OK);
+//    }
 
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Integer> deleteFromCart(@RequestParam("productCostId") int productCostId, Principal principal) {

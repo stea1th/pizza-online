@@ -1,19 +1,17 @@
 package de.stea1th.orderservice.service;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stea1th.orderservice.entity.Order;
+import de.stea1th.orderservice.kafka.OrderProductKafkaProducer;
 import de.stea1th.orderservice.kafka.PersonKafkaProducer;
 import de.stea1th.orderservice.repository.OrderRepository;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,14 +19,16 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final PersonKafkaProducer personKafkaProducer;
+    private final OrderProductKafkaProducer orderProductKafkaProducer;
     private final OrderRepository orderRepository;
 
 //    @Value("${pdf-creator.create.invoice}")
 //    private String pdfCreateTopic;
 
     @Autowired
-    public OrderServiceImpl(PersonKafkaProducer personKafkaProducer, OrderRepository orderRepository) {
+    public OrderServiceImpl(PersonKafkaProducer personKafkaProducer, OrderProductKafkaProducer orderProductKafkaProducer, OrderRepository orderRepository) {
         this.personKafkaProducer = personKafkaProducer;
+        this.orderProductKafkaProducer = orderProductKafkaProducer;
         this.orderRepository = orderRepository;
     }
 
@@ -94,16 +94,16 @@ public class OrderServiceImpl implements OrderService {
 //        return orderRepository.findCompletedYearsByPerson(person);
 //    }
 
-//    private Order complete(String keycloak) {
-//        Person person = personService.getByKeycloak(keycloak);
-//        Order order = getUncompletedOrderByPersonId(person);
-//        if (!order.getOrderProductCosts().isEmpty()) {
-//            order.setCompleted(LocalDateTime.now());
-//            order = orderRepository.save(order);
-//            createEmptyOrder(person);
-//        }
-//        return order;
-//    }
+    public Order complete(String keycloak) {
+        Order order = getUncompletedOrderByPersonKeycloak(keycloak);
+        if (orderProductKafkaProducer.isOrderProductExists(order.getId())) {
+            order.setCompleted(LocalDateTime.now());
+            order = orderRepository.save(order);
+            createEmptyOrder(order.getPersonId());
+            log.info("order complete for keycloak: {}", keycloak);
+        }
+        return order;
+    }
 
     private Order createEmptyOrder(int personId) {
         Order order = new Order();

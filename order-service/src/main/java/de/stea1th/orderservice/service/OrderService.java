@@ -18,4 +18,6 @@ public interface OrderService {
 //
 //    List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto);
 
+    Order complete(String keycloak);
+
 }

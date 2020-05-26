@@ -20,17 +20,8 @@ public class ReadKafkaConsumer {
         this.personService = personService;
     }
 
-//    private final String test = "test";
-//
-//    @KafkaListener(topics=test)
-//    @SendTo
-//    public String processPersonGetResponse(String json) {
-//        log.info("received: {}", json);
-//        return "Azm esm Zcar :)))";
-//    }
-
     @SneakyThrows
-    @KafkaListener(topics="${person.get}", groupId = "pizza-online")
+    @KafkaListener(topics="${person.get}")
     @SendTo
     public String getPerson(String message) {
         log.info("receiving keycloak: {}", message);

@@ -53,4 +53,11 @@ public class OrderController {
         System.out.println(orderService.getUncompletedOrderByPersonKeycloak(keycloak));
         return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
     }
+
+    @GetMapping("/test2")
+    public ResponseEntity<Order> test2() {
+        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+        return new ResponseEntity<>(orderService.complete(keycloak), HttpStatus.OK);
+
+    }
 }
