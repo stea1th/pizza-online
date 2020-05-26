@@ -1,5 +1,6 @@
 package de.stea1th.orderservice.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -11,8 +12,11 @@ import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 @Configuration
 public class KafkaConfig {
 
-    private String groupId = "pizza-online";
-    private String replyTopic = "replies";
+    @Value("${my.group.id}")
+    private String groupId;
+
+    @Value("${order.replies}")
+    private String replyTopic;
 
     @Bean
     public ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") ProducerFactory<String, String> pf,

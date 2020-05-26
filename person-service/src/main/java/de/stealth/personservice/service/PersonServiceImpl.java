@@ -32,12 +32,8 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public Person getByKeycloak(String keycloak) {
-//        keycloak = addQuotes(keycloak);
-        keycloak = removeQuotes(keycloak);
+
         Person person = personRepository.getByKeycloak(keycloak);
-        Person person1 = personRepository.getOne(1000);
-        System.out.println(keycloak);
-        System.out.println(person1.getKeycloak());
         if (person == null) {
             log.error("no such person with keycloak id: {} exists", keycloak);
             person = new Person();
