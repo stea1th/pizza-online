@@ -22,51 +22,6 @@ public class OrderServiceImpl implements OrderService {
 
     private final PersonKafkaProducer personKafkaProducer;
     private final OrderRepository orderRepository;
-//    private final ObjectMapper objectMapper = new ObjectMapper();
-
-
-
-//    public OrderServiceImpl(KafkaProducer kafkaProducer) {
-//        this.kafkaProducer = kafkaProducer;
-//    }
-
-
-//    @Override
-//    public Order getUncompletedOrderByPersonKeycloak(String keycloak) {
-//
-//        kafkaProducer.produce("test", keycloak);
-//
-//
-//        return null;
-//    }
-//
-//    @Override
-//    public Order completeOrder(String keycloak) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Integer> getCompletedYearsByPerson(String keycloak) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
-//        return null;
-//    }
-
-//    private PersonService personService;
-
-
-//    private ProductCostRepository productCostRepository;
-//
-//    private ProductCostConverter productCostConverter;
-//
-//    private OrderProductCostService orderProductCostService;
-//
-//    private OrderConverter orderConverter;
-
-//    private KafkaProducer kafkaProducer;
 
 //    @Value("${pdf-creator.create.invoice}")
 //    private String pdfCreateTopic;
