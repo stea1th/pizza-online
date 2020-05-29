@@ -11,10 +11,6 @@
     <modules>
         <module>web</module>
         <module>persist</module>
-        <module>order-service</module>
-        <module>person-service</module>
-        <module>product-service</module>
-        <module>order-product-service</module>
         <module>angular</module>
         <module>commons</module>
         <module>pdf-creator</module>

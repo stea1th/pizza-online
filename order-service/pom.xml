@@ -11,11 +11,12 @@
     <groupId>de.stea1th</groupId>
     <artifactId>order-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Order-service</name>
+    <name>order-service</name>
     <description>Order service for Pizza-Online</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <spring-cloud.version>2.2.2.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -74,11 +75,11 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>de.stea1th</groupId>-->
-<!--            <artifactId>commons-library</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -112,5 +113,16 @@
             </plugin>
         </plugins>
     </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-config-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

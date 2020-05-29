@@ -1,6 +1,5 @@
 package de.stealth.personservice.controller;
 
-import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stealth.personservice.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

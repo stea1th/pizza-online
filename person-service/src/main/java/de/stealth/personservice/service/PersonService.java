@@ -1,7 +1,6 @@
 package de.stealth.personservice.service;
 
 
-import de.stea1th.commonslibrary.dto.PersonDto;
 import de.stealth.personservice.entity.Person;
 
 public interface PersonService {

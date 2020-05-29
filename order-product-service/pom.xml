@@ -11,7 +11,7 @@
     <groupId>de.stea1th</groupId>
     <artifactId>order-product-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Order-product-service</name>
+    <name>order-product-service</name>
     <description>Order-product service for Pizza-Online</description>
 
     <properties>
