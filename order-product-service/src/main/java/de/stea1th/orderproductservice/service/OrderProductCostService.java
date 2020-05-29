@@ -1,6 +1,5 @@
 package de.stea1th.orderproductservice.service;
 
-import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.orderproductservice.entity.OrderProductCost;
 
 import java.util.List;
@@ -11,13 +10,13 @@ public interface OrderProductCostService {
 //
 //    Integer getQuantitiesSum(String keycloak);
 
-    Integer addToCart(OrderProductCostDto orderProductCostDto);
+//    Integer addToCart(OrderProductCostDto orderProductCostDto);
 
 //    int getQuantityByOrderProductCostId(int orderId, int productCostId);
 //
 //    Integer updateQuantityAndPriceWithDiscount(OrderProductCostDto orderProductCostDto);
 
-    Integer deleteFromCart(OrderProductCostDto orderProductCostDto);
+//    Integer deleteFromCart(OrderProductCostDto orderProductCostDto);
 
     List<OrderProductCost> getAllOrderProductCostsByOrderId(int orderId);
 

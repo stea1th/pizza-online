@@ -1,6 +1,5 @@
 package de.stea1th.orderproductservice.controller;
 
-import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -24,13 +23,13 @@ public class OrderProductCostController {
         this.orderProductCostService = orderProductCostService;
     }
 
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> addToCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
-        orderProductCostDto.setKeycloak(principal.getName());
-        log.info("added to cart: {}", orderProductCostDto);
-        Integer sum = orderProductCostService.addToCart(orderProductCostDto);
-        return new ResponseEntity<>(sum, HttpStatus.OK);
-    }
+//    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Integer> addToCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
+//        orderProductCostDto.setKeycloak(principal.getName());
+//        log.info("added to cart: {}", orderProductCostDto);
+//        Integer sum = orderProductCostService.addToCart(orderProductCostDto);
+//        return new ResponseEntity<>(sum, HttpStatus.OK);
+//    }
 
 //    @GetMapping(value = "/sum")
 //    public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
@@ -48,13 +47,13 @@ public class OrderProductCostController {
 //        return new ResponseEntity<>(sum, HttpStatus.OK);
 //    }
 
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<Integer> deleteFromCart(@RequestParam("productCostId") int productCostId, Principal principal) {
-        log.info("delete from cart {}", productCostId);
-        var orderProductCostDto = new OrderProductCostDto();
-        orderProductCostDto.setKeycloak(principal.getName());
-        orderProductCostDto.setProductCostId(productCostId);
-        Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
-        return new ResponseEntity<>(sum, HttpStatus.OK);
-    }
+//    @DeleteMapping(value = "/delete")
+//    public ResponseEntity<Integer> deleteFromCart(@RequestParam("productCostId") int productCostId, Principal principal) {
+//        log.info("delete from cart {}", productCostId);
+//        var orderProductCostDto = new OrderProductCostDto();
+//        orderProductCostDto.setKeycloak(principal.getName());
+//        orderProductCostDto.setProductCostId(productCostId);
+//        Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
+//        return new ResponseEntity<>(sum, HttpStatus.OK);
+//    }
 }

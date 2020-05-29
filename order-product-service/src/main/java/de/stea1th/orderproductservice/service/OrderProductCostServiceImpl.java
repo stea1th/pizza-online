@@ -1,6 +1,5 @@
 package de.stea1th.orderproductservice.service;
 
-import de.stea1th.commonslibrary.dto.OrderProductCostDto;
 
 import de.stea1th.orderproductservice.entity.OrderProductCost;
 import de.stea1th.orderproductservice.entity.OrderProductCostPK;
@@ -113,13 +112,13 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         return orderProductCostRepository.findAllByOrderId(orderId);
     }
 
-    @Override
-    public Integer addToCart(OrderProductCostDto orderProductCostDto) {
-        return null;
-    }
-
-    @Override
-    public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
-        return null;
-    }
+//    @Override
+//    public Integer addToCart(OrderProductCostDto orderProductCostDto) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
+//        return null;
+//    }
 }
