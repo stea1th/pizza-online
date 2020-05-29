@@ -1,5 +1,6 @@
 package de.stea1th.orderproductservice.controller;
 
+import com.netflix.ribbon.proxy.annotation.Http;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -13,7 +14,7 @@ import java.security.Principal;
 @CrossOrigin
 @RestController
 @Slf4j
-@RequestMapping("/api/order_product_cost")
+@RequestMapping("/api/")
 public class OrderProductCostController {
 
     private final OrderProductCostService orderProductCostService;
@@ -21,6 +22,12 @@ public class OrderProductCostController {
 
     public OrderProductCostController(OrderProductCostService orderProductCostService) {
         this.orderProductCostService = orderProductCostService;
+    }
+
+    @GetMapping("/hello/{userName}")
+    public ResponseEntity<String> greeting(@PathVariable("userName") String userName) {
+        String greeting = "Hello my friend, " + userName;
+        return new ResponseEntity<>(greeting, HttpStatus.OK);
     }
 
 //    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)

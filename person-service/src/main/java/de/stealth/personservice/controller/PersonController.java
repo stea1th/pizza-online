@@ -12,7 +12,7 @@ import java.security.Principal;
 @CrossOrigin
 @RestController
 @Slf4j
-@RequestMapping("/api/person")
+@RequestMapping("/api/")
 public class PersonController {
 
     private PersonService personService;

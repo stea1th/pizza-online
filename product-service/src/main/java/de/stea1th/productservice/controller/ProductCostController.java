@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/product-cost")
+@RequestMapping("/api/")
 public class ProductCostController {
 
     private final ProductCostService productCostService;
@@ -21,13 +21,13 @@ public class ProductCostController {
         this.productCostService = productCostService;
     }
 
-    @GetMapping
+    @GetMapping("product-cost")
     public ResponseEntity<List<ProductCost>> getAll() {
         log.info("get all product-costs");
         return new ResponseEntity<>(productCostService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("product-cost/{id}")
     public ResponseEntity<ProductCost> get(@PathVariable("id") int id) {
         log.info("get product-cost with id: {}", id);
         ProductCost productCost = productCostService.get(id);

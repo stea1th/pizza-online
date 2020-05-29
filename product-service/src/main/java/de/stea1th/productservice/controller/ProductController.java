@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("/api/product")
+@RequestMapping("/api/")
 //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class ProductController {
 
@@ -23,7 +23,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping("/product")
     public ResponseEntity<List<Product>> getAll() {
         log.info("get all products");
         List<Product> productDtoList = productService.getAll(true);
@@ -31,7 +31,7 @@ public class ProductController {
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/no-frozen")
+    @GetMapping("/product/no-frozen")
     public ResponseEntity<List<Product>> getAllWithoutFrozen() {
         log.info("get all products without frozen");
         List<Product> productDtoList = productService.getAll(false);
@@ -39,7 +39,7 @@ public class ProductController {
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<Product> get(@PathVariable("id") int id) {
         log.info("get product with id: {}", id);
         Product product = productService.get(id);
