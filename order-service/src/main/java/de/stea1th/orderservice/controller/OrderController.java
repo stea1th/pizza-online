@@ -1,10 +1,6 @@
 package de.stea1th.orderservice.controller;
 
 
-import de.stea1th.commonslibrary.dto.CompletedOrderDto;
-import de.stea1th.commonslibrary.dto.CompletedOrdersRequestDto;
-import de.stea1th.commonslibrary.dto.LocalDateTimeDto;
-import de.stea1th.commonslibrary.dto.TimeIntervalDto;
 import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,17 +43,13 @@ public class OrderController {
 //        return new ResponseEntity<>(orderService.getCompletedOrders(completedOrdersRequestDto), HttpStatus.OK);
 //    }
 
-    @GetMapping("/test")
-    public ResponseEntity<Order> test() {
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-        System.out.println(orderService.getUncompletedOrderByPersonKeycloak(keycloak));
+    @GetMapping("/{keycloak}")
+    public ResponseEntity<Order> getByKeycloak(@PathVariable("keycloak") String keycloak) {
         return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
     }
 
-    @GetMapping("/test2")
-    public ResponseEntity<Order> test2() {
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+    @GetMapping("/complete/{keycloak}")
+    public ResponseEntity<Order> completeByKeycloak(@PathVariable("keycloak") String keycloak) {
         return new ResponseEntity<>(orderService.complete(keycloak), HttpStatus.OK);
-
     }
 }

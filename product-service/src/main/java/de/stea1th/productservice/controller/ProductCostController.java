@@ -1,16 +1,12 @@
 package de.stea1th.productservice.controller;
 
-import de.stea1th.commonslibrary.dto.ProductCostInCartDto;
+import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,12 +21,19 @@ public class ProductCostController {
         this.productCostService = productCostService;
     }
 
-
-    @GetMapping("/cart")
-    public ResponseEntity<List<ProductCostInCartDto>> getAllProductCostsInCart(Principal principal) {
-        log.info("get all products in cart");
-        List<ProductCostInCartDto> productDtoList = productCostService.getProductCostsInCart(principal.getName());
-        log.info("received list of product-costs in cart: {}", productDtoList);
-        return new ResponseEntity<>(productDtoList, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<ProductCost>> getAll() {
+        log.info("get all product-costs");
+        return new ResponseEntity<>(productCostService.getAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductCost> get(@PathVariable("id") int id) {
+        log.info("get product-cost with id: {}", id);
+        ProductCost productCost = productCostService.get(id);
+        return productCost != null ? new ResponseEntity<>(productCost, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 }

@@ -8,11 +8,14 @@ import de.stea1th.orderservice.repository.OrderRepository;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -45,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 //    @Override
-//    public List<CompletedOrderDto> getCompletedOrders(CompletedOrdersRequestDto completedOrdersRequestDto) {
-//        Person person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
+//    public List<CompletedOrderDto> getCompletedOrders(String json) {
+//        int person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
 //        List<Order> orders;
 //        try {
 //            var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
@@ -59,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 //                .map(this::createCompletedOrderDto)
 //                .collect(Collectors.toList());
 //    }
-//
+////
 //    @Override
 //    @Transactional
 //    public Order completeOrder(String keycloak) {
@@ -72,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
 //        CompletedOrderDto completedOrderDto = createCompletedOrderDto(order);
 //        kafkaProducer.produce(pdfCreateTopic, completedOrderDto);
 //    }
-//
+
 //    @Transactional
 //    public CompletedOrderDto createCompletedOrderDto(Order order) {
 //        List<ProductCost> productCostList = productCostRepository.getAllByOrderId(order.getId());
@@ -88,11 +91,15 @@ public class OrderServiceImpl implements OrderService {
 //        pdfCreatorDto.setProductCostInCartDtoList(dtoList);
 //        return pdfCreatorDto;
 //    }
-//
-//    public List<Integer> getCompletedYearsByPerson(String keycloak) {
-//        var person = personService.getByKeycloak(keycloak);
-//        return orderRepository.findCompletedYearsByPerson(person);
+
+//    public String createCompletedOrderAsJson(Order order) {
+//        String allOrderProductAsJson = orderProductKafkaProducer.getAllOrderProductAsJson(order.getId());
 //    }
+
+    public List<Integer> getCompletedYearsByPerson(String keycloak) {
+        var personId = personKafkaProducer.getPersonIdByKeycloak(keycloak);
+        return orderRepository.findCompletedYearsByPersonId(personId);
+    }
 
     public Order complete(String keycloak) {
         Order order = getUncompletedOrderByPersonKeycloak(keycloak);
