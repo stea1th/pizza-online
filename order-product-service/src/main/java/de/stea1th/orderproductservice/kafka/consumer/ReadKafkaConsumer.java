@@ -1,4 +1,4 @@
-package de.stea1th.orderproductservice.kafka;
+package de.stea1th.orderproductservice.kafka.consumer;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +30,6 @@ public class ReadKafkaConsumer {
         log.info("receiving orderId: {}", message);
         List<OrderProductCost> allOrderProductCosts = orderProductCostService.getAllOrderProductCostsByOrderId(Integer.parseInt(message));
         return objectMapper.writeValueAsString(allOrderProductCosts);
-
-
     }
 
 

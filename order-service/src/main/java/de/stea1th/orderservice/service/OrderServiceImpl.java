@@ -2,8 +2,8 @@ package de.stea1th.orderservice.service;
 
 
 import de.stea1th.orderservice.entity.Order;
-import de.stea1th.orderservice.kafka.OrderProductKafkaProducer;
-import de.stea1th.orderservice.kafka.PersonKafkaProducer;
+import de.stea1th.orderservice.kafka.producer.OrderProductKafkaProducer;
+import de.stea1th.orderservice.kafka.producer.PersonKafkaProducer;
 import de.stea1th.orderservice.repository.OrderRepository;
 
 import lombok.SneakyThrows;
@@ -12,10 +12,8 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

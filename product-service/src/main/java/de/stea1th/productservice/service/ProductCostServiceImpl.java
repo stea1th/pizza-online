@@ -1,7 +1,5 @@
 package de.stea1th.productservice.service;
 
-
-
 import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.repository.ProductCostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +25,13 @@ public class ProductCostServiceImpl implements ProductCostService {
     @Transactional
     @Override
     public ProductCost get(int productCostId) {
-        return productCostRepository.findById(productCostId).get();
+        log.info("get product cost with id: {}", productCostId);
+        return productCostRepository.findById(productCostId).orElse(null);
     }
 
     @Override
     public List<ProductCost> getAll() {
+        log.info("get all product costs");
         return productCostRepository.findAll();
     }
 }

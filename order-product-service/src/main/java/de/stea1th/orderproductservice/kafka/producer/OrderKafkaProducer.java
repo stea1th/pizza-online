@@ -1,4 +1,4 @@
-package de.stea1th.orderservice.kafka;
+package de.stea1th.orderproductservice.kafka.producer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,22 +10,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PersonKafkaProducer extends KafkaProducer {
+public class OrderKafkaProducer extends KafkaProducer {
 
-    @Value("${person.get}")
-    private String getPersonTopic;
+    @Value("${order.get}")
+    private String getOrderTopic;
 
-    public PersonKafkaProducer(ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate, ObjectMapper objectMapper) {
+    public OrderKafkaProducer(ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate, ObjectMapper objectMapper) {
         super(replyingKafkaTemplate, objectMapper);
     }
 
     @SneakyThrows
-    public int getPersonIdByKeycloak(String keycloak) {
-        String json = produce(getPersonTopic, keycloak);
+    public int getOrderIdByKeycloak(String keycloak) {
+        String json = super.produce(getOrderTopic, keycloak);
         JsonNode rootNode = objectMapper.readTree(json);
         JsonNode idNode = rootNode.get("id");
         return idNode.asInt();
     }
-
-
 }

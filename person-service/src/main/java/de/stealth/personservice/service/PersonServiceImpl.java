@@ -32,6 +32,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public Person getByKeycloak(String keycloak) {
+        keycloak = removeQuotes(keycloak);
 
         Person person = personRepository.getByKeycloak(keycloak);
         if (person == null) {

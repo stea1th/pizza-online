@@ -1,4 +1,4 @@
-package de.stea1th.orderservice.kafka;
+package de.stea1th.orderservice.kafka.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
