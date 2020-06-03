@@ -61,55 +61,6 @@ public class OrderServiceImpl implements OrderService {
         return intervals;
     }
 
-//    @Override
-//    public List<CompletedOrderDto> getCompletedOrders(String json) {
-//        int person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
-//        List<Order> orders;
-//        try {
-//            var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
-//            orders = orderRepository.findByPersonAndCompletedAfterOrderByCompletedDesc(person, timeInterval.getTime());
-//        } catch (IllegalArgumentException e) {
-//            orders = orderRepository.findByPersonAndCompletedYear(person, completedOrdersRequestDto.getValue());
-//        }
-//        return orders
-//                .stream()
-//                .map(this::createCompletedOrderDto)
-//                .collect(Collectors.toList());
-//    }
-////
-
-//    @Transactional
-//    public Order completeOrder(String keycloak) {
-//        Order order = complete(keycloak);
-////        produceInvoiceAsPdf(order);
-//        return order;
-//    }
-//
-//    public void produceInvoiceAsPdf(Order order) {
-//        CompletedOrderDto completedOrderDto = createCompletedOrderDto(order);
-//        kafkaProducer.produce(pdfCreateTopic, completedOrderDto);
-//    }
-
-//    @Transactional
-//    public CompletedOrderDto createCompletedOrderDto(Order order) {
-//        List<ProductCost> productCostList = productCostRepository.getAllByOrderId(order.getId());
-//        List<ProductCostInCartDto> dtoList = productCostList
-//                .stream()
-//                .map(productCost -> {
-//                    var orderProductCost = orderProductCostService.get(order.getId(), productCost.getId());
-//                    return productCostConverter.convertToDtoInCart(productCost, orderProductCost);
-//                }).collect(Collectors.toList());
-//        OrderDto orderDto = orderConverter.convertToDtoWithoutOPC(order);
-//        var pdfCreatorDto = new CompletedOrderDto();
-//        pdfCreatorDto.setOrderDto(orderDto);
-//        pdfCreatorDto.setProductCostInCartDtoList(dtoList);
-//        return pdfCreatorDto;
-//    }
-//
-//    public String createCompletedOrderAsJson(Order order) {
-//        String allOrderProductAsJson = orderProductKafkaProducer.getAllOrderProductAsJson(order.getId());
-//    }
-
     public List<Integer> getCompletedYearsByPerson(String keycloak) {
         var personId = personKafkaProducer.getPersonIdByKeycloak(keycloak);
         return orderRepository.findCompletedYearsByPersonId(personId);

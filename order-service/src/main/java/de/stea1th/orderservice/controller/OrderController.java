@@ -44,12 +44,7 @@ public class OrderController {
         String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
         return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
     }
-//
-//    @GetMapping("/all/completed")
-//    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @RequestParam("value") String value) {
-//        CompletedOrdersRequestDto completedOrdersRequestDto = new CompletedOrdersRequestDto(principal.getName(), value);
-//        return new ResponseEntity<>(orderService.getCompletedOrders(completedOrdersRequestDto), HttpStatus.OK);
-//    }
+
 
     @GetMapping("/{keycloak}")
     public ResponseEntity<Order> getByKeycloak(@PathVariable("keycloak") String keycloak) {
