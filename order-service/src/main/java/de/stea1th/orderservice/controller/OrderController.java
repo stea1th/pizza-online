@@ -4,12 +4,15 @@ package de.stea1th.orderservice.controller;
 import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -23,20 +26,25 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-//    @GetMapping("/complete")
-//    public ResponseEntity<LocalDateTimeDto> completeOrder(Principal principal) {
+    @GetMapping("/complete")
+    public ResponseEntity<LocalDateTime> completeOrder(Principal principal) {
 //        String keycloak = principal.getName();
-//        LocalDateTimeDto complete = orderService.complete(keycloak);
-//        return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
-//                new ResponseEntity<>(complete, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/interval")
-//    public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
-//        String keycloak = principal.getName();
-//        return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
-//    }
 
+        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+
+        Order order = orderService.complete(keycloak);
+        LocalDateTime complete = order.getCompleted();
+        return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
+                new ResponseEntity<>(complete, HttpStatus.OK);
+    }
+
+    @GetMapping("/interval")
+    public ResponseEntity<Map<String, String>> getInterval(Principal principal) {
+//        String keycloak = principal.getName();
+        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+        return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
+    }
+//
 //    @GetMapping("/all/completed")
 //    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @RequestParam("value") String value) {
 //        CompletedOrdersRequestDto completedOrdersRequestDto = new CompletedOrdersRequestDto(principal.getName(), value);

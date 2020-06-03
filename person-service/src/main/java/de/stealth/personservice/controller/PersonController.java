@@ -1,5 +1,6 @@
 package de.stealth.personservice.controller;
 
+import de.stealth.personservice.entity.Person;
 import de.stealth.personservice.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +16,34 @@ import java.security.Principal;
 @RequestMapping("/api/")
 public class PersonController {
 
-    private PersonService personService;
+    private final PersonService personService;
 
     @Autowired
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
 
-//    @GetMapping(value = "/{id}")
-//    public ResponseEntity<PersonDto> get(@PathVariable("id") int id) {
-//        log.info("get person with id: {}", id);
-//        PersonDto personDto = personService.get(id);
-//        log.info("received person with id: {} {}", id, personDto == null ? "not exists" : personDto);
-//        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Person> get(@PathVariable("id") int id) {
+        log.info("get person with id: {}", id);
+        Person person = personService.get(id);
+        log.info("received person with id: {} {}", id, person == null ? "not exists" : person);
+        return person == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(person, HttpStatus.OK);
+    }
 
-//    @GetMapping(value = "/details")
-//    public ResponseEntity<PersonDto> getDetails(Principal principal) {
-//        log.info("get person with keycloak: {}", principal.getName());
-//        PersonDto personDto = personService.getByPrincipal(principal);
-//        log.info("received person with keycloak: {} {}", principal.getName(), personDto == null ? "not exists" : personDto);
-//        return personDto == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(personDto, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/details")
+    public ResponseEntity<Person> getDetails(Principal principal) {
+        log.info("get person with keycloak: {}", principal.getName());
+        String keycloak = principal.getName();
+        Person person = personService.getByKeycloak(keycloak);
+        log.info("received person with keycloak: {} {}", principal.getName(), person == null ? "not exists" : person);
+        return person == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(person, HttpStatus.OK);
+    }
 
-//    @PostMapping(value = "/save")
-//    public ResponseEntity save(@RequestBody PersonDto personDto) {
-//        personService.save(personDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping(value = "/save")
+    public ResponseEntity<HttpStatus> save(@RequestBody Person person) {
+        log.info("saving person: {}", person);
+        personService.save(person);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

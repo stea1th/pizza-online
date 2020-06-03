@@ -4,6 +4,7 @@ package de.stea1th.orderservice.service;
 import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.kafka.producer.OrderProductKafkaProducer;
 import de.stea1th.orderservice.kafka.producer.PersonKafkaProducer;
+import de.stea1th.orderservice.num.TimeInterval;
 import de.stea1th.orderservice.repository.OrderRepository;
 
 import lombok.SneakyThrows;
@@ -12,8 +13,10 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -45,6 +48,19 @@ public class OrderServiceImpl implements OrderService {
         return orders.isEmpty() ? createEmptyOrder(personId) : getUncompletedOrder(orders);
     }
 
+    public Map<String, String> getInterval(String keycloak) {
+        log.info("get time interval for keycloak {}", keycloak);
+        Map<String, String> intervals = new HashMap<>();
+        Arrays.stream(TimeInterval.values()).forEach(x -> {
+            intervals.put(x.name(), x.getDescription());
+        });
+        List<Integer> years = getCompletedYearsByPerson(keycloak);
+        if(years != null) {
+            years.forEach(year -> intervals.put(year.toString(), year.toString()));
+        }
+        return intervals;
+    }
+
 //    @Override
 //    public List<CompletedOrderDto> getCompletedOrders(String json) {
 //        int person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
@@ -61,11 +77,11 @@ public class OrderServiceImpl implements OrderService {
 //                .collect(Collectors.toList());
 //    }
 ////
-//    @Override
+
 //    @Transactional
 //    public Order completeOrder(String keycloak) {
 //        Order order = complete(keycloak);
-//        produceInvoiceAsPdf(order);
+////        produceInvoiceAsPdf(order);
 //        return order;
 //    }
 //
@@ -89,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 //        pdfCreatorDto.setProductCostInCartDtoList(dtoList);
 //        return pdfCreatorDto;
 //    }
-
+//
 //    public String createCompletedOrderAsJson(Order order) {
 //        String allOrderProductAsJson = orderProductKafkaProducer.getAllOrderProductAsJson(order.getId());
 //    }

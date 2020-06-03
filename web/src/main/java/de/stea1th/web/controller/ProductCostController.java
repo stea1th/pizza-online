@@ -25,7 +25,6 @@ public class ProductCostController {
         this.productCostService = productCostService;
     }
 
-
     @GetMapping("/cart")
     public ResponseEntity<List<ProductCostInCartDto>> getAllProductCostsInCart(Principal principal) {
         log.info("get all products in cart");
