@@ -1,6 +1,5 @@
 package de.stea1th.completedorderservice.converter;
 
-import lombok.var;
 import org.springframework.stereotype.Component;
 
 @Component

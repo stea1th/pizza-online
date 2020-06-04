@@ -1,6 +1,6 @@
 package de.stea1th.productservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class Product extends AbstractBaseEntity {
 
     private boolean frozen;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductCost> productCostList;
 }

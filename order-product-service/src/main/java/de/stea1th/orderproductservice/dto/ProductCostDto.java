@@ -18,6 +18,8 @@ public class ProductCostDto {
 
     private Integer discount;
 
+    private ProductDto product;
+
     private boolean frozen;
 
 }

@@ -109,4 +109,11 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     public List<OrderProductCost> getAllOrderProductCostsByOrderId(int orderId) {
         return orderProductCostRepository.findAllByOrderId(orderId);
     }
+
+    public List<ProductCostDto> getProductCostListByOrderId(int orderId) {
+        List<Integer> ids = orderProductCostRepository.findAllProductCostIdsByOrderId(orderId);
+        List<ProductCostDto> productCostListByIds = productKafkaProducer.getProductCostListByIds(ids);
+//        log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ {}", productCostListByIds.get(0).getProduct().getName());
+        return productCostListByIds;
+    }
 }

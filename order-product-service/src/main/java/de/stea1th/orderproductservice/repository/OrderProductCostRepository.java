@@ -22,4 +22,7 @@ public interface OrderProductCostRepository extends JpaRepository<OrderProductCo
     @Query("SELECT opc FROM OrderProductCost opc WHERE opc.id.orderId = :orderId ")
     List<OrderProductCost> findAllByOrderId(@Param("orderId") int orderId);
 
+    @Query("SELECT opc.id.productCostId FROM OrderProductCost opc WHERE opc.id.orderId = :orderId ")
+    List<Integer> findAllProductCostIdsByOrderId(@Param("orderId") int orderId);
+
 }

@@ -10,4 +10,6 @@ public interface ProductService {
     List<Product> getAll(boolean withFrozen);
 
     Product get(int id);
+
+    Product attachPic(Product product);
 }

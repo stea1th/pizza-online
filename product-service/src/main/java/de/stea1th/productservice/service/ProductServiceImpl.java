@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
         return attachPic(Objects.requireNonNull(productRepository.findById(id).orElse(null)));
     }
 
-    private Product attachPic(Product product) {
+    public Product attachPic(Product product) {
         try {
             String base64 = imageConverter.encodeFileFromResourcesToBase64(product.getPicture());
             product.setPicture(base64);

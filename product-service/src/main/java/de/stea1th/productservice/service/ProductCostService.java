@@ -11,4 +11,6 @@ public interface ProductCostService {
 
     List<ProductCost> getAll();
 
+    List<ProductCost> getAllByIds(List<Integer> ids);
+
 }

@@ -2,6 +2,7 @@ package de.stea1th.orderproductservice.controller;
 
 import com.netflix.ribbon.proxy.annotation.Http;
 import de.stea1th.orderproductservice.dto.OrderProductCostDto;
+import de.stea1th.orderproductservice.dto.ProductCostDto;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -65,5 +67,10 @@ public class OrderProductCostController {
         orderProductCostDto.setProductCostId(productCostId);
         Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/test/{orderId}")
+    public ResponseEntity<List<ProductCostDto>> test(@PathVariable("orderId") int orderId) {
+        return new ResponseEntity<>(orderProductCostService.getProductCostListByOrderId(orderId), HttpStatus.OK);
     }
 }

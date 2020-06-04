@@ -21,7 +21,7 @@ public class PersonKafkaProducer extends KafkaProducer {
     }
 
     @SneakyThrows
-    public PersonDto getPersonIdByKeycloak(String keycloak) {
+    public PersonDto getPersonDtoByKeycloak(String keycloak) {
         String json = produce(getPersonTopic, keycloak);
         return objectMapper.readValue(json, PersonDto.class);
     }

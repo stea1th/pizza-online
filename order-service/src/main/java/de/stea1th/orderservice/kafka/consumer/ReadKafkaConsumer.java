@@ -47,7 +47,5 @@ public class ReadKafkaConsumer {
             value = entry.getValue();
         }
         return objectMapper.writeValueAsString(orderService.getOrdersByTimeValue(keycloak, value));
-
-
     }
 }

@@ -1,6 +1,7 @@
 package de.stea1th.orderproductservice.service;
 
 import de.stea1th.orderproductservice.dto.OrderProductCostDto;
+import de.stea1th.orderproductservice.dto.ProductCostDto;
 import de.stea1th.orderproductservice.entity.OrderProductCost;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface OrderProductCostService {
     List<OrderProductCost> getAllOrderProductCostsByOrderId(int orderId);
 
     OrderProductCost get(int orderId, int productCostId);
+
+    List<ProductCostDto> getProductCostListByOrderId(int orderId);
 }

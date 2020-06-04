@@ -1,23 +1,23 @@
 package de.stea1th.completedorderservice.dto;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class OrderProductCostDto {
+public class ProductCostDto extends AbstractBaseDto {
 
-    private int productCostId;
+    private String property;
 
     private BigDecimal price;
 
     private Integer discount;
 
-    private int quantity;
+    private boolean frozen;
+
 }
