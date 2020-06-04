@@ -1,16 +1,16 @@
-package de.stea1th.completedorderservice.dto;
+package de.stea1th.orderproductservice.dto;
 
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class ProductCostDto extends AbstractBaseDto {
+public class CartElementDto {
+
+    private Integer id;
 
     private String property;
 
@@ -20,4 +20,7 @@ public class ProductCostDto extends AbstractBaseDto {
 
     private boolean frozen;
 
+    private ProductDto product;
+
+    private int quantity;
 }

@@ -28,15 +28,20 @@ public class ProductKafkaProducer extends KafkaProducer{
 
     @SneakyThrows
     public ProductCostDto getProductCostDtoById(int productCostId) {
+        logMessage(productCostId, getProductCostTopic);
         String json =  produce(getProductCostTopic, productCostId);
         return objectMapper.readValue(json, ProductCostDto.class);
     }
 
     @SneakyThrows
     public List<ProductCostDto> getProductCostListByIds(List<Integer> ids) {
-//        String message = objectMapper.writeValueAsString(ids);
+        logMessage(ids, getProductCostListByIdsTopic);
         String json = produce(getProductCostListByIdsTopic, ids);
         return objectMapper.readValue(json, new TypeReference<List<ProductCostDto>>() {
         });
+    }
+
+    private void logMessage(Object message, String topic) {
+        log.info("Sending message {} to {} topic", message, topic);
     }
 }

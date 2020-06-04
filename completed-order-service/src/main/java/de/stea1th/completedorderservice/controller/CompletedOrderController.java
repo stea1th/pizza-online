@@ -2,6 +2,7 @@ package de.stea1th.completedorderservice.controller;
 
 import de.stea1th.completedorderservice.dto.CompletedOrderDto;
 import de.stea1th.completedorderservice.dto.OrderDto;
+import de.stea1th.completedorderservice.service.CompletedOrderService;
 import de.stea1th.completedorderservice.service.CompletedOrderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,9 @@ import java.util.List;
 @Slf4j
 public class CompletedOrderController {
 
-    private final CompletedOrderServiceImpl completedOrderService;
+    private final CompletedOrderService completedOrderService;
 
-    public CompletedOrderController(CompletedOrderServiceImpl completedOrderService) {
+    public CompletedOrderController(CompletedOrderService completedOrderService) {
         this.completedOrderService = completedOrderService;
     }
 

@@ -1,6 +1,8 @@
 package de.stea1th.orderproductservice.service;
 
 
+import de.stea1th.orderproductservice.converter.CartElementConverter;
+import de.stea1th.orderproductservice.dto.CartElementDto;
 import de.stea1th.orderproductservice.dto.OrderProductCostDto;
 import de.stea1th.orderproductservice.dto.ProductCostDto;
 import de.stea1th.orderproductservice.entity.OrderProductCost;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,11 +28,14 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
 
     private final ProductKafkaProducer productKafkaProducer;
 
+    private final CartElementConverter cartElementConverter;
 
-    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, OrderKafkaProducer orderKafkaProducer, ProductKafkaProducer productKafkaProducer) {
+
+    public OrderProductCostServiceImpl(OrderProductCostRepository orderProductCostRepository, OrderKafkaProducer orderKafkaProducer, ProductKafkaProducer productKafkaProducer, CartElementConverter cartElementConverter) {
         this.orderProductCostRepository = orderProductCostRepository;
         this.orderKafkaProducer = orderKafkaProducer;
         this.productKafkaProducer = productKafkaProducer;
+        this.cartElementConverter = cartElementConverter;
     }
 
     @Transactional
@@ -71,19 +78,21 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
-        log.info("delete from order-product-cost product");
+        log.info("Delete from cart product-cost with id: {}", orderProductCostDto.getProductCostId());
         int orderId = orderKafkaProducer.getOrderIdByKeycloak(orderProductCostDto.getKeycloak());
         orderProductCostRepository.deleteById(createPK(orderId, orderProductCostDto.getProductCostId()));
         return getSumQuantitiesByOrderId(orderId);
     }
 
     public Integer addToCart(OrderProductCostDto orderProductCostDto) {
+        log.info("Adding to cart product-cost with id: {}", orderProductCostDto.getProductCostId());
         int orderId = orderKafkaProducer.getOrderIdByKeycloak(orderProductCostDto.getKeycloak());
         save(orderProductCostDto, orderId);
         return getSumQuantitiesByOrderId(orderId);
     }
 
     public Integer getQuantitiesSum(String keycloak) {
+        log.info("Get summary all products in cart for keycloak: {}", keycloak);
         int orderId = orderKafkaProducer.getOrderIdByKeycloak(keycloak);
         return getSumQuantitiesByOrderId(orderId);
     }
@@ -110,10 +119,31 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         return orderProductCostRepository.findAllByOrderId(orderId);
     }
 
+    private Map<Integer, OrderProductCost> getAllOrderProductCostsAsMapByOrderId(int orderId) {
+        return getAllOrderProductCostsByOrderId(orderId)
+                .stream()
+                .collect(Collectors.toMap(x -> x.getId().getProductCostId(), x -> x));
+    }
+
     public List<ProductCostDto> getProductCostListByOrderId(int orderId) {
         List<Integer> ids = orderProductCostRepository.findAllProductCostIdsByOrderId(orderId);
-        List<ProductCostDto> productCostListByIds = productKafkaProducer.getProductCostListByIds(ids);
-//        log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ {}", productCostListByIds.get(0).getProduct().getName());
-        return productCostListByIds;
+        return productKafkaProducer.getProductCostListByIds(ids);
+    }
+
+    public List<CartElementDto> createCart(int orderId) {
+        log.info("Aggregating cart for order with id: {}", orderId);
+        Map<Integer, OrderProductCost> orderProductCostMap = getAllOrderProductCostsAsMapByOrderId(orderId);
+        List<ProductCostDto> productCostListByOrderId = getProductCostListByOrderId(orderId);
+        return aggregateCartElements(orderProductCostMap, productCostListByOrderId);
+    }
+
+    private List<CartElementDto> aggregateCartElements(Map<Integer, OrderProductCost> map, List<ProductCostDto> list) {
+        return list
+                .stream()
+                .map(productCost -> {
+                    OrderProductCost orderProductCost = map.get(productCost.getId());
+                    return cartElementConverter.convertToDto(orderProductCost, productCost);
+                })
+                .collect(Collectors.toList());
     }
 }

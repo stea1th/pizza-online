@@ -18,7 +18,5 @@ public class OrderDto extends AbstractBaseDto {
 
     private LocalDateTime completed;
 
-    private List<OrderProductCostDto> orders;
-
     private PersonDto person;
 }

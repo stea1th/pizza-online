@@ -1,23 +1,26 @@
 package de.stea1th.completedorderservice.dto;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class OrderProductCostDto {
+public class CartElementDto {
 
-    private int productCostId;
+    private Integer id;
+
+    private String property;
 
     private BigDecimal price;
 
     private Integer discount;
+
+    private boolean frozen;
+
+    private ProductDto product;
 
     private int quantity;
 }

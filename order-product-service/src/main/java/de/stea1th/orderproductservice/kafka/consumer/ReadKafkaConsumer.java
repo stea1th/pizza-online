@@ -2,6 +2,7 @@ package de.stea1th.orderproductservice.kafka.consumer;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.stea1th.orderproductservice.dto.CartElementDto;
 import de.stea1th.orderproductservice.entity.OrderProductCost;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
 import lombok.SneakyThrows;
@@ -27,10 +28,18 @@ public class ReadKafkaConsumer {
     @KafkaListener(topics="${order-product.all}")
     @SendTo
     public String getAllOrderProductCostsByOrderId(String message) {
-        log.info("receiving orderId: {}", message);
+        log.info("Receiving orderId: {}", message);
         List<OrderProductCost> allOrderProductCosts = orderProductCostService.getAllOrderProductCostsByOrderId(Integer.parseInt(message));
         return objectMapper.writeValueAsString(allOrderProductCosts);
     }
 
 
+    @SneakyThrows
+    @KafkaListener(topics="${order-product.get.cart}")
+    @SendTo
+    public String getCartByOrderId(String message) {
+        log.info("Receiving order id: {}", message);
+        List<CartElementDto> cart = orderProductCostService.createCart(Integer.parseInt(message));
+        return objectMapper.writeValueAsString(cart);
+    }
 }
