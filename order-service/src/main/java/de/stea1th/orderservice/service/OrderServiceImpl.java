@@ -26,9 +26,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderProductKafkaProducer orderProductKafkaProducer;
     private final OrderRepository orderRepository;
 
-//    @Value("${pdf-creator.create.invoice}")
-//    private String pdfCreateTopic;
-
     @Autowired
     public OrderServiceImpl(PersonKafkaProducer personKafkaProducer, OrderProductKafkaProducer orderProductKafkaProducer, OrderRepository orderRepository) {
         this.personKafkaProducer = personKafkaProducer;
@@ -49,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Map<String, String> getInterval(String keycloak) {
-        log.info("get time interval for keycloak {}", keycloak);
+        log.info("get time interval for keycloak: {}", keycloak);
         Map<String, String> intervals = new HashMap<>();
         Arrays.stream(TimeInterval.values()).forEach(x -> {
             intervals.put(x.name(), x.getDescription());
@@ -89,5 +86,19 @@ public class OrderServiceImpl implements OrderService {
         Order order = orders.get(0);
         log.info("existing uncompleted order with id: {}", order.getId());
         return order;
+    }
+
+    public List<Order> getOrdersByTimeValue(String keycloak, String value) {
+        int personId = personKafkaProducer.getPersonIdByKeycloak(keycloak);
+        List<Order> orders;
+        try {
+            var timeInterval = TimeInterval.valueOf(value);
+            orders = orderRepository.findByPersonIdAndCompletedAfterOrderByCompletedDesc(personId, timeInterval.getTime());
+            log.info("getting orders for time interval: {}", value);
+        } catch (IllegalArgumentException e) {
+            orders = orderRepository.findByPersonIdAndCompletedYear(personId, value);
+            log.info("getting orders for year: {}", value);
+        }
+        return orders;
     }
 }

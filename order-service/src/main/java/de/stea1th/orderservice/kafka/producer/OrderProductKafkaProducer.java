@@ -1,6 +1,7 @@
 package de.stea1th.orderservice.kafka.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.stea1th.orderservice.entity.Order;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +31,4 @@ public class OrderProductKafkaProducer extends KafkaProducer {
         List list = objectMapper.readValue(json, List.class);
         return list.size() > 0;
     }
-
-
-
-
-
 }

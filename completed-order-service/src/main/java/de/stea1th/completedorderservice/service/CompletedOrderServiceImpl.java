@@ -2,11 +2,16 @@ package de.stea1th.completedorderservice.service;
 
 
 import de.stea1th.completedorderservice.converter.OrderConverter;
+import de.stea1th.completedorderservice.dto.CompletedOrderDto;
 import de.stea1th.completedorderservice.dto.OrderDto;
 import de.stea1th.completedorderservice.kafka.OrderKafkaProducer;
 import de.stea1th.completedorderservice.kafka.PersonKafkaProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -24,26 +29,26 @@ public class CompletedOrderServiceImpl {
 
     public OrderDto test(String keycloak) {
         String json = orderKafkaProducer.getOrderAsJson(keycloak);
-        return orderConverter.convertToDto(json);
+        return orderConverter.convertJsonToDto(json);
     }
 
 
-//    public List<CompletedOrderDto> getCompletedOrders(String keycloak, String value) {
-//        int person = personService.getByKeycloak(completedOrdersRequestDto.getKeycloak());
-//        List<Order> orders;
-//        try {
-//            var timeInterval = TimeInterval.valueOf(completedOrdersRequestDto.getValue());
-//            orders = orderRepository.findByPersonAndCompletedAfterOrderByCompletedDesc(person, timeInterval.getTime());
-//        } catch (IllegalArgumentException e) {
-//            orders = orderRepository.findByPersonAndCompletedYear(person, completedOrdersRequestDto.getValue());
-//        }
+    public List<CompletedOrderDto> getCompletedOrders(String keycloak, String value) {
+        Map<String, String> message = Collections.singletonMap(keycloak, value);
+        String json = orderKafkaProducer.getOrdersForTimeInterval(message);
+        List<OrderDto> orderDtos = orderConverter.convertToDtoList(json);
+
+        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!! {}", orderDtos.get(0).getId());
+
+
+        return null;
+
 //        return orders
 //                .stream()
 //                .map(this::createCompletedOrderDto)
 //                .collect(Collectors.toList());
-//    }
+    }
 
-    //    @Transactional
 //    public CompletedOrderDto createCompletedOrderDto(Order order) {
 //        List<ProductCost> productCostList = productCostRepository.getAllByOrderId(order.getId());
 //        List<ProductCostInCartDto> dtoList = productCostList

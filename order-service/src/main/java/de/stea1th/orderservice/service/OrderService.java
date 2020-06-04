@@ -11,6 +11,8 @@ public interface OrderService {
 
     Map<String, String> getInterval(String keycloak);
 
+    List<Order> getOrdersByTimeValue(String keycloak, String value);
+
 //    Order getUncompletedOrderByPerson(Person person);
 
 //    Order completeOrder(String keycloak);

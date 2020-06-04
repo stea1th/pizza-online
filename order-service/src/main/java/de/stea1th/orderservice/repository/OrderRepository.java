@@ -14,7 +14,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByPersonIdAndCompletedOrderByCreatedAsc(int personId, LocalDateTime completed);
 
-//    List<Order> findByPersonIdAndCompletedAfterOrderByCompletedDesc(int personId, LocalDateTime completed);
+    List<Order> findByPersonIdAndCompletedAfterOrderByCompletedDesc(int personId, LocalDateTime completed);
 
     @Query("SELECT o FROM Order o WHERE o.personId = :personId AND o.completed IS NULL ")
     List<Order> findByPersonIdAndCompletedIsNull(@Param("personId")int personId);
@@ -30,5 +30,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "FROM Order o " +
             "WHERE o.personId = :personId AND SUBSTRING(CONCAT(o.completed, ''), 1, 4) = :year " +
             "ORDER BY o.completed DESC")
-    List<Order> findByPersonAndCompletedYear(@Param("personId") int personId, @Param("year") String year);
+    List<Order> findByPersonIdAndCompletedYear(@Param("personId") int personId, @Param("year") String year);
 }
