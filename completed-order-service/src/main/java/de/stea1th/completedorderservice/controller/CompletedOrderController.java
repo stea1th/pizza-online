@@ -23,12 +23,12 @@ public class CompletedOrderController {
         this.completedOrderService = completedOrderService;
     }
 
-    @GetMapping(value = "/completed")
-    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders() {
+    @GetMapping(value = "/completed/{time-interval}")
+    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(@PathVariable("time-interval") String timeInterval) {
 
 //        return new ResponseEntity<>(completedOrderService.getCompletedOrders(principal.getName(), value), HttpStatus.OK);
         String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-        return new ResponseEntity<>(completedOrderService.getCompletedOrders(keycloak, "2020"), HttpStatus.OK);
+        return new ResponseEntity<>(completedOrderService.getCompletedOrders(keycloak, timeInterval), HttpStatus.OK);
     }
 
 //    @GetMapping(value = "/test")

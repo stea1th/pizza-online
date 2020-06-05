@@ -28,4 +28,6 @@ public interface OrderProductCostService {
     List<ProductCostDto> getProductCostListByOrderId(int orderId);
 
     List<CartElementDto> createCart(int orderId);
+
+    List<CartElementDto> createCart(String keycloak);
 }

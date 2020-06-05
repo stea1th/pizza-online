@@ -21,13 +21,13 @@ public class ProductCostController {
         this.productCostService = productCostService;
     }
 
-    @GetMapping("product-cost")
+    @GetMapping("/product-cost")
     public ResponseEntity<List<ProductCost>> getAll() {
         log.info("get all product-costs");
         return new ResponseEntity<>(productCostService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("product-cost/{id}")
+    @GetMapping("/product-cost/{id}")
     public ResponseEntity<ProductCost> get(@PathVariable("id") int id) {
         log.info("get product-cost with id: {}", id);
         ProductCost productCost = productCostService.get(id);

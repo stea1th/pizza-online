@@ -1,6 +1,7 @@
 package de.stea1th.orderproductservice.controller;
 
 import com.netflix.ribbon.proxy.annotation.Http;
+import de.stea1th.orderproductservice.dto.CartElementDto;
 import de.stea1th.orderproductservice.dto.OrderProductCostDto;
 import de.stea1th.orderproductservice.dto.ProductCostDto;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
@@ -72,5 +73,13 @@ public class OrderProductCostController {
     @GetMapping(value="/test/{orderId}")
     public ResponseEntity<List<ProductCostDto>> test(@PathVariable("orderId") int orderId) {
         return new ResponseEntity<>(orderProductCostService.getProductCostListByOrderId(orderId), HttpStatus.OK);
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity<List<CartElementDto>> getAllElementsInCart(Principal principal) {
+        log.info("get all products in cart");
+        List<CartElementDto> productDtoList = orderProductCostService.createCart(principal.getName());
+        log.info("received list of product-costs in cart: {}", productDtoList);
+        return new ResponseEntity<>(productDtoList, HttpStatus.OK);
     }
 }

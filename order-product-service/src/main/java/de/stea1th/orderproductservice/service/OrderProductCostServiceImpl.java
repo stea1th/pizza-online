@@ -130,14 +130,21 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         return productKafkaProducer.getProductCostListByIds(ids);
     }
 
+    public List<CartElementDto> createCart(String keycloak) {
+        log.info("Creating cart for keycloak: {}", keycloak);
+        int orderId = orderKafkaProducer.getOrderIdByKeycloak(keycloak);
+        return createCart(orderId);
+    }
+
     public List<CartElementDto> createCart(int orderId) {
-        log.info("Aggregating cart for order with id: {}", orderId);
+        log.info("Creating cart for order with id: {}", orderId);
         Map<Integer, OrderProductCost> orderProductCostMap = getAllOrderProductCostsAsMapByOrderId(orderId);
         List<ProductCostDto> productCostListByOrderId = getProductCostListByOrderId(orderId);
         return aggregateCartElements(orderProductCostMap, productCostListByOrderId);
     }
 
     private List<CartElementDto> aggregateCartElements(Map<Integer, OrderProductCost> map, List<ProductCostDto> list) {
+        log.info("Aggregating cart");
         return list
                 .stream()
                 .map(productCost -> {
