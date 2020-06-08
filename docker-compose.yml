@@ -80,7 +80,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
-    restart: on-failure
+#    restart: on-failure
     volumes:
       - keycloak-data-volume:/var/lib/keycloak/data
     networks:

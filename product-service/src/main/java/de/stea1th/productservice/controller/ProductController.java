@@ -34,9 +34,10 @@ public class ProductController {
     @GetMapping("/product/no-frozen")
     public ResponseEntity<List<Product>> getAllWithoutFrozen() {
         log.info("get all products without frozen");
-        List<Product> productDtoList = productService.getAll(false);
-        log.info("received list of products: {}", productDtoList);
-        return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
+        List<Product> products = productService.getAll(false);
+        log.info("??????????????????????????? {}", products.get(0).getProductCostList().size());
+        log.info("received list of products: {}", products);
+        return new ResponseEntity<>(products, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/product/{id}")

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.stea1th.productservice.dto.ProductCostDto;
 import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.service.ProductCostService;
 import lombok.SneakyThrows;
@@ -38,8 +39,7 @@ public class ReadKafkaConsumer {
 
         List<Integer> ids = objectMapper.readValue(message, new TypeReference<List<Integer>>() {
         });
-        List<ProductCost> allByIds = productCostService.getAllByIds(ids);
-        log.info("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§ {}", allByIds);
+        List<ProductCostDto> allByIds = productCostService.getAllByIds(ids);
         return objectMapper.writeValueAsString(allByIds);
     }
 }

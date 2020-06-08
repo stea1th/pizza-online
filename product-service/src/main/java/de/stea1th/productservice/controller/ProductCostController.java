@@ -1,5 +1,6 @@
 package de.stea1th.productservice.controller;
 
+import de.stea1th.productservice.dto.ProductCostDto;
 import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.service.ProductCostService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +23,15 @@ public class ProductCostController {
     }
 
     @GetMapping("/product-cost")
-    public ResponseEntity<List<ProductCost>> getAll() {
-        log.info("get all product-costs");
+    public ResponseEntity<List<ProductCostDto>> getAll() {
+        log.info("Get all product-costs");
         return new ResponseEntity<>(productCostService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/product-cost/{id}")
-    public ResponseEntity<ProductCost> get(@PathVariable("id") int id) {
-        log.info("get product-cost with id: {}", id);
-        ProductCost productCost = productCostService.get(id);
+    public ResponseEntity<ProductCostDto> get(@PathVariable("id") int id) {
+        log.info("Get product-cost with id: {}", id);
+        ProductCostDto productCost = productCostService.get(id);
         return productCost != null ? new ResponseEntity<>(productCost, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

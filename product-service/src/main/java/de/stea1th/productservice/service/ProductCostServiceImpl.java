@@ -1,5 +1,6 @@
 package de.stea1th.productservice.service;
 
+import de.stea1th.productservice.dto.ProductCostDto;
 import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.repository.ProductCostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,21 +27,36 @@ public class ProductCostServiceImpl implements ProductCostService {
 
     @Transactional
     @Override
-    public ProductCost get(int productCostId) {
+    public ProductCostDto get(int productCostId) {
         log.info("Get product cost with id: {}", productCostId);
-        return productCostRepository.findById(productCostId).orElse(null);
+        return transformToDto(productCostRepository.findById(productCostId).orElse(null));
     }
 
     @Override
-    public List<ProductCost> getAll() {
+    public List<ProductCostDto> getAll() {
         log.info("Get all product costs");
-        return productCostRepository.findAll();
+        return transformToDtoList(productCostRepository.findAll());
     }
 
-    public List<ProductCost> getAllByIds(List<Integer> ids) {
+    @Override
+    public List<ProductCostDto> getAllByIds(List<Integer> ids) {
         log.info("Get all product costs by ids: {}", ids);
         List<ProductCost> list = productCostRepository.findAllByIds(ids);
-        list.forEach(x -> x.setProduct(productService.attachPic(x.getProduct())));
-        return list;
+        return transformToDtoList(list);
+    }
+
+    private ProductCostDto transformToDto(ProductCost productCost) {
+        if(productCost == null) return null;
+        ProductCostDto productCostDto = new ProductCostDto();
+        productCostDto.setId(productCost.getId());
+        productCostDto.setPrice(productCost.getPrice());
+        productCostDto.setDiscount(productCost.getDiscount());
+        productCostDto.setFrozen(productCost.isFrozen());
+        productCostDto.setProduct(productService.attachPic(productCost.getProduct()));
+        return productCostDto;
+    }
+
+    private List<ProductCostDto> transformToDtoList(List<ProductCost> list) {
+        return list.stream().map(this::transformToDto).collect(Collectors.toList());
     }
 }

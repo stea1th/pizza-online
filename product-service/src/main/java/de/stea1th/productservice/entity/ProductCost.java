@@ -1,6 +1,7 @@
 package de.stea1th.productservice.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,8 +31,8 @@ public class ProductCost extends AbstractBaseEntity {
 
     private boolean frozen;
 
-    @JsonManagedReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
 }
