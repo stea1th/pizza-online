@@ -45,6 +45,8 @@ public class PersonController {
         log.info("Authorization: {}", authorization);
         log.info("Principal: {}", principal);
         log.info("Authentication: {}", authentication);
+        boolean isTrue = authentication.isAuthenticated();
+        log.info("Principal from Auth: {}", isTrue);
 //        headers.forEach((key, value) -> {
 //            log.info(String.format("Header '%s' = %s", key, value));
 //        });
