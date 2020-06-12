@@ -1,6 +1,7 @@
 package de.stea1th.productservice.service;
 
 import de.stea1th.productservice.converter.ImageConverter;
+import de.stea1th.productservice.dto.ProductDto;
 import de.stea1th.productservice.entity.Product;
 import de.stea1th.productservice.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAll(boolean withFrozen) {
-        log.info(withFrozen ? "get all products" : "get all products without frozen");
+        log.info(withFrozen ? "Getting all products" : "Getting all products without frozen");
         return withFrozen ?
                 productRepository
                         .findAll()
@@ -42,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product get(int id) {
-        log.info("get product with id: {}", id);
+        log.info("Getting product with id: {}", id);
         return attachPic(Objects.requireNonNull(productRepository.findById(id).orElse(null)));
     }
 
@@ -51,20 +52,28 @@ public class ProductServiceImpl implements ProductService {
             String base64 = imageConverter.encodeFileFromResourcesToBase64(product.getPicture());
             product.setPicture(base64);
         } catch (IOException e) {
-            log.info("no picture for product with id {} available", product.getId());
+            log.info("No picture for product with id {} available", product.getId());
         }
         return product;
     }
 
+    private String attachPic(String picName) {
+        String base64 = picName;
+        try {
+            base64 = imageConverter.encodeFileFromResourcesToBase64(picName);
+        } catch (IOException e) {
+            log.info("No picture for product with name {} available", picName);
+        }
+        return base64;
+    }
 
-//    @Override
-//    public List<Product> getAllProductsByKeycloak(String keycloak) {
-////        Order order = orderService.getUncompletedOrderByPersonKeycloak(keycloak);
-//        log.info("get products for keycloak: {}", keycloak);
-//        return productRepository
-//                .getAllByOrderId(order.getId())
-//                .stream()
-//                .map(x -> productConverter.convertToDto(x, false))
-//                .collect(Collectors.toList());
-//    }
+    public ProductDto transformToDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setFrozen(product.isFrozen());
+        productDto.setPicture(attachPic(product.getPicture()));
+        return productDto;
+    }
 }

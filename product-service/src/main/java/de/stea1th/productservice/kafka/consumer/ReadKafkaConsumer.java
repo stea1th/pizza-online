@@ -42,4 +42,13 @@ public class ReadKafkaConsumer {
         List<ProductCostDto> allByIds = productCostService.getAllByIds(ids);
         return objectMapper.writeValueAsString(allByIds);
     }
+
+    @SneakyThrows
+    @KafkaListener(topics = "${product-cost.get}")
+    @SendTo
+    public String getProductCostById(String message) {
+        log.info("Receiving message: {}", message);
+        ProductCostDto productCostDto = productCostService.get(Integer.parseInt(message));
+        return objectMapper.writeValueAsString(productCostDto);
+    }
 }

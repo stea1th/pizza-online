@@ -28,19 +28,19 @@ public class ProductCostServiceImpl implements ProductCostService {
     @Transactional
     @Override
     public ProductCostDto get(int productCostId) {
-        log.info("Get product cost with id: {}", productCostId);
+        log.info("Getting product cost with id: {}", productCostId);
         return transformToDto(productCostRepository.findById(productCostId).orElse(null));
     }
 
     @Override
     public List<ProductCostDto> getAll() {
-        log.info("Get all product costs");
+        log.info("Getting all product costs");
         return transformToDtoList(productCostRepository.findAll());
     }
 
     @Override
     public List<ProductCostDto> getAllByIds(List<Integer> ids) {
-        log.info("Get all product costs by ids: {}", ids);
+        log.info("Getting all product costs by ids: {}", ids);
         List<ProductCost> list = productCostRepository.findAllByIds(ids);
         return transformToDtoList(list);
     }
@@ -52,7 +52,7 @@ public class ProductCostServiceImpl implements ProductCostService {
         productCostDto.setPrice(productCost.getPrice());
         productCostDto.setDiscount(productCost.getDiscount());
         productCostDto.setFrozen(productCost.isFrozen());
-        productCostDto.setProduct(productService.attachPic(productCost.getProduct()));
+        productCostDto.setProduct(productService.transformToDto(productCost.getProduct()));
         return productCostDto;
     }
 

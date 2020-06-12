@@ -35,12 +35,10 @@ export class OrderInfoComponent implements OnInit {
       data.forEach(order => {
         const completedOrder = new CompletedOrder();
         completedOrder.id = order.orderDto.id;
-        // const completed = order.orderDto.completed;
         completedOrder.completed = new Date(order.orderDto.completed);
         completedOrder.products = order.cartElementList;
         this.completedOrders.push(completedOrder);
       });
-      console.log(this.completedOrders);
     })
   }
 }

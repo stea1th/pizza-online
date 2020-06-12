@@ -22,7 +22,7 @@ public class OrderProductCost {
     @NotNull
     private Integer quantity;
 
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
     @NotNull
