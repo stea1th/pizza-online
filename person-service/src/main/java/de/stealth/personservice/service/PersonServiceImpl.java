@@ -36,12 +36,12 @@ public class PersonServiceImpl implements PersonService {
 
         Person person = personRepository.getByKeycloak(keycloak);
         if (person == null) {
-            log.error("no such person with keycloak id: {} exists", keycloak);
+            log.error("No such person with keycloak id: {} exists", keycloak);
             person = new Person();
             person.setKeycloak(keycloak);
             var address = addressRepository.createEmptyAddress();
             person.setAddress(address);
-            log.info("new person with keycloak id: {} created", keycloak);
+            log.info("New person with keycloak id: {} created", keycloak);
             person = save(person);
         }
         return person;
