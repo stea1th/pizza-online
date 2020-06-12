@@ -24,7 +24,7 @@ public class ReadKafkaConsumer {
     @KafkaListener(topics="${person.get}")
     @SendTo
     public String getPerson(String message) {
-        log.info("receiving keycloak: {}", message);
+        log.info("Receiving with Kafka keycloak: {}", message);
         Person person = personService.getByKeycloak(message);
         return objectMapper.writeValueAsString(person);
     }

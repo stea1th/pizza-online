@@ -40,25 +40,11 @@ public class PersonController {
 
     @GetMapping(value = "/details")
     public ResponseEntity<Person> getDetails(Principal principal) {
-//    public ResponseEntity<Person> getDetails(@AuthenticationPrincipal User user) {
-//    public ResponseEntity<Person> getDetails(HttpServletRequest request, Principal principal, Authentication authentication) {
-//        String authorization = request.getHeader("authorization");
-//        log.info("Authorization: {}", authorization);
-//        log.info("Principal: {}", principal);
-//        log.info("Authentication: {}", authentication);
-//        boolean isTrue = authentication.isAuthenticated();
-//        log.info("Principal from Auth: {}", isTrue);
-//        headers.forEach((key, value) -> {
-//            log.info(String.format("Header '%s' = %s", key, value));
-//        });
         log.info("Get person with keycloak: {}", principal.getName());
-//        log.info("Get person with keycloak: {}", user.getUsername());
         String keycloak = principal.getName();
-//        String keycloak = user.getUsername();
         Person person = personService.getByKeycloak(keycloak);
         log.info("Received person with keycloak: {} {}", keycloak, person == null ? "not exists" : person);
         return person == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(person, HttpStatus.OK);
-//        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/save")
