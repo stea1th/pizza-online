@@ -25,7 +25,7 @@ public class CompletedOrderController {
     }
 
     @GetMapping(value = "/completed/{time-interval}")
-    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @PathVariable("time-interval") String timeInterval) {
+    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(@PathVariable("time-interval") String timeInterval, Principal principal) {
         log.info("Getting completed orders for time interval: {}", timeInterval);
         return new ResponseEntity<>(completedOrderService.getCompletedOrders(principal.getName(), timeInterval), HttpStatus.OK);
     }

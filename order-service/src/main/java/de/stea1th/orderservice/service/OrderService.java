@@ -1,5 +1,6 @@
 package de.stea1th.orderservice.service;
 
+import de.stea1th.orderservice.dto.TimeIntervalDto;
 import de.stea1th.orderservice.entity.Order;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface OrderService {
 
     Order getUncompletedOrderByPersonKeycloak(String keycloak);
 
-    Map<String, String> getInterval(String keycloak);
+    List<TimeIntervalDto> getInterval(String keycloak);
 
     List<Order> getOrdersByTimeValue(String keycloak, String value);
 

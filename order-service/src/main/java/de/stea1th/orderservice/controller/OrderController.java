@@ -1,6 +1,7 @@
 package de.stea1th.orderservice.controller;
 
 
+import de.stea1th.orderservice.dto.TimeIntervalDto;
 import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class OrderController {
     }
 
     @GetMapping("/interval")
-    public ResponseEntity<Map<String, String>> getInterval(Principal principal) {
+    public ResponseEntity<List<TimeIntervalDto>> getInterval(Principal principal) {
         String keycloak = principal.getName();
         log.info("Getting time interval for keycloak: {}", keycloak);
         return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);

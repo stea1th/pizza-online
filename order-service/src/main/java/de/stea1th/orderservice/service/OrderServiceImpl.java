@@ -1,6 +1,7 @@
 package de.stea1th.orderservice.service;
 
 
+import de.stea1th.orderservice.dto.TimeIntervalDto;
 import de.stea1th.orderservice.entity.Order;
 import de.stea1th.orderservice.kafka.producer.OrderProductKafkaProducer;
 import de.stea1th.orderservice.kafka.producer.PersonKafkaProducer;
@@ -45,15 +46,15 @@ public class OrderServiceImpl implements OrderService {
         return orders.isEmpty() ? createEmptyOrder(personId) : getUncompletedOrder(orders);
     }
 
-    public Map<String, String> getInterval(String keycloak) {
+    public List<TimeIntervalDto> getInterval(String keycloak) {
         log.info("Getting time interval for keycloak: {}", keycloak);
-        Map<String, String> intervals = new HashMap<>();
+        List<TimeIntervalDto> intervals = new ArrayList<>();
         Arrays.stream(TimeInterval.values()).forEach(x -> {
-            intervals.put(x.name(), x.getDescription());
+            intervals.add(new TimeIntervalDto(x.name(), x.getDescription()));
         });
         List<Integer> years = getCompletedYearsByPerson(keycloak);
         if(years != null) {
-            years.forEach(year -> intervals.put(year.toString(), year.toString()));
+            years.forEach(year -> intervals.add(new TimeIntervalDto(year.toString(), year.toString())));
         }
         return intervals;
     }
