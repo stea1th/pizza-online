@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -24,15 +25,8 @@ public class CompletedOrderController {
     }
 
     @GetMapping(value = "/completed/{time-interval}")
-    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(@PathVariable("time-interval") String timeInterval) {
-
-//        return new ResponseEntity<>(completedOrderService.getCompletedOrders(principal.getName(), value), HttpStatus.OK);
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-        return new ResponseEntity<>(completedOrderService.getCompletedOrders(keycloak, timeInterval), HttpStatus.OK);
+    public ResponseEntity<List<CompletedOrderDto>> getCompletedOrders(Principal principal, @PathVariable("time-interval") String timeInterval) {
+        log.info("Getting completed orders for time interval: {}", timeInterval);
+        return new ResponseEntity<>(completedOrderService.getCompletedOrders(principal.getName(), timeInterval), HttpStatus.OK);
     }
-
-//    @GetMapping(value = "/test")
-//    public ResponseEntity<String> get
-
-
 }

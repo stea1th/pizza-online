@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Map<String, String> getInterval(String keycloak) {
-        log.info("get time interval for keycloak: {}", keycloak);
+        log.info("Getting time interval for keycloak: {}", keycloak);
         Map<String, String> intervals = new HashMap<>();
         Arrays.stream(TimeInterval.values()).forEach(x -> {
             intervals.put(x.name(), x.getDescription());
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
             order.setCompleted(LocalDateTime.now());
             order = orderRepository.save(order);
             createEmptyOrder(order.getPersonId());
-            log.info("order complete for keycloak: {}", keycloak);
+            log.info("Order complete for keycloak: {}", keycloak);
         }
         return order;
     }
@@ -78,13 +78,13 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setPersonId(personId);
         order = orderRepository.save(order);
-        log.info("new uncompleted order with id: {} created", order.getId());
+        log.info("Creating new uncompleted order with id: {}", order.getId());
         return order;
     }
 
     private Order getUncompletedOrder(List<Order> orders) {
         Order order = orders.get(0);
-        log.info("existing uncompleted order with id: {}", order.getId());
+        log.info("Existing uncompleted order with id: {}", order.getId());
         return order;
     }
 
@@ -94,10 +94,10 @@ public class OrderServiceImpl implements OrderService {
         try {
             var timeInterval = TimeInterval.valueOf(value);
             orders = orderRepository.findByPersonIdAndCompletedAfterOrderByCompletedDesc(personId, timeInterval.getTime());
-            log.info("getting orders for time interval: {}", value);
+            log.info("Getting orders for time interval: {}", value);
         } catch (IllegalArgumentException e) {
             orders = orderRepository.findByPersonIdAndCompletedYear(personId, value);
-            log.info("getting orders for year: {}", value);
+            log.info("Getting orders for year: {}", value);
         }
         return orders;
     }

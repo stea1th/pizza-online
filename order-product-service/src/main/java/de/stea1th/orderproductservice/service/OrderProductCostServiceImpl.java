@@ -43,17 +43,17 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         OrderProductCost orderProductCost = get(orderId, orderProductCostDto.getProductCostId());
         ProductCostDto productCostDto = productKafkaProducer.getProductCostDtoById(orderProductCostDto.getProductCostId());
         if (orderProductCost == null) {
-            log.info("new order-product-cost created");
+            log.info("Creating new order-product-cost");
             orderProductCost = new OrderProductCost();
             orderProductCost.setId(createPK(orderId, orderProductCostDto.getProductCostId()));
             orderProductCost.setQuantity(orderProductCostDto.getQuantity());
         } else {
-            log.info("existing order-product-cost updated");
+            log.info("Updating of existing order-product-cost");
             orderProductCost.setQuantity(orderProductCost.getQuantity() + orderProductCostDto.getQuantity());
         }
         orderProductCost.setPrice(productCostDto.getPrice());
         orderProductCost.setDiscount(productCostDto.getDiscount());
-        log.info("order-product-cost: {} saved", orderProductCost);
+        log.info("Saving order-product-cost: {}", orderProductCost);
         return orderProductCostRepository.save(orderProductCost);
     }
 
@@ -68,7 +68,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
         ProductCostDto productCostDto = productKafkaProducer.getProductCostDtoById(orderProductCostDto.getProductCostId());
 
         if (orderProductCost != null) {
-            log.info("in order-product-cost product quantity updated");
+            log.info("Updating in order-product-cost product quantity");
             orderProductCost.setQuantity(orderProductCostDto.getQuantity());
             orderProductCost.setPrice(productCostDto.getPrice());
             orderProductCost.setDiscount(productCostDto.getDiscount());
@@ -78,7 +78,7 @@ public class OrderProductCostServiceImpl implements OrderProductCostService {
     }
 
     public Integer deleteFromCart(OrderProductCostDto orderProductCostDto) {
-        log.info("Delete from cart product-cost with id: {}", orderProductCostDto.getProductCostId());
+        log.info("Deleting from cart product-cost with id: {}", orderProductCostDto.getProductCostId());
         int orderId = orderKafkaProducer.getOrderIdByKeycloak(orderProductCostDto.getKeycloak());
         orderProductCostRepository.deleteById(createPK(orderId, orderProductCostDto.getProductCostId()));
         return getSumQuantitiesByOrderId(orderId);

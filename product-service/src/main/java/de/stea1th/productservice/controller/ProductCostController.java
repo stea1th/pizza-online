@@ -24,13 +24,13 @@ public class ProductCostController {
 
     @GetMapping("/product-cost")
     public ResponseEntity<List<ProductCostDto>> getAll() {
-        log.info("Get all product-costs");
+        log.info("Getting all product-costs");
         return new ResponseEntity<>(productCostService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/product-cost/{id}")
     public ResponseEntity<ProductCostDto> get(@PathVariable("id") int id) {
-        log.info("Get product-cost with id: {}", id);
+        log.info("Getting product-cost with id: {}", id);
         ProductCostDto productCost = productCostService.get(id);
         return productCost != null ? new ResponseEntity<>(productCost, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -42,15 +42,4 @@ public class OrderController {
         log.info("Getting time interval for keycloak: {}", keycloak);
         return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
     }
-
-
-//    @GetMapping("/{keycloak}")
-//    public ResponseEntity<Order> getByKeycloak(@PathVariable("keycloak") String keycloak) {
-//        return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/complete/{keycloak}")
-//    public ResponseEntity<Order> completeByKeycloak(@PathVariable("keycloak") String keycloak) {
-//        return new ResponseEntity<>(orderService.complete(keycloak), HttpStatus.OK);
-//    }
 }

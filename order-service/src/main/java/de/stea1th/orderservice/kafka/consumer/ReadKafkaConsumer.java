@@ -28,7 +28,7 @@ public class ReadKafkaConsumer {
     @KafkaListener(topics = "${order.get}")
     @SendTo
     public String getOrderByKeycloak(String message) {
-        log.info("receiving keycloak: {}", message);
+        log.info("Receiving keycloak: {}", message);
         Order order = orderService.getUncompletedOrderByPersonKeycloak(message);
         return objectMapper.writeValueAsString(order);
     }
@@ -37,7 +37,7 @@ public class ReadKafkaConsumer {
     @KafkaListener(topics = "${order.get.all.time-interval}")
     @SendTo
     public String getOrdersByTimeValue(String message) {
-        log.info("receiving message: {}", message);
+        log.info("Receiving message: {}", message);
         Map<String, String> mes = objectMapper.readValue(message, new TypeReference<Map<String, String>>() {
         });
         String keycloak = null;

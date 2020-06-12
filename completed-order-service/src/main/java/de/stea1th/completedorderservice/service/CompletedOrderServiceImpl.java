@@ -32,13 +32,8 @@ public class CompletedOrderServiceImpl implements CompletedOrderService {
         this.orderProductKafkaProducer = orderProductKafkaProducer;
     }
 
-//    public OrderDto test(String keycloak) {
-//        String json = orderKafkaProducer.getOrderAsJson(keycloak);
-//        return orderConverter.convertJsonToDto(json);
-//    }
-
-
     public List<CompletedOrderDto> getCompletedOrders(String keycloak, String value) {
+        log.info("Getting completed orders for keycloak: {} and time interval: {}", keycloak, value);
         Map<String, String> message = Collections.singletonMap(keycloak, value);
         String json = orderKafkaProducer.getOrdersForTimeInterval(message);
         List<OrderDto> orders = orderConverter.convertToDtoList(json);
@@ -49,6 +44,7 @@ public class CompletedOrderServiceImpl implements CompletedOrderService {
     }
 
     private CompletedOrderDto createCompletedOrderDto(OrderDto order) {
+        log.info("Creating completed order with id: {}", order.getId());
         CompletedOrderDto completedOrderDto = new CompletedOrderDto();
         completedOrderDto.setOrderDto(order);
         List<CartElementDto> cartElementsByOrderId = orderProductKafkaProducer.getCartElementsByOrderId(order.getId());

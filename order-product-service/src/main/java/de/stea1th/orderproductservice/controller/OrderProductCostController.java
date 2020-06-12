@@ -1,9 +1,7 @@
 package de.stea1th.orderproductservice.controller;
 
-import com.netflix.ribbon.proxy.annotation.Http;
 import de.stea1th.orderproductservice.dto.CartElementDto;
 import de.stea1th.orderproductservice.dto.OrderProductCostDto;
-import de.stea1th.orderproductservice.dto.ProductCostDto;
 import de.stea1th.orderproductservice.service.OrderProductCostService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -31,17 +29,15 @@ public class OrderProductCostController {
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> addToCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
         orderProductCostDto.setKeycloak(principal.getName());
-        log.info("added to cart: {}", orderProductCostDto);
+        log.info("Adding to cart: {}", orderProductCostDto);
         Integer sum = orderProductCostService.addToCart(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
     @GetMapping(value = "/sum")
     public ResponseEntity<Integer> getQuantitiesSumInCart(Principal principal) {
-//        String keycloak = principal.getName();
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-        log.info("retrieve sum of all products in cart for keycloak: {}", keycloak);
-//        Integer sum = orderProductCostService.getQuantitiesSumInCart(keycloak);
+        String keycloak = principal.getName();
+        log.info("Retrieving sum of all products in cart for keycloak: {}", keycloak);
         Integer sum = orderProductCostService.getQuantitiesSum(keycloak);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
@@ -49,37 +45,26 @@ public class OrderProductCostController {
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateInCart(@RequestBody OrderProductCostDto orderProductCostDto, Principal principal) {
         orderProductCostDto.setKeycloak(principal.getName());
-        log.info("update in cart: {}", orderProductCostDto);
-//        Integer sum = orderProductCostService.updateInCart(orderProductCostDto);
+        log.info("Updating in cart: {}", orderProductCostDto);
         Integer sum = orderProductCostService.updateQuantityAndPriceWithDiscount(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{productCostId}")
     public ResponseEntity<Integer> deleteFromCart(@PathVariable("productCostId") int productCostId, Principal principal) {
-        log.info("delete from cart {}", productCostId);
+        log.info("Deleting from cart {}", productCostId);
         var orderProductCostDto = new OrderProductCostDto();
-//        orderProductCostDto.setKeycloak(principal.getName());
-
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-        orderProductCostDto.setKeycloak(keycloak);
-
-
+        orderProductCostDto.setKeycloak(principal.getName());
         orderProductCostDto.setProductCostId(productCostId);
         Integer sum = orderProductCostService.deleteFromCart(orderProductCostDto);
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
-    @GetMapping(value="/test/{orderId}")
-    public ResponseEntity<List<ProductCostDto>> test(@PathVariable("orderId") int orderId) {
-        return new ResponseEntity<>(orderProductCostService.getProductCostListByOrderId(orderId), HttpStatus.OK);
-    }
-
     @GetMapping("/cart")
     public ResponseEntity<List<CartElementDto>> getAllElementsInCart(Principal principal) {
-        log.info("get all products in cart");
+        log.info("Getting all products in cart");
         List<CartElementDto> productDtoList = orderProductCostService.createCart(principal.getName());
-        log.info("received list of product-costs in cart: {}", productDtoList);
+        log.info("Receiving list of product-costs in cart: {}", productDtoList);
         return new ResponseEntity<>(productDtoList, HttpStatus.OK);
     }
 }

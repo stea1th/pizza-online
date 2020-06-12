@@ -25,34 +25,25 @@ public class ProductController {
 
     @GetMapping("/product")
     public ResponseEntity<List<Product>> getAll() {
-        log.info("get all products");
+        log.info("Getting all products");
         List<Product> productDtoList = productService.getAll(true);
-        log.info("received list of products: {}", productDtoList);
+        log.info("Receiving list of products: {}", productDtoList);
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/product/no-frozen")
     public ResponseEntity<List<Product>> getAllWithoutFrozen() {
-        log.info("get all products without frozen");
+        log.info("Getting all products without frozen");
         List<Product> products = productService.getAll(false);
-        log.info("??????????????????????????? {}", products.get(0).getProductCostList().size());
-        log.info("received list of products: {}", products);
+        log.info("Receiving list of products without frozen: {}", products);
         return new ResponseEntity<>(products, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/product/{id}")
     public ResponseEntity<Product> get(@PathVariable("id") int id) {
-        log.info("get product with id: {}", id);
+        log.info("Getting product with id: {}", id);
         Product product = productService.get(id);
         return product != null? new ResponseEntity<>(product, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-//    @GetMapping("/cart")
-//    public ResponseEntity<List<Product>> getAllProductsInCart(Principal principal) {
-//        log.info("get all products in cart");
-//        List<ProductDto> productDtoList = productService.getProductsInCart(principal.getName());
-//        log.info("received list of products in cart: {}", productDtoList);
-//        return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
-//    }
 }

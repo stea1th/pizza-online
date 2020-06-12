@@ -33,6 +33,7 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public Person getByKeycloak(String keycloak) {
         keycloak = removeQuotes(keycloak);
+        keycloak = addQuotes(keycloak);
 
         Person person = personRepository.getByKeycloak(keycloak);
         if (person == null) {
@@ -52,6 +53,7 @@ public class PersonServiceImpl implements PersonService {
     public Person save(Person person) {
         log.info("person: {} successful saved", person);
         addressRepository.save(person.getAddress());
+        person.setKeycloak(addQuotes(person.getKeycloak()));
         return personRepository.save(person);
     }
 
