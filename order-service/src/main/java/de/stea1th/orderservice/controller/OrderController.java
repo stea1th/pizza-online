@@ -28,10 +28,8 @@ public class OrderController {
 
     @GetMapping("/complete")
     public ResponseEntity<LocalDateTime> completeOrder(Principal principal) {
-//        String keycloak = principal.getName();
-
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
-
+        String keycloak = principal.getName();
+        log.info("Completing order for keycloak: {}", keycloak);
         Order order = orderService.complete(keycloak);
         LocalDateTime complete = order.getCompleted();
         return complete == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
@@ -40,19 +38,19 @@ public class OrderController {
 
     @GetMapping("/interval")
     public ResponseEntity<Map<String, String>> getInterval(Principal principal) {
-//        String keycloak = principal.getName();
-        String keycloak = "b04bf0fe-135e-4dc5-a130-48a0109543a6";
+        String keycloak = principal.getName();
+        log.info("Getting time interval for keycloak: {}", keycloak);
         return new ResponseEntity<>(orderService.getInterval(keycloak), HttpStatus.OK);
     }
 
 
-    @GetMapping("/{keycloak}")
-    public ResponseEntity<Order> getByKeycloak(@PathVariable("keycloak") String keycloak) {
-        return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
-    }
-
-    @GetMapping("/complete/{keycloak}")
-    public ResponseEntity<Order> completeByKeycloak(@PathVariable("keycloak") String keycloak) {
-        return new ResponseEntity<>(orderService.complete(keycloak), HttpStatus.OK);
-    }
+//    @GetMapping("/{keycloak}")
+//    public ResponseEntity<Order> getByKeycloak(@PathVariable("keycloak") String keycloak) {
+//        return new ResponseEntity<>(orderService.getUncompletedOrderByPersonKeycloak(keycloak), HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/complete/{keycloak}")
+//    public ResponseEntity<Order> completeByKeycloak(@PathVariable("keycloak") String keycloak) {
+//        return new ResponseEntity<>(orderService.complete(keycloak), HttpStatus.OK);
+//    }
 }

@@ -1,4 +1,4 @@
-package de.stea1th.productservice.config;
+package de.stea1th.orderservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

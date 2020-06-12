@@ -1,4 +1,4 @@
-package de.stea1th.productservice.config;
+package de.stea1th.orderproductservice.config;
 
 
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
