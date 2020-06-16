@@ -1,0 +1,63 @@
+server:
+  port: 8663
+
+spring:
+  application:
+    name: cloud-gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "authorization"
+            allowCredentials: true
+      routes:
+        - id: order-product-service
+          uri: lb://ORDER-PRODUCT-SERVICE
+          predicates:
+            - Path=/order-product/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+        - id: person-service
+          uri: lb://PERSON-SERVICE
+          predicates:
+            - Path=/person/**
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/product/**
+          filters:
+            - StripPrefix=1
+        - id: completed-order-service
+          uri: lb://COMPLETED-ORDER-SERVICE
+          predicates:
+            - Path=/completed-order/**
+        - id: order-websocket-service
+          uri: lb://ORDER-WEBSOCKET-SERVICE
+          predicates:
+            - Path=/order-websocket/**
+
+
+ribbon:
+  ReadTimeout: 60000
+
+#eureka client props
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8661/eureka
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
