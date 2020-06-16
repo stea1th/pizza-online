@@ -16,6 +16,9 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "authorization"
             allowCredentials: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - StripPrefix=1
       routes:
         - id: order-product-service
           uri: lb://ORDER-PRODUCT-SERVICE
@@ -33,8 +36,6 @@ spring:
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/product/**
-          filters:
-            - StripPrefix=1
         - id: completed-order-service
           uri: lb://COMPLETED-ORDER-SERVICE
           predicates:
@@ -43,6 +44,7 @@ spring:
           uri: lb://ORDER-WEBSOCKET-SERVICE
           predicates:
             - Path=/order-websocket/**
+
 
 
 ribbon:
