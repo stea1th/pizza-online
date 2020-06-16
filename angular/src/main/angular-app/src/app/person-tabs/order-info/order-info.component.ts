@@ -29,18 +29,16 @@ export class OrderInfoComponent implements OnInit {
 
 
   onChange() {
-    const params = '?value=' + this.timeIntervalSelect.value;
+    const params = '/' + this.timeIntervalSelect.value;
     this.completedOrders = [];
     this._data.getCompletedOrders(params).subscribe(data => {
       data.forEach(order => {
         const completedOrder = new CompletedOrder();
         completedOrder.id = order.orderDto.id;
-        const completed = order.orderDto.completed;
-        completedOrder.completed = new Date(completed.year, completed.monthValue - 1, completed.dayOfMonth, completed.hour, completed.minute, completed.second);
-        completedOrder.products = order.productCostInCartDtoList;
+        completedOrder.completed = new Date(order.orderDto.completed);
+        completedOrder.products = order.cartElementList;
         this.completedOrders.push(completedOrder);
       });
-      console.log(this.completedOrders);
     })
   }
 }

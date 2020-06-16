@@ -72,6 +72,7 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
     this._spinner.showSpinner();
     this._data.getAllProductsWithoutFrozen().subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
+      console.log(data);
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
         this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
           .changingThisBreaksApplicationSecurity;

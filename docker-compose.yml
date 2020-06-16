@@ -51,6 +51,8 @@ services:
   keycloak-database:
     image: postgres:latest
     container_name: keycloak-database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: pizza-online-auth
       POSTGRES_USER: user
@@ -78,7 +80,9 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
-    restart: on-failure
+#    restart: on-failure
+    volumes:
+      - keycloak-data-volume:/var/lib/keycloak/data
     networks:
       - app-tier
 
@@ -105,3 +109,10 @@ services:
 networks:
   app-tier:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  keycloak-data-volume:
+    driver: local
+#    external: true
