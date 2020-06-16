@@ -45,8 +45,6 @@ spring:
           predicates:
             - Path=/order-websocket/**
 
-
-
 ribbon:
   ReadTimeout: 60000
 

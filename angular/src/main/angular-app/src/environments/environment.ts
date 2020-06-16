@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:8662/order-websocket/notify-websocket/'
+  api: 'http://localhost:8663/order-websocket/notify-websocket'
 };
 
 /*

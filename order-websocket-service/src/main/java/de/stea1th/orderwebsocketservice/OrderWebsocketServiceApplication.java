@@ -15,17 +15,20 @@ import java.time.LocalDateTime;
 @EnableScheduling
 public class OrderWebsocketServiceApplication {
 
+    private final SimpMessagingTemplate messagingTemplate;
+
+    public OrderWebsocketServiceApplication(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(OrderWebsocketServiceApplication.class, args);
     }
 
-    @Autowired
-    SimpMessagingTemplate messagingTemplate;
-
     @Scheduled(fixedDelay = 3000L)
     public void time() {
         String message = "Hallo at: " +LocalDateTime.now().toString();
-        messagingTemplate.convertAndSend("/topic/time", message);
+        messagingTemplate.convertAndSend("/topic/greetings", message);
     }
 
 }

@@ -21,6 +21,6 @@ export class OpenedOrdersComponent implements OnInit {
 
   onSubmit() {
     // this._websocket.sendMessage(this.testForm.value.firstName);
-    this._websocket.connect();
+    // this._websocket.connect();
   }
 }
