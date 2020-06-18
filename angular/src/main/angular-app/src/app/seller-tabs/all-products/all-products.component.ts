@@ -10,6 +10,7 @@ import {PriceService} from "../../service/price.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 import {ProductElement} from "../../model/product-element.model";
+import {TableDataSourceService} from "../../service/table-data-source.service";
 
 @Component({
   selector: 'app-all-products',
@@ -35,10 +36,9 @@ export class AllProductsComponent implements OnInit {
   expandedElement: ProductElement | null;
 
   constructor(private _data: DataService,
-              private _sanitizer: DomSanitizer,
               private _snackBar: MatSnackBar,
               private _spinner: SpinnerService,
-              private _price: PriceService) {
+              private _tableService: TableDataSourceService) {
   }
 
   ngOnInit(): void {
@@ -49,13 +49,7 @@ export class AllProductsComponent implements OnInit {
     this._spinner.showSpinner();
     const params = '/' + true;
     this._data.getAllProducts(params).subscribe(data => {
-      this.myDataSource.data = data as ProductElement[];
-      for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
-        this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
-          .changingThisBreaksApplicationSecurity;
-        this.myDataSource.filteredData[i].price = this._price.createPrice(data[i].productCostList);
-        this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
-      }
+      this.myDataSource = this._tableService.fillTableWithData(data as ProductElement[]);
       this._spinner.stopSpinner();
     });
   }

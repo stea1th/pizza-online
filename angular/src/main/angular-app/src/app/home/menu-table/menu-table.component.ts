@@ -12,6 +12,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {KeycloakService} from "../../service/keycloak.service";
 import {PriceService} from "../../service/price.service";
 import {ProductElement} from "../../model/product-element.model";
+import {TableDataSourceService} from "../../service/table-data-source.service";
 
 @Component({
   selector: 'app-menu-table',
@@ -46,13 +47,12 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
 
 
   constructor(private _data: DataService,
-              private _sanitizer: DomSanitizer,
+              private _tableService: TableDataSourceService,
               private _snackBar: MatSnackBar,
               private _search: SearchService,
               private _spinner: SpinnerService,
               private _cookieService: CookieService,
-              private _keycloak: KeycloakService,
-              private _price: PriceService) {
+              private _keycloak: KeycloakService,) {
   }
 
   ngOnInit() {
@@ -72,14 +72,7 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
     this._spinner.showSpinner();
     const params = '/' + false;
     this._data.getAllProducts(params).subscribe(data => {
-      this.myDataSource.data = data as ProductElement[];
-      console.log(data);
-      for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
-        this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
-          .changingThisBreaksApplicationSecurity;
-        this.myDataSource.filteredData[i].price = this._price.createPrice(data[i].productCostList);
-        this.myDataSource.filteredData[i].discount = data[i].productCostList.filter(x => x.discount > 0).length > 0 ? '%' : '';
-      }
+      this.myDataSource = this._tableService.fillTableWithData(data as ProductElement[]);
       this.setSort();
       this.setPaginator();
       this._spinner.stopSpinner();
