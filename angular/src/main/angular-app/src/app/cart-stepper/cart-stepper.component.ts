@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DataService} from "../service/data.service";
-import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
 import {MatStepper} from "@angular/material/stepper";
 import {TransactionItem, UnitAmount} from "./person-details/paypal-payment/paypal-payment.component";
 import {PersonDetailsComponent} from "./person-details/person-details.component";
 import {SpinnerService} from "../service/spinner.service";
 import {PriceService} from "../service/price.service";
+import {ProductCostElement} from "../model/product-cost-element";
 
 @Component({
   selector: 'app-cart-stepper',
@@ -36,7 +36,7 @@ export class CartStepperComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setOrderDateTime(event) {
+  public setOrderDateTime(event) {
     this.orderDateTime = this.attachZero(event.dayOfMonth) + '.'
       + this.attachZero(event.monthValue) + '.'
       + event.year + ' '
@@ -44,35 +44,21 @@ export class CartStepperComponent implements OnInit {
       + this.attachZero(event.minute);
   }
 
-  getProductsInCart() {
+  public getProductsInCart() {
     this._spinner.showSpinner();
     this._data.getCartProductCosts().subscribe(data => {
       this.productCostList = data;
-      this._sideNav.cart = this.sumAllQuantitiesInCart(data);
+      this._sideNav.cart = this._price.calculateTotalQuantity(data);
       this.createTotal(this.productCostList);
       this._spinner.stopSpinner();
       return this.productCostList;
     });
   }
 
-  createTotal(array: ProductCostElement[]) {
-    let totalPrice = 0;
-    this.totalQuantity = 0;
-    for (let i = 0; i < array.length; i++) {
-      const price = array[i].price;
-      const quantity = array[i].quantity;
-      totalPrice += (price - price * array[i].discount / 100) * quantity;
-      this.totalQuantity += quantity;
-    }
-    this.totalPay = this._price.convertToEuroPrice(totalPrice);
-  }
-
-  sumAllQuantitiesInCart(array: ProductCostElement[]) {
-    let sum = 0;
-    for (let i = 0; i < array.length; i++) {
-      sum += array[i].quantity;
-    }
-    return sum;
+  public createTotal(array: ProductCostElement[]) {
+    this.totalQuantity = this._price.calculateTotalQuantity(array);
+    let totalPrice = this._price.calculateTotalPrice(array);
+    this.totalPay = this._price.convertToPriceWithComma(totalPrice);
   }
 
   attachZero(num: number): string {
@@ -84,11 +70,12 @@ export class CartStepperComponent implements OnInit {
     this.stepper.next();
   }
 
-  createTransactionItems() {
+  public createTransactionItems() {
+    let priceService = this._price;
     this.transactionItems = this.productCostList.map(function (element) {
       let amount = new UnitAmount();
       amount.currency_code = 'EUR';
-      amount.value = (element.price - element.price * element.discount / 100).toFixed(2);
+      amount.value = priceService.calculatePriceWithDiscount(element.price, element.discount) + '';
       let item = new TransactionItem();
       item.name = element.product.name;
       item.unit_amount = amount;

@@ -64,12 +64,12 @@ export class AddToCartFormComponent implements OnInit {
     this.discount = val?.discount;
     if (this.discount != undefined) {
       if (this.discount == 0) {
-        this.formDiscountPrice = this._price.convertToEuroPrice(val.price);
+        this.formDiscountPrice = this._price.convertToPriceWithComma(val.price);
         this.isNormalPriceHidden = true;
       } else {
         const price = val?.price;
-        this.formDiscountPrice = this._price.convertToEuroPrice(price - price * this.discount / 100);
-        this.formNormalPrice = this._price.convertToEuroPrice(price);
+        this.formDiscountPrice = this._price.convertToPriceWithComma(price - price * this.discount / 100);
+        this.formNormalPrice = this._price.convertToPriceWithComma(price);
         this.isNormalPriceHidden = false;
       }
     } else {

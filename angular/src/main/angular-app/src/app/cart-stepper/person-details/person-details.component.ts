@@ -2,10 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PersonDetails} from "../../person-tabs/person-tabs.component";
 import {DataService} from "../../service/data.service";
-import {ProductCostElement} from "../shop-cart/shop-cart.component";
 import {SidenavResponsiveComponent} from "../../sidenav-responsive/sidenav-responsive.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PaypalPaymentComponent} from "./paypal-payment/paypal-payment.component";
+import {ProductCostElement} from "../../model/product-cost-element";
 
 @Component({
   selector: 'app-person-details',

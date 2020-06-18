@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProductCostElement} from "../shop-cart.component";
 import {FormControl, Validators} from "@angular/forms";
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import {DataService} from "../../../service/data.service";
@@ -7,6 +6,7 @@ import {SidenavResponsiveComponent} from "../../../sidenav-responsive/sidenav-re
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PriceService} from "../../../service/price.service";
+import {ProductCostElement} from "../../../model/product-cost-element";
 
 
 @Component({
@@ -35,7 +35,7 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.quantity = '' + this.productCostElement.quantity;
-    this.formNormalPrice = this._price.convertToEuroPrice(this.productCostElement.price);
+    this.formNormalPrice = this._price.convertToPriceWithComma(this.productCostElement.price);
     this.quantitySelect = new FormControl(this.quantity, Validators.required);
     this.quantitySelect.markAsPristine();
     this.image = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(this.productCostElement.product.picture) as any).changingThisBreaksApplicationSecurity;

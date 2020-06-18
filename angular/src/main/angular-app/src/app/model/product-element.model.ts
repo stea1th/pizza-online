@@ -7,12 +7,3 @@ export class ProductElement {
   picture: string;
   discount: string;
 }
-
-// ProductCostElement
-
-// id: number;
-// property: string;
-// price: number;
-// discount: number;
-// quantity: number;
-// product: any;

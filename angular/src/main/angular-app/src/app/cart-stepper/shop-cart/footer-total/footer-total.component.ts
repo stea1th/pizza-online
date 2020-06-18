@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faEuroSign} from "@fortawesome/free-solid-svg-icons";
 import { Location } from '@angular/common';
-import {ProductCostElement} from "../shop-cart.component";
+
 
 @Component({
   selector: 'app-footer-total',

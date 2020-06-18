@@ -3,14 +3,12 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataService} from "../../service/data.service";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {DomSanitizer} from "@angular/platform-browser";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatSort} from "@angular/material/sort";
 import {SearchService} from "../../service/search.service";
 import {SpinnerService} from "../../service/spinner.service";
 import {CookieService} from 'ngx-cookie-service';
 import {KeycloakService} from "../../service/keycloak.service";
-import {PriceService} from "../../service/price.service";
 import {ProductElement} from "../../model/product-element.model";
 import {TableDataSourceService} from "../../service/table-data-source.service";
 

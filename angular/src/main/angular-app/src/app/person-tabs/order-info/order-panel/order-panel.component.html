@@ -9,10 +9,10 @@
           ORDER # 303-123123123-{{completedOrder.id}}
         </span>
         <span>
-          Items: {{itemQuantity}}
+          Items: {{countItems()}}
         </span>
         <span>
-          Total: 99,99
+          Total: {{countTotalPrice()}}
         </span>
       </div>
     </mat-panel-description>
@@ -24,7 +24,7 @@
 
         <span fxFlex="50%">{{item.product.name}}, {{item.property}}</span>
         <span fxFlex="27%" fxLayoutAlign="end center">Quantity: {{item.quantity}}</span>
-        <span fxFlex="23%" fxLayoutAlign="end center">Price: {{item.price}}</span>
+        <span fxFlex="23%" fxLayoutAlign="end center">Price: {{formatPrice(item.price)}}</span>
       </p>
     </mat-list-item>
   </mat-list>

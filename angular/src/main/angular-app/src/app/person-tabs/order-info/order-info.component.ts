@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {DataService} from "../../service/data.service";
 import {FormControl, Validators} from "@angular/forms";
+import {ProductElement} from "../../model/product-element.model";
 
 @Component({
   selector: 'app-order-info',
@@ -51,6 +52,6 @@ export interface TimeInterval {
 export class CompletedOrder {
   id: number;
   completed: Date;
-  products: [];
+  products: ProductElement[];
 }
 

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ProductCostElement} from "../../model/product-cost-element";
 
 @Component({
   selector: 'app-shop-cart',
@@ -29,11 +30,3 @@ export class ShopCartComponent implements OnInit {
   }
 }
 
-export class ProductCostElement {
-  id: number;
-  property: string;
-  price: number;
-  discount: number;
-  quantity: number;
-  product: any;
-}

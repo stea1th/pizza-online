@@ -18,7 +18,7 @@ export class TableDataSourceService {
     for (let i = 0; i < myDataSource.filteredData.length; i++) {
       myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)
         .changingThisBreaksApplicationSecurity;
-      myDataSource.filteredData[i].price = this._price.createPrice(data[i].productCostList);
+      myDataSource.filteredData[i].price = this._price.createMinMaxPrice(data[i].productCostList);
       // @ts-ignore
       myDataSource.filteredData[i].discount = data[i].productCostList.filter(el => el.discount > 0).length > 0 ? '%' : '';
     }

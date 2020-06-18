@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CompletedOrder} from "../order-info.component";
+import {PriceService} from "../../../service/price.service";
 
 @Component({
   selector: 'app-order-panel',
@@ -9,9 +10,10 @@ import {CompletedOrder} from "../order-info.component";
 export class OrderPanelComponent implements OnInit {
 
   @Input() completedOrder: CompletedOrder;
-  itemQuantity: number;
+  // itemQuantity: number;
+  totalPay: string;
 
-  constructor() { }
+  constructor(private _price : PriceService) { }
 
   ngOnInit(): void {
     this.countItems();
@@ -19,12 +21,18 @@ export class OrderPanelComponent implements OnInit {
   }
 
   countItems() {
-    this.itemQuantity = 0;
-    this.completedOrder.products.forEach(prod => {
-      // @ts-ignore
-      this.itemQuantity += prod.quantity;
+    return this._price.calculateTotalQuantity(this.completedOrder.products);
+  }
 
-    });
+  countTotalPrice() {
+    let totalPrice = this._price.calculateTotalPrice(this.completedOrder.products);
+    return this.formatPrice(totalPrice);
+}
+
+
+
+  formatPrice(price: number) {
+    return this._price.convertToPriceWithComma(price);
   }
 
 }
