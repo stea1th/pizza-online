@@ -1,5 +1,6 @@
 package de.stea1th.productservice.controller;
 
+import de.stea1th.productservice.dto.ProductDto;
 import de.stea1th.productservice.entity.Product;
 import de.stea1th.productservice.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,25 +25,25 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<List<Product>> getAll() {
+    public ResponseEntity<List<ProductDto>> getAll() {
         log.info("Getting all products");
-        List<Product> productDtoList = productService.getAll(true);
+        List<ProductDto> productDtoList = productService.getAll(true);
         log.info("Receiving list of products: {}", productDtoList);
         return new ResponseEntity<>(productDtoList, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/product/no-frozen")
-    public ResponseEntity<List<Product>> getAllWithoutFrozen() {
+    public ResponseEntity<List<ProductDto>> getAllWithoutFrozen() {
         log.info("Getting all products without frozen");
-        List<Product> products = productService.getAll(false);
+        List<ProductDto> products = productService.getAll(false);
         log.info("Receiving list of products without frozen: {}", products);
         return new ResponseEntity<>(products, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> get(@PathVariable("id") int id) {
+    public ResponseEntity<ProductDto> get(@PathVariable("id") int id) {
         log.info("Getting product with id: {}", id);
-        Product product = productService.get(id);
+        ProductDto product = productService.get(id);
         return product != null? new ResponseEntity<>(product, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

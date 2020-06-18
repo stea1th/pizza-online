@@ -3,11 +3,7 @@ import {DataService} from "../service/data.service";
 import {ProductCostElement} from "./shop-cart/shop-cart.component";
 import {SidenavResponsiveComponent} from "../sidenav-responsive/sidenav-responsive.component";
 import {MatStepper} from "@angular/material/stepper";
-import {
-  PaypalPaymentComponent,
-  TransactionItem,
-  UnitAmount
-} from "./person-details/paypal-payment/paypal-payment.component";
+import {TransactionItem, UnitAmount} from "./person-details/paypal-payment/paypal-payment.component";
 import {PersonDetailsComponent} from "./person-details/person-details.component";
 import {SpinnerService} from "../service/spinner.service";
 import {PriceService} from "../service/price.service";
@@ -51,7 +47,6 @@ export class CartStepperComponent implements OnInit {
   getProductsInCart() {
     this._spinner.showSpinner();
     this._data.getCartProductCosts().subscribe(data => {
-      console.log(data);
       this.productCostList = data;
       this._sideNav.cart = this.sumAllQuantitiesInCart(data);
       this.createTotal(this.productCostList);

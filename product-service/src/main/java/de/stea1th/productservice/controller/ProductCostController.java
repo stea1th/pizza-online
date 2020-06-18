@@ -35,6 +35,4 @@ public class ProductCostController {
         return productCost != null ? new ResponseEntity<>(productCost, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-
 }

@@ -1,5 +1,6 @@
 package de.stea1th.productservice.service;
 
+import de.stea1th.productservice.converter.ProductCostConverter;
 import de.stea1th.productservice.dto.ProductCostDto;
 import de.stea1th.productservice.entity.ProductCost;
 import de.stea1th.productservice.repository.ProductCostRepository;
@@ -8,55 +9,37 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ProductCostServiceImpl implements ProductCostService {
 
     private final ProductCostRepository productCostRepository;
+    private final ProductCostConverter productConverter;
 
-    private final ProductService productService;
-
-
-    public ProductCostServiceImpl(ProductCostRepository productCostRepository, ProductService productService) {
+    public ProductCostServiceImpl(ProductCostRepository productCostRepository, ProductCostConverter productConverter) {
         this.productCostRepository = productCostRepository;
-        this.productService = productService;
+        this.productConverter = productConverter;
     }
-
 
     @Transactional
     @Override
     public ProductCostDto get(int productCostId) {
         log.info("Getting product cost with id: {}", productCostId);
-        return transformToDto(productCostRepository.findById(productCostId).orElse(null));
+        return productConverter.transformToDto(productCostRepository.findById(productCostId).orElse(null));
     }
 
     @Override
     public List<ProductCostDto> getAll() {
         log.info("Getting all product costs");
-        return transformToDtoList(productCostRepository.findAll());
+        return productConverter.transformToDtoList(productCostRepository.findAll());
     }
 
     @Override
     public List<ProductCostDto> getAllByIds(List<Integer> ids) {
         log.info("Getting all product costs by ids: {}", ids);
         List<ProductCost> list = productCostRepository.findAllByIds(ids);
-        return transformToDtoList(list);
+        return productConverter.transformToDtoList(list);
     }
 
-    private ProductCostDto transformToDto(ProductCost productCost) {
-        if(productCost == null) return null;
-        ProductCostDto productCostDto = new ProductCostDto();
-        productCostDto.setId(productCost.getId());
-        productCostDto.setPrice(productCost.getPrice());
-        productCostDto.setDiscount(productCost.getDiscount());
-        productCostDto.setFrozen(productCost.isFrozen());
-        productCostDto.setProduct(productService.transformToDto(productCost.getProduct()));
-        return productCostDto;
-    }
-
-    private List<ProductCostDto> transformToDtoList(List<ProductCost> list) {
-        return list.stream().map(this::transformToDto).collect(Collectors.toList());
-    }
 }

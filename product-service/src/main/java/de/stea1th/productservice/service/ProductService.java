@@ -8,11 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getAll(boolean withFrozen);
+    List<ProductDto> getAll(boolean withFrozen);
 
-    Product get(int id);
-
-    Product attachPic(Product product);
-
-    ProductDto transformToDto(Product product);
+    ProductDto get(int id);
 }

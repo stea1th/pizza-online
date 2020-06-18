@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {PriceService} from "../../../service/price.service";
-import {MatSelectionList, MatSelectionListChange} from "@angular/material/list";
+import {MatSelectionList} from "@angular/material/list";
 import {ProductElement} from "../../../model/product-element.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
