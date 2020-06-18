@@ -47,7 +47,8 @@ export class AllProductsComponent implements OnInit {
 
   fillTable() {
     this._spinner.showSpinner();
-    this._data.getAllProducts().subscribe(data => {
+    const params = '/' + true;
+    this._data.getAllProducts(params).subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
         this.myDataSource.filteredData[i].picture = 'data:image/jpg;base64,' + (this._sanitizer.bypassSecurityTrustResourceUrl(data[i].picture) as any)

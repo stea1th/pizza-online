@@ -43,15 +43,15 @@ export class DataService {
     return this.post('/person/api/save', body);
   }
 
-  public getAllProducts(): Observable<any> {
+  public getAllProducts(params): Observable<any> {
     // return this.get('/product').pipe();
-    return this.get('/product/api/product').pipe();
+    return this.getWithParams('/product/api/products', params).pipe();
   }
 
-  public getAllProductsWithoutFrozen(): Observable<any> {
-    // return this.get('/product/no-frozen').pipe();
-    return this.get('/product/api/product/no-frozen').pipe();
-  }
+  // public getAllProductsWithoutFrozen(withFrozen : boolean): Observable<any> {
+  //   // return this.get('/product/no-frozen').pipe();
+  //   return this.get('/product/api/product/no-frozen').pipe();
+  // }
 
   // public getCartProducts(): Observable<any> {
   //   return this.get('/product/cart').pipe();

@@ -70,7 +70,8 @@ export class MenuTableComponent implements OnInit, AfterViewInit {
 
   fillTable() {
     this._spinner.showSpinner();
-    this._data.getAllProductsWithoutFrozen().subscribe(data => {
+    const params = '/' + false;
+    this._data.getAllProducts(params).subscribe(data => {
       this.myDataSource.data = data as ProductElement[];
       console.log(data);
       for (let i = 0; i < this.myDataSource.filteredData.length; i++) {
