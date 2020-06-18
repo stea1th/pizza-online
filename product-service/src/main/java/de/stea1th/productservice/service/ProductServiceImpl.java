@@ -28,12 +28,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAll(boolean withFrozen) {
         log.info(withFrozen ? "Getting all products" : "Getting all products without frozen");
-        return productConverter.transformToDtoList(withFrozen ? productRepository.findAll() : productRepository.findAllWithoutFrozen());
+        return productConverter.transformToDtoList(withFrozen ? productRepository.findAll() : productRepository.findAllWithoutFrozen(), true);
     }
 
     public ProductDto get(int id) {
         log.info("Getting product with id: {}", id);
-        return productConverter.transformToDto(Objects.requireNonNull(productRepository.findById(id).orElse(null)));
+        return productConverter.transformToDto(Objects.requireNonNull(productRepository.findById(id).orElse(null)), true);
     }
 
 

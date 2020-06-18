@@ -26,20 +26,20 @@ public class ProductCostServiceImpl implements ProductCostService {
     @Override
     public ProductCostDto get(int productCostId) {
         log.info("Getting product cost with id: {}", productCostId);
-        return productConverter.transformToDto(productCostRepository.findById(productCostId).orElse(null));
+        return productConverter.transformToDto(productCostRepository.findById(productCostId).orElse(null), true);
     }
 
     @Override
     public List<ProductCostDto> getAll() {
         log.info("Getting all product costs");
-        return productConverter.transformToDtoList(productCostRepository.findAll());
+        return productConverter.transformToDtoList(productCostRepository.findAll(), true);
     }
 
     @Override
     public List<ProductCostDto> getAllByIds(List<Integer> ids) {
         log.info("Getting all product costs by ids: {}", ids);
         List<ProductCost> list = productCostRepository.findAllByIds(ids);
-        return productConverter.transformToDtoList(list);
+        return productConverter.transformToDtoList(list, true);
     }
 
 }

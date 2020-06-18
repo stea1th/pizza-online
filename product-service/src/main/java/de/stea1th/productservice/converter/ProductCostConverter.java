@@ -18,8 +18,8 @@ public class ProductCostConverter {
         this.productConverter = productConverter;
     }
 
-    public ProductCostDto transformToDto(ProductCost productCost) {
-        log.info("Transforming product-cost: {} to transfer object", productCost);
+    public ProductCostDto transformToDto(ProductCost productCost, boolean withProduct) {
+        log.info("Transforming product-cost: {} {} product to transfer object", productCost, withProduct? "with" : "without");
         if(productCost == null) return null;
         ProductCostDto productCostDto = new ProductCostDto();
         productCostDto.setId(productCost.getId());
@@ -27,13 +27,17 @@ public class ProductCostConverter {
         productCostDto.setPrice(productCost.getPrice());
         productCostDto.setDiscount(productCost.getDiscount());
         productCostDto.setFrozen(productCost.isFrozen());
-        productCostDto.setProduct(productConverter.transformToDto(productCost.getProduct()));
+        if(withProduct) {
+            log.info("Adding product to transfer object");
+            productCostDto.setProduct(productConverter.transformToDto(productCost.getProduct(), false));
+        }
+
         return productCostDto;
     }
 
-    public List<ProductCostDto> transformToDtoList(List<ProductCost> list) {
-        log.info("Transforming product-cost list: {} to transfer object", list);
-        return list.stream().map(this::transformToDto).collect(Collectors.toList());
+    public List<ProductCostDto> transformToDtoList(List<ProductCost> list, boolean withProduct) {
+        log.info("Transforming product-cost list: {} {} product to transfer object", list, withProduct? "with" : "without");
+        return list.stream().map(el-> transformToDto(el, withProduct)).collect(Collectors.toList());
     }
 
 }

@@ -1,6 +1,8 @@
 package de.stea1th.productservice.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.stea1th.productservice.entity.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
