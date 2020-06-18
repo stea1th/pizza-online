@@ -48,4 +48,8 @@ export class ProductDetailsComponent implements OnInit {
     this.testData = this.descriptionFormGroup.value.descriptionForm;
     this.editDescription = false;
   }
+
+  formatPrice(price: number) {
+    return this._price.convertToPriceWithComma(price);
+  }
 }
