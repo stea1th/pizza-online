@@ -76,6 +76,6 @@ testem.log
 Thumbs.db
 
 #Prometheus
-prometheus/data
+/prometheus/data
 
 
