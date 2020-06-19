@@ -114,6 +114,22 @@ services:
     networks:
       - app-tier
 
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+#    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - app-tier
+
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
@@ -132,4 +148,5 @@ volumes:
     driver: local
   keycloak-data-volume:
     driver: local
+  grafana_data: {}
 #    external: true
