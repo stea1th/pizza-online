@@ -97,6 +97,23 @@ services:
     networks:
       - app-tier
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/config:/prometheus
+      - ./prometheus/data/prometheus:/data
+    command:
+      - '--config.file=/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/data'
+    ports:
+      - 9090:9090
+#    depends_on:
+#      - alertmanager
+#    restart: always
+    networks:
+      - app-tier
+
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
