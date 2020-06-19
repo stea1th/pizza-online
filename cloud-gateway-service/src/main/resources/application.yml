@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: cloud-gateway-service
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
   cloud:
     gateway:
       discovery:
@@ -58,6 +61,21 @@ eureka:
     service-url:
       defaultZone: http://localhost:8661/eureka
 
-logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+#actuator props
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude:
+    jmx:
+      exposure:
+        include: '*'
+        exclude:
+
+#logging:
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"

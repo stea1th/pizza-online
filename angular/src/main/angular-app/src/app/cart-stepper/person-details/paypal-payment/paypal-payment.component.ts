@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ICreateOrderRequest, IPayPalConfig, ITransactionItem, IUnitAmount} from "ngx-paypal";
-import {ProductCostElement} from "../../shop-cart/shop-cart.component";
 import {SpinnerService} from "../../../service/spinner.service";
 
 @Component({
