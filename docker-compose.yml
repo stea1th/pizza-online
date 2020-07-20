@@ -87,7 +87,7 @@ services:
       - app-tier
 
   frontend:
-    #    image: stea1th/pizza-ang:latest
+#    image: stea1th/pizza-ang:latest
     build: ./angular/src/main/angular-app
     container_name: angular
     depends_on:

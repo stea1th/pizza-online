@@ -42,7 +42,6 @@ public class PersonController {
     public ResponseEntity<Person> getDetails(Principal principal) {
         log.info("Get person with keycloak: {}", principal.getName());
         String keycloak = principal.getName();
-//        Person person = personService.getByKeycloak(keycloak);
         Person person = personService.getByPrincipal(principal);
         log.info("Received person with keycloak: {} {}", keycloak, person == null ? "not exists" : person);
         return person == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(person, HttpStatus.OK);
