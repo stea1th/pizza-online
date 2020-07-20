@@ -1,10 +1,11 @@
 package de.stealth.personservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.stealth.personservice.TestDataGenerator;
 import de.stealth.personservice.entity.Address;
 import de.stealth.personservice.entity.Person;
 import de.stealth.personservice.service.PersonService;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,33 +40,22 @@ class PersonControllerTest {
     @MockBean
     private Principal principal;
 
-    private Person person;
-    private Address address;
+    private static Person person;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @BeforeEach
-    void setUp() {
-        address = new Address();
-        address.setId(997);
-        address.setStreet("Sedulinos");
-        address.setCity("Visaginas");
-        address.setZip("1234");
-        address.setCountry("Lithuania");
-
-        person = new Person();
-        person.setId(1001);
-        person.setFirstName("Dmitrij");
-        person.setLastName("Gusev");
-        person.setEmail("a@a.de");
-        person.setAddress(address);
+    @BeforeAll
+    public static void setUp() {
+        person = TestDataGenerator.generatePerson();
     }
 
     @Test
     void get_Id1001_ThenReturnPerson() throws Exception {
-        given(personService.get(1001)).willReturn(person);
+        int id = person.getId();
+
+        given(personService.get(id)).willReturn(person);
 
         mockMvc.perform(
-                get("/api/1001")
+                get("/api/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", is(person.getFirstName())));
@@ -91,8 +81,8 @@ class PersonControllerTest {
 
         mockMvc.perform(
                 post("/api/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
         )
                 .andExpect(status().isOk());
     }
