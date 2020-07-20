@@ -3,6 +3,7 @@ package de.stealth.personservice.controller;
 import de.stealth.personservice.entity.Person;
 import de.stealth.personservice.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -50,7 +51,7 @@ public class PersonController {
     @PostMapping(value = "/save")
     public ResponseEntity<HttpStatus> save(@RequestBody Person person) {
         log.info("Saving person: {}", person);
-        personService.save(person);
-        return new ResponseEntity<>(HttpStatus.OK);
+        var savedPerson = personService.save(person);
+        return savedPerson == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) : new ResponseEntity<>(HttpStatus.OK);
     }
 }

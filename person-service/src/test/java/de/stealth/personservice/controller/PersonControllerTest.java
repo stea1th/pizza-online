@@ -1,5 +1,6 @@
 package de.stealth.personservice.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.stealth.personservice.entity.Address;
 import de.stealth.personservice.entity.Person;
 import de.stealth.personservice.service.PersonService;
@@ -13,10 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.security.Principal;
+
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,8 +36,12 @@ class PersonControllerTest {
     @MockBean
     private PersonService personService;
 
+    @MockBean
+    private Principal principal;
+
     private Person person;
     private Address address;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -53,23 +61,39 @@ class PersonControllerTest {
     }
 
     @Test
-    void get_id1001_ThenReturnPerson() throws Exception {
-        given(personService.get(any(Integer.class))).willReturn(person);
+    void get_Id1001_ThenReturnPerson() throws Exception {
+        given(personService.get(1001)).willReturn(person);
 
         mockMvc.perform(
-                (get("/api/1001")
-                .contentType(MediaType.APPLICATION_JSON)))
+                get("/api/1001")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", is(person.getFirstName())));
-
-
     }
 
     @Test
-    void getDetails() {
+    void getPersonDetails_WithPrincipal_ThenReturnPerson() throws Exception {
+        given(personService.getByPrincipal(any(Principal.class))).willReturn(person);
+
+        mockMvc.perform(
+                get("/api/details")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .principal(principal))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", is(person.getFirstName())));
     }
 
     @Test
-    void save() {
+    void save_Person_ThenReturnOk() throws Exception {
+        String json = objectMapper.writeValueAsString(person);
+
+        given(personService.save(person)).willReturn(person);
+
+        mockMvc.perform(
+                post("/api/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        )
+                .andExpect(status().isOk());
     }
 }
