@@ -41,45 +41,53 @@ public class PersonServiceImpl implements PersonService {
     public Person getByKeycloak(String keycloak) {
         keycloak = removeQuotes(keycloak);
         keycloak = addQuotes(keycloak);
-
+        log.info("Getting person by keycloak: {}", keycloak);
         Person person = personRepository.getByKeycloak(keycloak);
-        if (person == null) {
-            log.error("No such person with keycloak id: {} exists", keycloak);
-            person = new Person();
-            person.setKeycloak(keycloak);
-            var address = addressRepository.createEmptyAddress();
-            person.setAddress(address);
-            log.info("New person with keycloak id: {} created", keycloak);
-            person = save(person);
-        }
-        return person;
+        return person == null? createNewPerson(keycloak) : person;
     }
 
     @Transactional
     @Override
     public Person save(Person person) {
-        log.info("Person: {} successful saved", person);
+        log.info("Saving person: {}", person);
         addressRepository.save(person.getAddress());
         person.setKeycloak(addQuotes(person.getKeycloak()));
         return personRepository.save(person);
     }
 
 
+    @Override
     public Person getByPrincipal(Principal principal) {
         log.info("Getting person by principal: {}", principal);
-
-        KeycloakAuthenticationToken keycloakAuthenticationToken = (KeycloakAuthenticationToken) principal;
-        String keycloak = keycloakAuthenticationToken.getName();
+        String keycloak = principal.getName();
         Person person = getByKeycloak(keycloak);
-        if (person != null) {
-            KeycloakSecurityContext securityContext = ((KeycloakPrincipal) keycloakAuthenticationToken.getPrincipal()).getKeycloakSecurityContext();
-            AccessToken accessToken = securityContext.getToken();
-            setPersonDetails(accessToken, person);
-        }
+        setPersonDetails(person, principal);
         return person;
     }
 
-    private void setPersonDetails(AccessToken accessToken, Person person) {
+    private Person createNewPerson(String keycloak) {
+        log.error("No such person with keycloak id: {} exists", keycloak);
+        Person person = new Person();
+        person.setKeycloak(keycloak);
+        person.setAddress(addressRepository.createEmptyAddress());
+        log.info("Creating new person with keycloak id: {}", keycloak);
+        return save(person);
+    }
+
+    private void setPersonDetails(Person person, Principal principal) {
+        if (person != null) {
+            AccessToken accessToken = getAccessToken(principal);
+            addMissingDetails(accessToken, person);
+        }
+    }
+
+    private AccessToken getAccessToken(Principal principal) {
+            KeycloakAuthenticationToken keycloakAuthenticationToken = (KeycloakAuthenticationToken) principal;
+            KeycloakSecurityContext securityContext = ((KeycloakPrincipal) keycloakAuthenticationToken.getPrincipal()).getKeycloakSecurityContext();
+            return securityContext.getToken();
+    }
+
+    private void addMissingDetails(AccessToken accessToken, Person person) {
         boolean needSave = false;
         if (person.getFirstName() == null) {
             person.setFirstName(accessToken.getGivenName());
