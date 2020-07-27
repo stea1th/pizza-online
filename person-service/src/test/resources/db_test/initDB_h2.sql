@@ -8,7 +8,7 @@ CREATE SEQUENCE global_seq START WITH 997;
 
 CREATE TABLE ADDRESS
 (
-    id      INTEGER PRIMARY KEY DEFAULT global_seq.nextval,
+    id      INTEGER DEFAULT global_seq.nextval PRIMARY KEY,
     street  VARCHAR(255),
     zip     VARCHAR(10),
     city    VARCHAR(255),
@@ -18,7 +18,7 @@ CREATE TABLE ADDRESS
 
 CREATE TABLE PERSON
 (
-    id         INTEGER PRIMARY KEY DEFAULT global_seq.nextval,
+    id         INTEGER DEFAULT global_seq.nextval PRIMARY KEY,
     first_name VARCHAR(40),
     last_name  VARCHAR(40),
     email      VARCHAR(50),
@@ -28,6 +28,7 @@ CREATE TABLE PERSON
 );
 
 CREATE UNIQUE INDEX person_unique_keycloak_index ON PERSON (keycloak);
+
 
 
 

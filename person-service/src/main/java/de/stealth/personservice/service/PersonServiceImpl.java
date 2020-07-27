@@ -4,7 +4,6 @@ import de.stealth.personservice.entity.Person;
 import de.stealth.personservice.repository.AddressRepository;
 import de.stealth.personservice.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -42,7 +41,7 @@ public class PersonServiceImpl implements PersonService {
         keycloak = removeQuotes(keycloak);
         keycloak = addQuotes(keycloak);
         log.info("Getting person by keycloak: {}", keycloak);
-        Person person = personRepository.getByKeycloak(keycloak);
+        Person person = personRepository.findByKeycloak(keycloak);
         return person == null? createNewPerson(keycloak) : person;
     }
 

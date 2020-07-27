@@ -13,8 +13,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -50,7 +50,7 @@ class PersonServiceTest {
     @Test
     void get_ByKeycloak_ReturnPerson() {
         String keycloak = person.getKeycloak();
-        given(personRepository.getByKeycloak(keycloak)).willReturn(person);
+        given(personRepository.findByKeycloak(keycloak)).willReturn(person);
 
         Person current = personService.getByKeycloak(keycloak);
 
@@ -58,12 +58,24 @@ class PersonServiceTest {
     }
 
     @Test
-    void save() {
+    void save_Person_ReturnSavedPerson() {
+        given(personRepository.save(person)).willReturn(person);
+
+        Person current = personService.save(person);
+
+        assertEquals(person, current);
     }
 
     @Test
     void getByPrincipal() {
-        String keycloak = person.getKeycloak();
-//        given(principal.getName()).willReturn()
+//        String keycloak = person.getKeycloak();
+//        given(principal.getName()).willReturn(keycloak);
+//        given(personService.getByKeycloak(keycloak)).willReturn(person);
+//
+//        personService.getByPrincipal(principal);
+//
+////        assertNull(current);
+//
+//        then(personRepository).should().getByKeycloak(keycloak);
     }
 }

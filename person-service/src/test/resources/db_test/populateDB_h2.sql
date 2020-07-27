@@ -2,7 +2,7 @@
 -- ALTER SEQUENCE global_seq
 --     RESTART WITH 997;
 
-INSERT INTO address(street, zip, city, country)
+INSERT INTO ADDRESS(street, zip, city, country)
 VALUES ('Hauptstrasse 6', '12345', 'Essen', 'Deutschland'),
        ('Schobertweg 3', '45678', 'München', 'Deutschland'),
        ('Sedulinos 7', '23452', 'Ignalina', 'Litauen');
