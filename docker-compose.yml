@@ -130,6 +130,43 @@ services:
     networks:
       - app-tier
 
+  sonarqube-database:
+    image: library/postgres:latest
+    container_name: sonarqube-database
+    volumes:
+      - postgres_data:/var/lib/postgresql2:z
+      - postgres_data:/var/lib/postgresql2/data:z
+    environment:
+      POSTGRES_DB: sonarqube
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5418:5434
+    networks:
+      - app-tier
+
+  sonarqube:
+    image: library/sonarqube:latest
+    container_name: sonarqube
+    depends_on:
+      - sonarqube-database
+    ports:
+      - 9000:9000
+    expose:
+      - 9000
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://sonarqube-database:5434/sonarqube
+      - sonar.jdbc.username=user
+      - sonar.jdbc.password=password
+      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+    volumes:
+      - sonarqube_data:/opt/sonarqube/logs
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_data:/opt/sonarqube/extensions
+    networks:
+      - app-tier
+
+
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
@@ -142,6 +179,9 @@ services:
 networks:
   app-tier:
     driver: bridge
+  solar-net:
+    driver: bridge
+
 
 volumes:
   postgres_data:
@@ -149,4 +189,5 @@ volumes:
   keycloak-data-volume:
     driver: local
   grafana_data: {}
+  sonarqube_data: {}
 #    external: true
