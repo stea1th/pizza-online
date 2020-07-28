@@ -144,10 +144,12 @@ services:
       - POSTGRESQL_USER=user
       - POSTGRESQL_DATABASE=sonarqube_database
       - POSTGRESQL_PASSWORD=password
+      - SPRING_PROFILES_ACTIVE=test
     volumes:
-      - sonarqube_postgres_data:/var/lib/bitnami
+      - sonarqube_postgres:/var/lib/bitnami/postgresql
+      - sonarqube_postgres_data:/var/lib/bitnami/postgresql/data
     networks:
-      - solar-net
+      - app-tier
 
 #  sonarqube:
 #    image: bitnami/sonarqube:latest
@@ -158,16 +160,16 @@ services:
 #      - 9000:9000
 #    environment:
 #      - POSTGRESQL_HOST=sonarqube-database
-#      - POSTGRESQL_ROOT_USER=postgres
-#      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=sonarqube_database
-#      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=user
-#      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=password
+##      - POSTGRESQL_ROOT_USER=postgres
+##      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=sonarqube_database
+##      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=user
+##      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=password
 #      - SONARQUBE_DATABASE_USER=user
 #      - SONARQUBE_DATABASE_NAME=sonarqube_database
 #      - SONARQUBE_DATABASE_PASSWORD=password
 #      - ALLOW_EMPTY_PASSWORD=yes
 #    volumes:
-#      - sonarqube_data:/bitnami
+#      - sonarqube_data:/bitnami/sonarqube
 #    networks:
 #      - app-tier
 
@@ -202,12 +204,13 @@ services:
       - sonar.jdbc.username=user
       - sonar.jdbc.password=password
       - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+      - SPRING_PROFILES_ACTIVE=test
     volumes:
-      - sonarqube_data:/opt/sonarqube/logs
+      - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_data:/opt/sonarqube/extensions
+      - sonarqube_extensions:/opt/sonarqube/extensions
     networks:
-      - solar-net
+      - app-tier
 
 
 #  Passing Spring Profile in DockerCompose
@@ -221,19 +224,20 @@ services:
 networks:
   app-tier:
     driver: bridge
-  solar-net:
-    driver: bridge
+#  solar-net:
+#    driver: bridge
 
 volumes:
   postgres_data:
-    driver: local
+#    driver: local
   keycloak_postgres_data:
-    driver: local
+#    driver: local
   keycloak_data:
-    driver: local
+#    driver: local
   grafana_data: {}
   sonarqube_postgres_data:
-    driver: local
+  sonarqube_postgres:
   sonarqube_data:
-    driver: local
+  sonarqube_conf:
+  sonarqube_extensions:
 #    external: true
