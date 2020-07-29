@@ -21,6 +21,9 @@
         <validator.version>6.0.18.Final</validator.version>
         <sonar.plugin.version>3.7.0.1746</sonar.plugin.version>
         <jacoco.plugin.version>0.8.5</jacoco.plugin.version>
+        <sonar.projectKey>stea1th_pizza-online</sonar.projectKey>
+        <sonar.organization>stea1th</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -146,9 +149,6 @@
             <id>sonar</id>
             <properties>
                 <activatedProperties>sonar</activatedProperties>
-                <sonar.projectKey>stea1th_pizza-online</sonar.projectKey>
-                <sonar.organization>stea1th</sonar.organization>
-                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
             </properties>
         </profile>
     </profiles>

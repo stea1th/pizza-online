@@ -86,7 +86,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
-    restart: on-failure
+#    restart: on-failure
     volumes:
       - keycloak_data:/var/lib/keycloak/data
     networks:
@@ -136,82 +136,43 @@ services:
     networks:
       - app-tier
 
-  sonarqube-database:
-    image: bitnami/postgresql:latest
-    container_name: sonarqube-database
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - POSTGRESQL_USER=user
-      - POSTGRESQL_DATABASE=sonarqube_database
-      - POSTGRESQL_PASSWORD=password
-      - SPRING_PROFILES_ACTIVE=test
-    volumes:
-      - sonarqube_postgres:/var/lib/bitnami/postgresql
-      - sonarqube_postgres_data:/var/lib/bitnami/postgresql/data
-    networks:
-      - app-tier
-
+#SonarQube Server
+#=======================
+#  sonarqube-database:
+#    image: bitnami/postgresql:latest
+#    container_name: sonarqube-database
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#      - POSTGRESQL_USER=user
+#      - POSTGRESQL_DATABASE=sonarqube_database
+#      - POSTGRESQL_PASSWORD=password
+#      - SPRING_PROFILES_ACTIVE=test
+#    volumes:
+#      - sonarqube_postgres:/var/lib/bitnami/postgresql
+#      - sonarqube_postgres_data:/var/lib/bitnami/postgresql/data
+#    networks:
+#      - app-tier
+#
 #  sonarqube:
-#    image: bitnami/sonarqube:latest
+#    image: sonarqube:latest
 #    container_name: sonarqube
 #    depends_on:
 #      - sonarqube-database
 #    ports:
 #      - 9000:9000
 #    environment:
-#      - POSTGRESQL_HOST=sonarqube-database
-##      - POSTGRESQL_ROOT_USER=postgres
-##      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=sonarqube_database
-##      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=user
-##      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=password
-#      - SONARQUBE_DATABASE_USER=user
-#      - SONARQUBE_DATABASE_NAME=sonarqube_database
-#      - SONARQUBE_DATABASE_PASSWORD=password
-#      - ALLOW_EMPTY_PASSWORD=yes
+#      - sonar.jdbc.url=jdbc:postgresql://sonarqube-database:5432/sonarqube_database
+#      - sonar.jdbc.username=user
+#      - sonar.jdbc.password=password
+#      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+#      - SPRING_PROFILES_ACTIVE=test
 #    volumes:
-#      - sonarqube_data:/bitnami/sonarqube
+#      - sonarqube_conf:/opt/sonarqube/conf
+#      - sonarqube_data:/opt/sonarqube/data
+#      - sonarqube_extensions:/opt/sonarqube/extensions
 #    networks:
 #      - app-tier
-
-#  sonarqube-database:
-#    image: postgres:latest
-#    container_name: sonarqube-database
-#    volumes:
-#      - sonarqube_data:/var/lib/sonarqube
-#      - sonarqube_data:/var/lib/sonarqube/data
-#    environment:
-#      POSTGRES_DB: sonarqube
-#      POSTGRES_USER: user
-#      POSTGRES_PASSWORD: password
-#    ports:
-#      - 5418:5434
-#    expose:
-#      - 5434
-#    command:
-#      -p 5434
-#    networks:
-#      - app-tier
-#
-  sonarqube:
-    image: sonarqube:latest
-    container_name: sonarqube
-    depends_on:
-      - sonarqube-database
-    ports:
-      - 9000:9000
-    environment:
-      - sonar.jdbc.url=jdbc:postgresql://sonarqube-database:5432/sonarqube_database
-      - sonar.jdbc.username=user
-      - sonar.jdbc.password=password
-      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
-      - SPRING_PROFILES_ACTIVE=test
-    volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-    networks:
-      - app-tier
-
+#======================
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
@@ -224,20 +185,14 @@ services:
 networks:
   app-tier:
     driver: bridge
-#  solar-net:
-#    driver: bridge
 
 volumes:
   postgres_data:
-#    driver: local
   keycloak_postgres_data:
-#    driver: local
   keycloak_data:
-#    driver: local
   grafana_data: {}
-  sonarqube_postgres_data:
-  sonarqube_postgres:
-  sonarqube_data:
-  sonarqube_conf:
-  sonarqube_extensions:
-#    external: true
+#  sonarqube_postgres_data:
+#  sonarqube_postgres:
+#  sonarqube_data:
+#  sonarqube_conf:
+#  sonarqube_extensions:
