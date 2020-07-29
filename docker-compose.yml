@@ -45,6 +45,8 @@ services:
     expose:
       - 5433
     command: -p 5433
+#    volumes:
+#      - postgres_data:/var/lib/postgres/data
     networks:
       - app-tier
 
@@ -52,7 +54,7 @@ services:
     image: postgres:latest
     container_name: keycloak-database
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - keycloak_postgres_data:/var/lib/postgres_keycloak/data
     environment:
       POSTGRES_DB: pizza-online-auth
       POSTGRES_USER: user
@@ -60,7 +62,11 @@ services:
     depends_on:
       - kafka
     ports:
-      - 5417:5432
+      - 5417:5434
+    expose:
+      - 5434
+    command:
+      -p 5434
     networks:
       - app-tier
 
@@ -75,14 +81,14 @@ services:
       DB_VENDOR: "POSTGRES"
       DB_ADDR: keycloak-database
       DB_DATABASE: pizza-online-auth
-      DB_PORT: 5432
+      DB_PORT: 5434
       DB_USER: user
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: password
 #    restart: on-failure
     volumes:
-      - keycloak-data-volume:/var/lib/keycloak/data
+      - keycloak_data:/var/lib/keycloak/data
     networks:
       - app-tier
 
@@ -130,43 +136,43 @@ services:
     networks:
       - app-tier
 
-  sonarqube-database:
-    image: library/postgres:latest
-    container_name: sonarqube-database
-    volumes:
-      - postgres_data:/var/lib/postgresql2:z
-      - postgres_data:/var/lib/postgresql2/data:z
-    environment:
-      POSTGRES_DB: sonarqube
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    ports:
-      - 5418:5434
-    networks:
-      - app-tier
-
-  sonarqube:
-    image: library/sonarqube:latest
-    container_name: sonarqube
-    depends_on:
-      - sonarqube-database
-    ports:
-      - 9000:9000
-    expose:
-      - 9000
-    environment:
-      - sonar.jdbc.url=jdbc:postgresql://sonarqube-database:5434/sonarqube
-      - sonar.jdbc.username=user
-      - sonar.jdbc.password=password
-      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
-    volumes:
-      - sonarqube_data:/opt/sonarqube/logs
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_data:/opt/sonarqube/extensions
-    networks:
-      - app-tier
-
-
+#SonarQube Server
+#=======================
+#  sonarqube-database:
+#    image: bitnami/postgresql:latest
+#    container_name: sonarqube-database
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#      - POSTGRESQL_USER=user
+#      - POSTGRESQL_DATABASE=sonarqube_database
+#      - POSTGRESQL_PASSWORD=password
+#      - SPRING_PROFILES_ACTIVE=test
+#    volumes:
+#      - sonarqube_postgres:/var/lib/bitnami/postgresql
+#      - sonarqube_postgres_data:/var/lib/bitnami/postgresql/data
+#    networks:
+#      - app-tier
+#
+#  sonarqube:
+#    image: sonarqube:latest
+#    container_name: sonarqube
+#    depends_on:
+#      - sonarqube-database
+#    ports:
+#      - 9000:9000
+#    environment:
+#      - sonar.jdbc.url=jdbc:postgresql://sonarqube-database:5432/sonarqube_database
+#      - sonar.jdbc.username=user
+#      - sonar.jdbc.password=password
+#      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+#      - SPRING_PROFILES_ACTIVE=test
+#    volumes:
+#      - sonarqube_conf:/opt/sonarqube/conf
+#      - sonarqube_data:/opt/sonarqube/data
+#      - sonarqube_extensions:/opt/sonarqube/extensions
+#    networks:
+#      - app-tier
+#======================
 
 #  Passing Spring Profile in DockerCompose
 #  rest-api:
@@ -179,15 +185,14 @@ services:
 networks:
   app-tier:
     driver: bridge
-  solar-net:
-    driver: bridge
-
 
 volumes:
   postgres_data:
-    driver: local
-  keycloak-data-volume:
-    driver: local
+  keycloak_postgres_data:
+  keycloak_data:
   grafana_data: {}
-  sonarqube_data: {}
-#    external: true
+#  sonarqube_postgres_data:
+#  sonarqube_postgres:
+#  sonarqube_data:
+#  sonarqube_conf:
+#  sonarqube_extensions:
